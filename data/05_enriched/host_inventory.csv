@@ -1,0 +1,5 @@
+﻿host,ip,ip_basis,role,role_basis,criticality,criticality_basis,role_evidence,collected_logs,interactive_accounts,service_accounts
+app-01,10.10.1.20,관측,application,추정,high,추정,"/opt/app 경로에서 개발 계정 작업 (git, stat /opt/app/current), 소스 코드 보관",sysmon:1230,dev02:57|dev01:43|intern01:38,root:680
+bastion-01,10.10.1.10,관측,bastion,추정,high,추정,sshd 로그의 유일한 호스트이자 외부 SSH 시도가 모이는 관문 (호스트 이름 bastion),sshd:1364|sysmon:1108,admin01:76,root:697
+node-01,10.10.1.40,관측,operations,추정,medium,추정,"운영 계정(ops01, ops02) 작업 서버",sysmon:1340,ops01:103|ops02:45,root:745
+web-01,10.10.1.30,관측,web,추정,high,추정,"nginx(/usr/local/nginx) 실행, www-data 계정 활동, 웹 서비스 동작 서버로 추정",sysmon:1404,web01:54|analyst01:34,root:561|syslog:384|www-data:4

@@ -1,0 +1,4 @@
+﻿client_ip,first_seen,last_seen,attempts,active_days,attempts_per_day,distinct_accounts,accounts,event_actions,ever_logged_in
+45.148.10.151,2026-09-30 18:54:02.473850,2026-10-16 10:34:35.482629,66,15.7,4.2,5,test:18|deploy:17|root:14|oracle:12|admin:5,invalid_user,false
+213.176.26.69,2026-10-01 05:43:57.673783,2026-10-16 05:35:14.871536,49,15.0,3.3,5,root:17|deploy:11|admin:9|test:6|oracle:6,invalid_user,false
+165.154.235.9,2026-10-01 07:54:20.472320,2026-10-16 14:00:26.190837,46,15.3,3.0,5,deploy:11|oracle:11|test:9|root:9|admin:6,invalid_user,false

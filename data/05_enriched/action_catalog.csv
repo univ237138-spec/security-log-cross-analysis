@@ -1,0 +1,31 @@
+﻿log_source,event_action,vendor_code,category,description,sensitivity,meaning_basis,sensitivity_basis,event_count,sample_request
+sshd,auth_failure,,authentication,인증 실패 (Failed password ...),medium,공식,추정,3,
+sshd,auth_success,,authentication,인증 성공 (Accepted ...),low,공식,추정,150,
+sshd,disconnect_received,,session,클라이언트가 연결 종료 요청,low,공식,추정,150,
+sshd,disconnected_user,,session,사용자 연결 종료,low,공식,추정,150,
+sshd,invalid_user,,authentication,서버에 없는 계정으로 시도 (Invalid user ...),medium,공식,추정,161,
+sshd,session_closed,,session,PAM 세션 종료,low,공식,추정,150,
+sshd,session_logged_out,,session,systemd-logind 로그아웃,low,공식,추정,150,
+sshd,session_new,,session,systemd-logind 세션 번호 부여,low,공식,추정,150,
+sshd,session_opened,,session,PAM 세션 시작,low,공식,추정,150,
+sshd,session_removed,,session,systemd-logind 세션 정리,low,공식,추정,150,
+sysmon,file_create,EventID 11,file,EventID 11 파일 생성,low,공식,추정,377,
+sysmon,network_connect,EventID 3,network,EventID 3 네트워크 연결,low,공식,추정,1789,
+sysmon,process_create,EventID 1,process,EventID 1 프로세스 생성,low,공식,추정,1458,
+sysmon,process_terminate,EventID 5,process,EventID 5 프로세스 종료,low,공식,추정,1458,
+teiren_audit,DASHBOARD_LAYOUT_VIEW_UPDATE,DASHBOARD-S301,view_config,대시보드 배치 변경,low,추정,추정,74,/api/dashboard_info/layout
+teiren_audit,DEBUG_EXEC,THREAT-S201,admin_exec,내부 디버그 기능으로 명령 실행,high,추정,추정,1,/api/internal/debug/exec
+teiren_audit,GENERAL_BAD_REQUEST,ACCOUNT-G001,error,잘못된 요청,low,추정,추정,8,/api/internal/debug/exec
+teiren_audit,IAM_LOGIN_NEW_DEVICE,ACCOUNT-S509,authentication,새 기기에서 콘솔 로그인,medium,추정,추정,1,/api/account/login_sub_account
+teiren_audit,IAM_LOGIN_SUCCESS,ACCOUNT-S505,authentication,콘솔 하위 계정 로그인 성공,low,추정,추정,125,/api/account/login_sub_account
+teiren_audit,IAM_POLICY_DETACH,ACCOUNT-S305,iam_change,계정에서 권한 정책 해제,high,추정,추정,1,/api/account/sub_account/intern01/policy
+teiren_audit,IAM_USER_DELETE,ACCOUNT-S403,iam_change,콘솔 계정 삭제,high,추정,추정,1,/api/account/sub_account/web01/detail
+teiren_audit,INTEGRATION_STATUS_UPDATE,RESOURCE-S302,system_config,외부 연동(수집) 상태 변경,medium,추정,추정,49,/api/resource/collect
+teiren_audit,LOG_COLUMN_VIEW_UPDATE,LOG-S301,view_config,로그 조회 컬럼 설정 변경,low,추정,추정,24,/api/logs/column
+teiren_audit,ROOT_LOGIN_NO_MFA,ACCOUNT-S501,authentication,콘솔 최상위(root) 계정이 MFA 없이 로그인,high,추정,추정,23,/api/account/login_root
+teiren_audit,RULE_DELETE,THREAT-S401,detection_config,탐지 룰 삭제,high,추정,추정,2,/api/threat/rule/exfil-watch
+teiren_audit,SESSION_REFRESH,ACCOUNT-S801,session,콘솔 세션 갱신,low,추정,추정,147,/api/account/refresh
+nginx,DELETE,,web_write,리소스 삭제,medium,공식,추정,3,
+nginx,GET,,web_read,리소스 조회,low,공식,추정,2210,
+nginx,POST,,web_write,데이터 전송·처리 요청,medium,공식,추정,9,
+nginx,PUT,,web_write,리소스 생성·교체,medium,공식,추정,1,

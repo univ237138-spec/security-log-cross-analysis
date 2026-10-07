@@ -1,0 +1,12 @@
+﻿work_session_id,alert,person_candidate,risk_score,activity_verdict,attribution,reason
+S132,true,analyst01,424.0,의심 확인,관측,"high 룰 ['R01', 'R02', 'R14'] (원본 이벤트 관측), 세션 직접 소속 high 룰 있음"
+S122,true,dev02,370.0,의심 확인,관측,"high 룰 ['R08'] (원본 이벤트 관측), 세션 직접 소속 high 룰 있음"
+S137,true,ops02,248.0,의심 확인,추정,"high 룰 ['R02', 'R04', 'R05'] (원본 이벤트 관측), high 룰이 모두 5-c 추정 연결"
+S142,true,intern01,160.0,의심 확인,관측,"high 룰 ['R12', 'R13'] (원본 이벤트 관측), 세션 직접 소속 high 룰 있음"
+S026,false,admin01,20.0,오탐 후보,,"B01: 시작 9시, 평소 12~17시 (벗어남 3시간) | 정상 근거: IP 평소와 같음, 세션 종류 server+web, 웹 로그인 ROOT_LOGIN_NO_MFA, 룰 신호 없음"
+S036,false,web01,20.0,오탐 후보,,"B08: 양 초과(프로세스 4, GET 외 0), 기준선 peer n=5 | 정상 근거: IP 평소와 같음, 세션 종류 server+web, 웹 로그인 IAM_LOGIN_SUCCESS, 룰 신호 없음"
+S050,false,dev02,20.0,오탐 후보,,"B01: 시작 17시, 평소 9~15시 (벗어남 2시간) | 정상 근거: IP 평소와 같음, 세션 종류 server+web, 웹 로그인 IAM_LOGIN_SUCCESS, 룰 신호 없음"
+S053,false,analyst01,20.0,오탐 후보,,"B01: 시작 10시, 평소 12~19시 (벗어남 2시간) | 정상 근거: IP 평소와 같음, 세션 종류 server+web, 웹 로그인 IAM_LOGIN_SUCCESS, 룰 신호 없음"
+S063,false,ops02,20.0,오탐 후보,,"B01: 시작 10시, 평소 12~16시 (벗어남 2시간) | 정상 근거: IP 평소와 같음, 세션 종류 server+web, 웹 로그인 IAM_LOGIN_SUCCESS, 룰 신호 없음"
+S131,false,ops01,20.0,오탐 후보,,"B08: 양 초과(프로세스 7, GET 외 0), ssh 접속 3개를 합친 세션, 기준선 person n=27 | 정상 근거: IP 평소와 같음, 세션 종류 server+web, 웹 로그인 IAM_LOGIN_SUCCESS, 룰 신호 없음"
+S139,false,ops01,20.0,오탐 후보,,"B08: 양 초과(프로세스 10, GET 외 0), ssh 접속 3개를 합친 세션, 기준선 person n=28 | 정상 근거: IP 평소와 같음, 세션 종류 server+web, 웹 로그인 IAM_LOGIN_SUCCESS, 룰 신호 없음"

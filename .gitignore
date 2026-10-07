@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+Thumbs.db
+.ipynb_checkpoints/
+/docs/14_조사/01_사고카드.md
+/dashboard/
+/.streamlit/
+/scripts/99_verify_dashboard.py

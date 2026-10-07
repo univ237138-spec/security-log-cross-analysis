@@ -1,0 +1,13 @@
+﻿entity_type,entity,total_score,max_24h,max_24h_at,max_7d,max_7d_at,alert_sessions,signal_types
+person,admin01,20.0,20.0,S026,20.0,S026,,
+person,analyst01,444.0,424.0,S132,424.0,S132,S132,
+person,dev01,0.0,0.0,S001,0.0,S001,,
+person,dev02,390.0,370.0,S122,370.0,S122,S122,
+person,intern01,160.0,160.0,S142,160.0,S142,S142,
+person,ops01,40.0,40.0,S139,40.0,S139,,
+person,ops02,268.0,248.0,S137,248.0,S137,S137,
+person,web01,20.0,20.0,S036,20.0,S036,,
+host,app-01,180.0,,,,,,R03|R07|R08
+host,bastion-01,90.0,,,,,,R10|R11
+host,node-01,260.0,,,,,,B09|R02|R03|R04|R05|R06
+host,web-01,255.0,,,,,,B09|R01|R02|R03

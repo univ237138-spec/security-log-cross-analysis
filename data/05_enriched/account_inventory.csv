@@ -1,0 +1,24 @@
+﻿account,account_system,account_type,type_basis,role,role_basis,is_privileged,login_success,login_fail,console_events,primary_client_ip,other_client_ips,active_hosts,home_host,home_host_basis,person_candidate,person_basis,note
+admin,linux,nonexistent,관측,,,false,0,20,,,,,,,,,sshd가 Invalid user로 기록 (서버에 없는 계정)
+admin01,linux,human,추정,administrator,추정,true,23,0,,10.20.10.71,,bastion-01:76,bastion-01,추정,admin01,추정,로그인 성공 + 사용자 홈 디렉터리에서 작업
+analyst01,linux,human,추정,analyst,추정,false,12,0,,10.20.10.51,,web-01:34,web-01,추정,analyst01,추정,로그인 성공 + 사용자 홈 디렉터리에서 작업
+deploy,linux,nonexistent,관측,,,false,0,39,,,,,,,,,sshd가 Invalid user로 기록 (서버에 없는 계정)
+dev01,linux,human,추정,developer,추정,false,16,0,,10.20.10.11,,app-01:43,app-01,추정,dev01,추정,로그인 성공 + 사용자 홈 디렉터리에서 작업
+dev02,linux,human,추정,developer,추정,false,18,3,,10.20.10.12,203.0.113.44:1,app-01:57,app-01,추정,dev02,추정,로그인 성공 + 사용자 홈 디렉터리에서 작업
+intern01,linux,human,추정,intern,추정,false,13,0,,10.20.10.61,,app-01:38,app-01,추정,intern01,추정,로그인 성공 + 사용자 홈 디렉터리에서 작업
+ops01,linux,human,추정,operations,추정,false,33,0,,10.20.10.21,,node-01:103,node-01,추정,ops01,추정,로그인 성공 + 사용자 홈 디렉터리에서 작업
+ops02,linux,human,추정,operations,추정,false,17,0,,10.20.10.22,,node-01:45,node-01,추정,ops02,추정,로그인 성공 + 사용자 홈 디렉터리에서 작업
+oracle,linux,nonexistent,관측,,,false,0,29,,,,,,,,,sshd가 Invalid user로 기록 (서버에 없는 계정)
+root,linux,system,공식,,,true,0,40,,,,node-01:263|web-01:263|bastion-01:243|app-01:237,,,,,슈퍼유저 (UID 0)
+syslog,linux,system,공식,,,false,0,0,,,,,,,,,시스템 로그 서비스 계정
+test,linux,nonexistent,관측,,,false,0,33,,,,,,,,,sshd가 Invalid user로 기록 (서버에 없는 계정)
+web01,linux,human,추정,web_operator,추정,false,18,0,,10.20.10.81,,web-01:54,web-01,추정,web01,추정,로그인 성공 + 사용자 홈 디렉터리에서 작업
+www-data,linux,system,공식,,,false,0,0,,,,web-01:2,,,,,웹 서버 프로세스 실행 계정
+admin01@lab.internal,teiren_console,human,추정,administrator,추정,true,,,69,10.20.10.71,,,,,admin01,추정,주 접속 IP 10.20.10.71에서 리눅스 계정 admin01 로그인도 관측됨
+analyst01@lab.internal,teiren_console,human,추정,analyst,추정,false,,,46,10.20.10.51,198.51.100.77:10,,,,analyst01,추정,주 접속 IP 10.20.10.51에서 리눅스 계정 analyst01 로그인도 관측됨
+dev01@lab.internal,teiren_console,human,추정,developer,추정,false,,,48,10.20.10.11,,,,,dev01,추정,주 접속 IP 10.20.10.11에서 리눅스 계정 dev01 로그인도 관측됨
+dev02@lab.internal,teiren_console,human,추정,developer,추정,false,,,51,10.20.10.12,,,,,dev02,추정,주 접속 IP 10.20.10.12에서 리눅스 계정 dev02 로그인도 관측됨
+intern01@lab.internal,teiren_console,human,추정,intern,추정,false,,,41,10.20.10.61,,,,,intern01,추정,주 접속 IP 10.20.10.61에서 리눅스 계정 intern01 로그인도 관측됨
+ops01@lab.internal,teiren_console,human,추정,operations,추정,false,,,99,10.20.10.21,,,,,ops01,추정,주 접속 IP 10.20.10.21에서 리눅스 계정 ops01 로그인도 관측됨
+ops02@lab.internal,teiren_console,human,추정,operations,추정,false,,,48,10.20.10.22,,,,,ops02,추정,주 접속 IP 10.20.10.22에서 리눅스 계정 ops02 로그인도 관측됨
+web01@lab.internal,teiren_console,human,추정,web_operator,추정,false,,,54,10.20.10.81,,,,,web01,추정,주 접속 IP 10.20.10.81에서 리눅스 계정 web01 로그인도 관측됨

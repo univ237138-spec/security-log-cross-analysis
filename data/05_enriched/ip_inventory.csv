@@ -1,0 +1,22 @@
+﻿ip,ip_zone,zone_basis,host,host_basis,is_rfc1918,is_documentation_range,linux_login_accounts,console_accounts,failed_login_accounts,seen_in_logs,event_count,first_seen,last_seen
+10.10.1.10,server,관측,bastion-01,관측,true,false,,,,sysmon:376,376,2026-09-30 16:05:31.300000,2026-10-16 12:13:05.000000
+10.10.1.20,server,관측,app-01,관측,true,false,,,,sysmon:773,773,2026-09-30 15:10:48.000000,2026-10-16 14:10:31.000000
+10.10.1.30,server,관측,web-01,관측,true,false,,,,sysmon:2005,2005,2026-09-30 15:10:48.000000,2026-10-16 14:10:31.000000
+10.10.1.40,server,관측,node-01,관측,true,false,,,,sysmon:420,420,2026-09-30 16:07:42.300000,2026-10-16 12:09:16.000000
+10.20.10.11,user_pc,추정,,,true,false,dev01:16,dev01@lab.internal:48,,nginx:258|sshd:48|teiren_audit:48,354,2026-10-01 00:47:17.256787,2026-10-16 07:00:10.242592
+10.20.10.12,user_pc,추정,,,true,false,dev02:17,dev02@lab.internal:51,,nginx:319|sshd:51|teiren_audit:51,421,2026-10-01 05:01:11.286544,2026-10-16 07:18:14.323214
+10.20.10.21,user_pc,추정,,,true,false,ops01:33,ops01@lab.internal:99,,nginx:468|sshd:99|teiren_audit:99,666,2026-10-01 01:04:33.590653,2026-10-16 02:47:17.829867
+10.20.10.22,user_pc,추정,,,true,false,ops02:17,ops02@lab.internal:48,,nginx:253|sshd:51|teiren_audit:48,352,2026-10-01 05:42:17.695186,2026-10-16 06:48:27.217178
+10.20.10.51,user_pc,추정,,,true,false,analyst01:12,analyst01@lab.internal:36,,nginx:157|sshd:36|teiren_audit:36,229,2026-10-01 07:21:44.117771,2026-10-16 07:58:52.591098
+10.20.10.61,user_pc,추정,,,true,false,intern01:13,intern01@lab.internal:41,,nginx:194|teiren_audit:41|sshd:39,274,2026-10-01 06:46:58.835750,2026-10-16 06:33:22.343000
+10.20.10.71,user_pc,추정,,,true,false,admin01:23,admin01@lab.internal:69,,nginx:295|sshd:69|teiren_audit:69,433,2026-10-01 07:14:33.615517,2026-10-16 00:55:52.636521
+10.20.10.81,user_pc,추정,,,true,false,web01:18,web01@lab.internal:54,,nginx:270|sshd:54|teiren_audit:54,378,2026-10-01 07:48:18.417476,2026-10-16 06:18:26.684478
+45.148.10.151,external,공식,,,false,false,,,test:18|deploy:17|root:14|oracle:12|admin:5,sshd:66,66,2026-09-30 18:54:02.473850,2026-10-16 10:34:35.482629
+165.154.235.9,external,공식,,,false,false,,,deploy:11|oracle:11|test:9|root:9|admin:6,sshd:46,46,2026-10-01 07:54:20.472320,2026-10-16 14:00:26.190837
+198.51.100.10,external,추정,,,false,true,,,,sysmon:1,1,2026-10-15 17:42:50.440000,2026-10-15 17:42:50.440000
+198.51.100.77,external,추정,,,false,true,,analyst01@lab.internal:10,,teiren_audit:10|nginx:9,19,2026-10-15 05:07:03.880000,2026-10-15 05:08:14.960000
+198.51.100.90,external,추정,,,false,true,,,,sysmon:1,1,2026-10-15 05:08:18.880000,2026-10-15 05:08:18.880000
+203.0.113.44,external,추정,,,false,true,dev02:1,,dev02:3,sshd:6,6,2026-10-14 18:11:38.120000,2026-10-14 18:27:18.123000
+203.0.113.80,external,추정,,,false,true,,,,sysmon:1,1,2026-10-14 18:13:29.120000,2026-10-14 18:13:29.120000
+203.0.113.90,external,추정,,,false,true,,,,sysmon:1,1,2026-10-15 17:41:32.440000,2026-10-15 17:41:32.440000
+213.176.26.69,external,공식,,,false,false,,,root:17|deploy:11|admin:9|test:6|oracle:6,sshd:49,49,2026-10-01 05:43:57.673783,2026-10-16 05:35:14.871536
