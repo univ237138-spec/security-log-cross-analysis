@@ -66,6 +66,31 @@ python scripts/run_all.py
 
 `run_all.py`는 파싱·초기 정규화와 그 검증까지만 실행한다. 통합부터 조사·통계 검정까지의 전체 순서는 [실행 가이드](docs/09_실행_가이드.md)에 있다. 재실행하면 해당 단계의 산출 CSV를 덮어쓴다.
 
+## 대시보드
+
+[dashboard_v2](dashboard_v2)는 `data/`의 분석 결과 CSV 26개를 읽어 보여주는 Streamlit 앱이다. 탐지·점수·판정을 다시 계산하지 않으므로 수치를 바꾸려면 해당 분석 단계를 재실행해 CSV를 갱신한다.
+
+```bash
+python -m streamlit run dashboard_v2/app.py   # 저장소 최상위에서 실행
+python scripts/99_verify_dashboard_v2.py      # 수정 후 화면·집계값 검증
+```
+
+| 수정 대상 | 파일 |
+|---|---|
+| 화면 6개 | [dashboard_v2/views](dashboard_v2/views) |
+| 공통 카드·표·차트 | [components.py](dashboard_v2/components.py) |
+| CSV 경로·읽기 | [loaders.py](dashboard_v2/loaders.py) |
+| 색·글꼴 | [theme.py](dashboard_v2/theme.py), [.streamlit/config.toml](.streamlit/config.toml) |
+| 로고 | [assets](dashboard_v2/assets) (`make_logo.py` 재생성 시 Pillow 필요) |
+
+대시보드 수정은 `main`에 바로 올리지 않고 브랜치를 만들어 Pull Request로 공유한다.
+
+```bash
+git switch -c dashboard/<작업내용>
+# 수정 → 로컬 실행·검증
+git push -u origin dashboard/<작업내용>   # GitHub에서 Pull Request 생성
+```
+
 ## 팀 작업 규칙
 
 - 원시 로그는 보존하고 변경 근거는 문서에 남긴다.
