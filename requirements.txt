@@ -1,5 +1,7 @@
-# Verified local versions; scipy for statistics, other packages for analysis figures.
+# Verified local versions; scipy for statistics, matplotlib/numpy for analysis figures, streamlit/plotly for dashboard_v2.
 scipy==1.18.0
 matplotlib==3.11.1
 numpy==2.5.1
 pandas==2.3.3
+streamlit==1.62.0
+plotly==6.9.0

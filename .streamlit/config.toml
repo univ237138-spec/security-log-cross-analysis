@@ -1,0 +1,34 @@
+# 대시보드 테마 (dashboard_v2 기준. 프로젝트 최상위에서 실행하는 dashboard/(v1)에도 함께 적용된다)
+# 색 방향: 시안 → 블루 → 딥네이비 (보안 솔루션 브랜드 톤). 세부 장식은 dashboard_v2/theme.py의 CSS.
+[theme]
+base = "light"
+primaryColor = "#1668e3"
+backgroundColor = "#f3f7fc"
+secondaryBackgroundColor = "#e6eef9"
+textColor = "#0b1b33"
+borderColor = "#d6e1f0"
+linkColor = "#0b5be0"
+dataframeHeaderBackgroundColor = "#eaf1fb"
+baseRadius = "10px"
+font = "Pretendard, 'Malgun Gothic', sans-serif"
+headingFont = "Pretendard, 'Malgun Gothic', sans-serif"
+headingFontWeights = [800, 700, 700, 700, 600, 600]
+metricValueFontWeight = 700
+
+[[theme.fontFaces]]
+family = "Pretendard"
+url = "https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/variable/woff2/PretendardVariable.woff2"
+weight = "100 900"
+
+[theme.sidebar]
+backgroundColor = "#061c52"
+secondaryBackgroundColor = "#0b2b72"
+textColor = "#e6f1ff"
+primaryColor = "#35d6f5"
+borderColor = "#1b3f8f"
+
+[client]
+toolbarMode = "minimal"   # Deploy 버튼 숨김
+
+[browser]
+gatherUsageStats = false
