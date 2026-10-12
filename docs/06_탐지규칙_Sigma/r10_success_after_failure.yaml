@@ -1,0 +1,84 @@
+# R10 실패 뒤 로그인 성공
+# docs/06_탐지규칙_Sigma_대조.yaml 을 규칙별로 나눈 파일이다. 필드 이름과 추가 필드의 뜻은 그 파일 머리말에 있다.
+# 이 파일에는 문서가 3개 있다: 기본 이벤트 룰과 그것을 세는 correlation 룰.
+
+title: R10 기본 이벤트 - SSH 로그인 실패
+id: 333c3fbd-9b8a-4956-b31a-574fa276e493
+name: r10_base_ssh_login_failure
+status: experimental
+description: R10이 쓰는 기본 이벤트다. R09의 기본 이벤트와 조건이 같다. 없는 계정으로의 시도와 인증 실패를 함께 로그인 실패로 보며, 단독으로는 경보가 아니다.
+references:
+    - docs/06_탐지_위험점수.md
+author: security-log-cross-analysis 프로젝트 팀
+date: 2026-10-03
+tags:
+    - attack.credential-access
+    - attack.t1110
+logsource:
+    product: linux
+    service: sshd
+detection:
+    selection:
+        event_action:
+            - 'invalid_user'
+            - 'auth_failure'
+    condition: selection
+falsepositives:
+    - 비밀번호를 잘못 입력한 정상 사용자
+level: informational
+project_rule_id: R10
+---
+title: R10 기본 이벤트 - SSH 로그인 성공
+id: dffd2975-2046-4c14-9d83-bf5a3cc9ebf2
+name: r10_base_ssh_login_success
+status: experimental
+description: R10이 쓰는 기본 이벤트다. SSH 인증 성공 기록이며, 단독으로는 경보가 아니다.
+references:
+    - docs/06_탐지_위험점수.md
+author: security-log-cross-analysis 프로젝트 팀
+date: 2026-10-03
+tags:
+    - attack.initial-access
+    - attack.t1078
+logsource:
+    product: linux
+    service: sshd
+detection:
+    selection:
+        event_action: 'auth_success'
+    condition: selection
+falsepositives:
+    - 정상 로그인
+level: informational
+project_rule_id: R10
+---
+title: R10 실패 뒤 로그인 성공
+id: 741aa071-c64f-452d-9c51-4449bfe0024a
+name: r10_success_after_failure
+status: experimental
+description: 같은 접속 IP와 계정에서 로그인 실패가 있은 뒤 10분 안에 로그인이 성공하면 탐지한다.
+references:
+    - docs/06_탐지_위험점수.md
+author: security-log-cross-analysis 프로젝트 팀
+date: 2026-10-03
+tags:
+    - attack.credential-access
+    - attack.initial-access
+    - attack.t1110
+    - attack.t1078
+correlation:
+    type: temporal_ordered
+    rules:
+        - r10_base_ssh_login_failure
+        - r10_base_ssh_login_success
+    group-by:
+        - client_ip # 보강 컬럼
+        - account # 보강 컬럼
+    timespan: 10m
+falsepositives:
+    - 비밀번호를 한두 번 틀린 뒤 로그인한 정상 사용자 (이 데이터의 정상 세션에서는 0건)
+level: medium
+project_rule_id: R10
+project_hits: 1
+sigma_match_level: 대응 룰 없음
+sigma_difference: R09와 같은 이유다. '실패 후 10분 안 성공'은 이 프로젝트가 정한 조건이다.
