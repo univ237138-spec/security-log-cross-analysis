@@ -1,0 +1,31 @@
+# R15
+title: "Repeated Web Errors From One Address And Path"
+id: "753080a3-21fb-459e-8a68-b7747cb775cd"
+status: "experimental"
+description: "Detects five or more 4xx or 5xx nginx responses for the same client address and request path within five minutes."
+author: "TEIREN Security Log Cross Analysis Team"
+date: "2026-10-12"
+correlation:
+    type: "event_count"
+    rules:
+        - "fba9549d-acb5-4c4b-97a3-8211f65e4352"
+    group-by:
+        - "client_ip"
+        - "request"
+    timespan: "5m"
+    condition:
+        gte: 5
+falsepositives:
+    - "Broken links, client retries or approved web testing."
+level: "medium"
+---
+title: "Nginx Client Or Server Error Response"
+id: "fba9549d-acb5-4c4b-97a3-8211f65e4352"
+name: "nginx_error_response"
+logsource:
+    category: "webserver"
+    definition: "Project-normalized nginx access log; client_ip, request URI and http_status_code are required."
+detection:
+    selection:
+        http_status_code|re: "^[45]"
+    condition: "selection"

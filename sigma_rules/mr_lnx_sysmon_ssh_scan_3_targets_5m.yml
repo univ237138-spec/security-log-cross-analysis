@@ -1,0 +1,40 @@
+# R05
+title: "One Linux Host Connects To Three Internal SSH Targets"
+id: "98baff6d-2284-406a-bbba-4ada643171a2"
+status: "experimental"
+description: "Detects a Linux host connecting to at least three distinct internal server addresses on SSH port 22 within five minutes, excluding sshd processes."
+references:
+    - "https://github.com/SigmaHQ/sigma/blob/8a4813404ea3074890e0cda9272d4d1a8b2941d6/rules/linux/auditd/syscall/lnx_auditd_network_service_scanning.yml"
+author: "TEIREN Security Log Cross Analysis Team"
+date: "2026-10-12"
+tags:
+    - "attack.discovery"
+    - "attack.t1046"
+correlation:
+    type: "value_count"
+    rules:
+        - "731de412-8393-4b2f-8a30-6dac54ac305e"
+    group-by:
+        - "host"
+    timespan: "5m"
+    condition:
+        field: "DestinationIp"
+        gte: 3
+falsepositives:
+    - "Approved inventory, monitoring or vulnerability scanning."
+level: "high"
+---
+title: "Internal SSH Connection From A Non Sshd Process"
+id: "731de412-8393-4b2f-8a30-6dac54ac305e"
+name: "internal_ssh_connection"
+logsource:
+    product: "linux"
+    category: "network_connection"
+    definition: "Sysmon for Linux network connection; project enrichment supplies dst_zone and host."
+detection:
+    selection:
+        dst_zone: "server"
+        DestinationPort: 22
+    filter_sshd:
+        Image|re: "(^|/)sshd$"
+    condition: "selection and not filter_sshd"

@@ -1,0 +1,45 @@
+# R10
+title: "SSH Login Success After Failure For Same Account"
+id: "bcceb032-51da-4ef7-ac25-d5ce2d712b6f"
+status: "experimental"
+description: "Detects an SSH login success following an authentication failure for the same client address and account within ten minutes."
+author: "TEIREN Security Log Cross Analysis Team"
+date: "2026-10-12"
+correlation:
+    type: "temporal_ordered"
+    rules:
+        - "4bb8c429-f0e6-4c09-9db1-b7b6fded5093"
+        - "8fb89625-b3c9-468c-a899-68d7b97e8f93"
+    group-by:
+        - "client_ip"
+        - "account"
+    timespan: "10m"
+falsepositives:
+    - "A legitimate user mistypes a password and then signs in."
+level: "medium"
+---
+title: "SSH Authentication Failure For Ordered Correlation"
+id: "4bb8c429-f0e6-4c09-9db1-b7b6fded5093"
+name: "ssh_failure_before_success"
+logsource:
+    product: "linux"
+    service: "sshd"
+    definition: "Project-normalized sshd events; event_action, client_ip, account and client_zone are parser/enrichment fields."
+detection:
+    selection:
+        event_action:
+            - "invalid_user"
+            - "auth_failure"
+    condition: "selection"
+---
+title: "SSH Authentication Success For Ordered Correlation"
+id: "8fb89625-b3c9-468c-a899-68d7b97e8f93"
+name: "ssh_success_after_failure"
+logsource:
+    product: "linux"
+    service: "sshd"
+    definition: "Project-normalized sshd events; event_action, client_ip, account and client_zone are parser/enrichment fields."
+detection:
+    selection:
+        event_action: "auth_success"
+    condition: "selection"

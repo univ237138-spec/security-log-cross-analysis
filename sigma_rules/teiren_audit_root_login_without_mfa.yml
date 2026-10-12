@@ -1,0 +1,25 @@
+# R16
+title: "Teiren Root Login Without MFA"
+id: "56acc1b5-f492-48ef-8d0b-5034d71a287c"
+status: "experimental"
+description: "Detects a Teiren audit event explicitly reporting a successful root login without multi-factor authentication."
+references:
+    - "https://github.com/SigmaHQ/sigma/blob/8a4813404ea3074890e0cda9272d4d1a8b2941d6/rules/cloud/aws/cloudtrail/aws_cloudtrail_console_login_success_without_mfa.yml"
+    - "https://github.com/SigmaHQ/sigma/blob/8a4813404ea3074890e0cda9272d4d1a8b2941d6/rules/cloud/aws/cloudtrail/aws_root_account_usage.yml"
+author: "TEIREN Security Log Cross Analysis Team"
+date: "2026-10-12"
+logsource:
+    product: "teiren"
+    service: "audit"
+    definition: "Project-specific Teiren audit log; event_action and action_category are derived by this repository and need a custom mapping."
+detection:
+    selection:
+        event_action: "ROOT_LOGIN_NO_MFA"
+    condition: "selection"
+fields:
+    - "event_action"
+    - "client_ip"
+    - "account"
+falsepositives:
+    - "Expected root access where MFA has not been enabled."
+level: "low"

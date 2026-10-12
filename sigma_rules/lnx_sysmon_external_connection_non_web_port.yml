@@ -1,0 +1,29 @@
+# R04
+title: "External Connection On A Non Web Port"
+id: "0a7f8028-450e-47e0-aa8b-af6dcc5e84ed"
+status: "experimental"
+description: "Detects an external Sysmon for Linux connection whose destination port is neither 80 nor 443."
+references:
+    - "https://github.com/SigmaHQ/sigma/blob/8a4813404ea3074890e0cda9272d4d1a8b2941d6/rules/linux/network_connection/net_connection_lnx_susp_malware_callback_port.yml"
+author: "TEIREN Security Log Cross Analysis Team"
+date: "2026-10-12"
+logsource:
+    product: "linux"
+    category: "network_connection"
+    definition: "Sysmon for Linux network connection; project enrichment supplies dst_zone and host."
+detection:
+    selection:
+        dst_zone: "external"
+    filter_web_ports:
+        DestinationPort:
+            - 80
+            - 443
+    condition: "selection and not filter_web_ports"
+fields:
+    - "Image"
+    - "DestinationIp"
+    - "DestinationPort"
+    - "dst_zone"
+falsepositives:
+    - "Approved external services using other ports, including SSH and databases."
+level: "high"

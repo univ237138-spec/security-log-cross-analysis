@@ -1,0 +1,32 @@
+# R01
+title: "Web Service Account Starts Shell Or Downloader"
+id: "741b572f-9bf1-4eff-9f4b-9ea3ad76364d"
+status: "experimental"
+description: "Detects a web service account starting a shell or download utility in a Sysmon for Linux process event."
+references:
+    - "https://github.com/SigmaHQ/sigma/blob/8a4813404ea3074890e0cda9272d4d1a8b2941d6/rules/linux/process_creation/proc_creation_lnx_webshell_detection.yml"
+author: "TEIREN Security Log Cross Analysis Team"
+date: "2026-10-12"
+tags:
+    - "attack.execution"
+    - "attack.t1059.004"
+logsource:
+    product: "linux"
+    category: "process_creation"
+    definition: "Sysmon for Linux process creation; Image and CommandLine are required."
+detection:
+    selection:
+        User:
+            - "www-data"
+            - "apache"
+            - "nginx"
+            - "httpd"
+        Image|re: "(^|/)(bash|sh|dash|zsh|curl|wget)$"
+    condition: "selection"
+fields:
+    - "User"
+    - "Image"
+    - "CommandLine"
+falsepositives:
+    - "Approved web service maintenance or application scripts."
+level: "high"
