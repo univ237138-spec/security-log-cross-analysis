@@ -9,6 +9,10 @@
 | 데이터 파일·행 수·컬럼·연결 키 | [데이터 목록](data/README.md) |
 | 파일을 생성한 코드·실행 순서 | [스크립트 목록](scripts/README.md) |
 | 분석 규칙·결정 근거·결과·한계 | [분석 문서](docs/README.md) |
+| 탐지 룰 YAML (R01–R16) | [sigma_rules](sigma_rules) |
+| 룰 Key 스키마 | [rule_key_schema](docs/rule_key_schema.md) |
+| SigmaHQ 대조 | [06_탐지규칙_SigmaHQ_대조](docs/06_탐지규칙_SigmaHQ_대조.yaml) |
+| Wazuh 원본 룰 보관 (비배포) | [research](research) |
 | 환경 설치·전체 재실행 | [실행 가이드](docs/09_실행_가이드.md) |
 | Snowflake 파싱·정규화 | [SQL 안내](sql/snow/README.md) |
 | 분석 결과 그래프 | [그래프 목록](assets/analysis/README.md) |
