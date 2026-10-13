@@ -1,0 +1,220 @@
+schema: wazuh-original-rules-yaml/v1
+format_only_conversion: true
+native_runtime_format: Wazuh XML
+authoritative_field: sources[].original_xml
+upstream:
+  repository: https://github.com/wazuh/wazuh
+  tag: v4.14.8
+  commit: f470ad7db717b18db7feeed568949643698f0f34
+sources:
+- file: ruleset/rules/0485-cylance_rules.xml
+  url: https://github.com/wazuh/wazuh/blob/f470ad7db717b18db7feeed568949643698f0f34/ruleset/rules/0485-cylance_rules.xml
+  sha256: 4fe8c0c67da9395747ba5408b883bc3f7044600e53134c91608729f3d6032a44
+  rule_count: 10
+  elements:
+  - element: group
+    attributes:
+      name: cylance,
+    children:
+    - element: rule
+      attributes:
+        id: '87000'
+        level: '0'
+      children:
+      - element: decoded_as
+        text: cylance_events
+      - element: description
+        text: Cylance events messages grouped.
+    - element: rule
+      attributes:
+        id: '87001'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '87000'
+      - element: field
+        attributes:
+          name: cylance_events.eventstatus
+        text: unsafe
+      - element: description
+        text: 'Cylance: File $(cylance_events.filepath) is unsafe.'
+      - element: mitre
+        children:
+        - element: id
+          text: T1203
+      - element: group
+        text: pci_dss_10.6.1,gdpr_IV_35.7.d,
+    - element: rule
+      attributes:
+        id: '87002'
+        level: '4'
+      children:
+      - element: if_sid
+        text: '87000'
+      - element: field
+        attributes:
+          name: cylance_events.eventstatus
+        text: abnormal
+      - element: description
+        text: 'Cylance: File $(cylance_events.filepath) is abnormal.'
+      - element: mitre
+        children:
+        - element: id
+          text: T1203
+    - element: rule
+      attributes:
+        id: '87003'
+        level: '6'
+      children:
+      - element: if_sid
+        text: '87000'
+      - element: field
+        attributes:
+          name: cylance_events.eventstatus
+        text: quarantined
+      - element: description
+        text: 'Cylance: File $(cylance_events.filepath) is quarantined.'
+      - element: group
+        text: gdpr_IV_35.7.d,
+      - element: mitre
+        children:
+        - element: id
+          text: T1203
+    - element: rule
+      attributes:
+        id: '87004'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '87000'
+      - element: field
+        attributes:
+          name: cylance_events.eventstatus
+        text: waived
+      - element: description
+        text: 'Cylance Event: File $(cylance_events.filepath) is waived.'
+    - element: rule
+      attributes:
+        id: '87050'
+        level: '0'
+      children:
+      - element: decoded_as
+        text: cylance_threats
+      - element: description
+        text: Cylance threats messages grouped.
+    - element: rule
+      attributes:
+        id: '87051'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '87050'
+      - element: field
+        attributes:
+          name: cylance_threats.file_status
+        text: waived
+      - element: description
+        text: 'Cylance Threat: File $(cylance_threats.file_path) is waived'
+    - element: rule
+      attributes:
+        id: '87052'
+        level: '6'
+      children:
+      - element: if_sid
+        text: '87050'
+      - element: field
+        attributes:
+          name: cylance_threats.file_status
+        text: quarantined
+      - element: description
+        text: 'Cylance Threat: File $(cylance_threats.file_path) is quarantined'
+      - element: group
+        text: gdpr_IV_35.7.d,
+    - element: rule
+      attributes:
+        id: '87053'
+        level: '4'
+      children:
+      - element: if_sid
+        text: '87050'
+      - element: field
+        attributes:
+          name: cylance_threats.file_status
+        text: abnormal
+      - element: description
+        text: 'Cylance Threat: File $(cylance_threats.file_path) is abnormal'
+      - element: mitre
+        children:
+        - element: id
+          text: T1203
+    - element: rule
+      attributes:
+        id: '87054'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '87050'
+      - element: field
+        attributes:
+          name: cylance_threats.file_status
+        text: unsafe
+      - element: description
+        text: 'Cylance Threat: File $(cylance_threats.file_path) is unsafe'
+      - element: group
+        text: pci_dss_10.6.1,gdpr_IV_35.7.d,
+  original_xml: "<!--\n  -  Cylance rules\n  -  Created by Wazuh, Inc.\n  -  Copyright (C) 2015, Wazuh Inc.\n  -\
+    \  This program is a free software; you can redistribute it and/or modify it under the terms of GPLv2.\n-->\n\
+    \n<!-- ID: 87000 - 87100 -->\n<group name=\"cylance,\">\n    <rule id=\"87000\" level=\"0\">\n        <decoded_as>cylance_events</decoded_as>\n\
+    \        <description>Cylance events messages grouped.</description>\n    </rule>\n\n    <!-- Event Status rules\
+    \ -->\n    <!--\n        The event unsafe means a file is very probably to be a virus.\n\n        123456789ABCDEFG123456789ABCDEFG123456789ABCDEFG123456789ABCDEFG\t\
+    123456789ABCDEFG123456789ABCDEFG\tF-R5PH3421FJ7\t7/10/2017 22:09\tD:\\rfrgr\\rgreg\\regr\\grg.exe\tunsafe\t\
+    100\tPUP - Adware\tFALSE\tFALSE\tBackground\tThreat Detection\t12345ght-12gh-ff24-1iu8-hgyrbv987hf3\n    -->\n\
+    \    <rule id=\"87001\" level=\"5\">\n        <if_sid>87000</if_sid>\n        <field name=\"cylance_events.eventstatus\"\
+    >unsafe</field>\n        <description>Cylance: File $(cylance_events.filepath) is unsafe.</description>\n  \
+    \      <mitre>\n            <id>T1203</id>\n        </mitre>\n        <group>pci_dss_10.6.1,gdpr_IV_35.7.d,</group>\n\
+    \    </rule>\n\n    <!--\n        The event abnormal means a file is not normal.\n\n        123456789ABCDEFG123456789ABCDEFG123456789ABCDEFG123456789ABCDEFG\t\
+    123456789ABCDEFG123456789ABCDEFG\tF-R5PH3421FJ7\t7/10/2017 22:09\tD:\\rfrgr\\rgreg\\regr\\grg.exe\tabnormal\t\
+    100\tPUP - Adware\tFALSE\tFALSE\tBackground\tThreat Detection\t12345ght-12gh-ff24-1iu8-hgyrbv987hf3\n    -->\n\
+    \    <rule id=\"87002\" level=\"4\">\n        <if_sid>87000</if_sid>\n        <field name=\"cylance_events.eventstatus\"\
+    >abnormal</field>\n        <description>Cylance: File $(cylance_events.filepath) is abnormal.</description>\n\
+    \        <mitre>\n            <id>T1203</id>\n        </mitre>\n    </rule>\n\n    <!--\n        The event quarantined\
+    \ means a file is a virus.\n\n        123456789ABCDEFG123456789ABCDEFG123456789ABCDEFG123456789ABCDEFG\t123456789ABCDEFG123456789ABCDEFG\t\
+    F-R5PH3421FJ7\t7/10/2017 22:09\tD:\\rfrgr\\rgreg\\regr\\grg.exe\tquarantined\t100\tPUP - Adware\tFALSE\tFALSE\t\
+    Background\tThreat Detection\t12345ght-12gh-ff24-1iu8-hgyrbv987hf3\n    -->\n    <rule id=\"87003\" level=\"\
+    6\">\n        <if_sid>87000</if_sid>\n        <field name=\"cylance_events.eventstatus\">quarantined</field>\n\
+    \        <description>Cylance: File $(cylance_events.filepath) is quarantined.</description>\n        <group>gdpr_IV_35.7.d,</group>\n\
+    \        <mitre>\n            <id>T1203</id>\n        </mitre>\n    </rule>\n\n    <!--\n        The event waived\
+    \ means a file is safe.\n\n        123456789ABCDEFG123456789ABCDEFG123456789ABCDEFG123456789ABCDEFG\t123456789ABCDEFG123456789ABCDEFG\t\
+    F-R5PH3421FJ7\t7/10/2017 22:09\tD:\\rfrgr\\rgreg\\regr\\grg.exe\twaived\t100\tPUP - Adware\tFALSE\tFALSE\tBackground\t\
+    Threat Detection\t12345ght-12gh-ff24-1iu8-hgyrbv987hf3\n    -->\n    <rule id=\"87004\" level=\"3\">\n     \
+    \   <if_sid>87000</if_sid>\n        <field name=\"cylance_events.eventstatus\">waived</field>\n        <description>Cylance\
+    \ Event: File $(cylance_events.filepath) is waived.</description>\n    </rule>\n\n<!--\n\n-->\n\n    <rule id=\"\
+    87050\" level=\"0\">\n        <decoded_as>cylance_threats</decoded_as>\n        <description>Cylance threats\
+    \ messages grouped.</description>\n    </rule>\n\n    <!--\n\t\tRRETGRETRE.exe\twaived\t55\tNo Signature\t\t\
+    No\tNo\tFALSE\t\t\t\t\t\t\t\t\t\t123456789ABCDEFG123456789ABCDEFG123456789ABCDEFG123456789ABCDEFG\t123456789ABCDEFG123456789ABCDEFG\t\
+    Dual Use - Remote Access\tF-R5PH3421FJ7\t12345ght-12gh-ff24-1iu8-hgyrbv987hf3\t18432\tC:\\dfrg\\rreg\\grrgr\\\
+    RRETGRETRE.exe\tInternal Hard Drive\tBUILTIN\\Administrators\t6/19/2017 20:06\t6/19/2017 20:06\t7/10/2017 20:13\t\
+    FALSE\tFALSE\tFALSE\t7/10/2017 20:14\t7/28/2017 21:37\tBackground Threat Detection\n    -->\n    <rule id=\"\
+    87051\" level=\"3\">\n    \t<if_sid>87050</if_sid>\n    \t<field name=\"cylance_threats.file_status\">waived</field>\n\
+    \    \t<description>Cylance Threat: File $(cylance_threats.file_path) is waived</description>\n    </rule>\n\
+    \n    <!--\n\t\tRRETGRETRE.exe\tquarantined\t55\tNo Signature\t\tNo\tNo\tFALSE\t\t\t\t\t\t\t\t\t\t123456789ABCDEFG123456789ABCDEFG123456789ABCDEFG123456789ABCDEFG\t\
+    123456789ABCDEFG123456789ABCDEFG\tDual Use - Remote Access\tF-R5PH3421FJ7\t12345ght-12gh-ff24-1iu8-hgyrbv987hf3\t\
+    18432\tC:\\dfrg\\rreg\\grrgr\\RRETGRETRE.exe\tInternal Hard Drive\tBUILTIN\\Administrators\t6/19/2017 20:06\t\
+    6/19/2017 20:06\t7/10/2017 20:13\tFALSE\tFALSE\tFALSE\t7/10/2017 20:14\t7/28/2017 21:37\tBackground Threat Detection\n\
+    \    -->\n    <rule id=\"87052\" level=\"6\">\n    \t<if_sid>87050</if_sid>\n    \t<field name=\"cylance_threats.file_status\"\
+    >quarantined</field>\n    \t<description>Cylance Threat: File $(cylance_threats.file_path) is quarantined</description>\n\
+    \        <group>gdpr_IV_35.7.d,</group>\n    </rule>\n\n    <!--\n\t\tRRETGRETRE.exe\tabnormal\t55\tNo Signature\t\
+    \tNo\tNo\tFALSE\t\t\t\t\t\t\t\t\t\t123456789ABCDEFG123456789ABCDEFG123456789ABCDEFG123456789ABCDEFG\t123456789ABCDEFG123456789ABCDEFG\t\
+    Dual Use - Remote Access\tF-R5PH3421FJ7\t12345ght-12gh-ff24-1iu8-hgyrbv987hf3\t18432\tC:\\dfrg\\rreg\\grrgr\\\
+    RRETGRETRE.exe\tInternal Hard Drive\tBUILTIN\\Administrators\t6/19/2017 20:06\t6/19/2017 20:06\t7/10/2017 20:13\t\
+    FALSE\tFALSE\tFALSE\t7/10/2017 20:14\t7/28/2017 21:37\tBackground Threat Detection\n    -->\n    <rule id=\"\
+    87053\" level=\"4\">\n    \t<if_sid>87050</if_sid>\n    \t<field name=\"cylance_threats.file_status\">abnormal</field>\n\
+    \    \t<description>Cylance Threat: File $(cylance_threats.file_path) is abnormal</description>\n    \t<mitre>\n\
+    \    \t  <id>T1203</id>\n    \t</mitre>\n    </rule>\n\n    <!--\n\t\tRRETGRETRE.exe\tunsafe\t55\tNo Signature\t\
+    \tNo\tNo\tFALSE\t\t\t\t\t\t\t\t\t\t123456789ABCDEFG123456789ABCDEFG123456789ABCDEFG123456789ABCDEFG\t123456789ABCDEFG123456789ABCDEFG\t\
+    Dual Use - Remote Access\tF-R5PH3421FJ7\t12345ght-12gh-ff24-1iu8-hgyrbv987hf3\t18432\tC:\\dfrg\\rreg\\grrgr\\\
+    RRETGRETRE.exe\tInternal Hard Drive\tBUILTIN\\Administrators\t6/19/2017 20:06\t6/19/2017 20:06\t7/10/2017 20:13\t\
+    FALSE\tFALSE\tFALSE\t7/10/2017 20:14\t7/28/2017 21:37\tBackground Threat Detection\n    -->\n    <rule id=\"\
+    87054\" level=\"5\">\n    \t<if_sid>87050</if_sid>\n    \t<field name=\"cylance_threats.file_status\">unsafe</field>\n\
+    \    \t<description>Cylance Threat: File $(cylance_threats.file_path) is unsafe</description>\n        <group>pci_dss_10.6.1,gdpr_IV_35.7.d,</group>\n\
+    \    </rule>\n</group>\n"

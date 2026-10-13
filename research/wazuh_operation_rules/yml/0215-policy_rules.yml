@@ -1,0 +1,83 @@
+schema: wazuh-original-rules-yaml/v1
+format_only_conversion: true
+native_runtime_format: Wazuh XML
+authoritative_field: sources[].original_xml
+upstream:
+  repository: https://github.com/wazuh/wazuh
+  tag: v4.14.8
+  commit: f470ad7db717b18db7feeed568949643698f0f34
+sources:
+- file: ruleset/rules/0215-policy_rules.xml
+  url: https://github.com/wazuh/wazuh/blob/f470ad7db717b18db7feeed568949643698f0f34/ruleset/rules/0215-policy_rules.xml
+  sha256: 13bf50aea23805d581a8284e91b0793d14c3a3b9ab511421d46767c0655574e8
+  rule_count: 2
+  elements:
+  - element: group
+    attributes:
+      name: policy_violation,
+    children:
+    - element: rule
+      attributes:
+        id: '17101'
+        level: '9'
+      children:
+      - element: if_group
+        text: authentication_success
+      - element: time
+        text: 6 pm - 8:30 am
+      - element: description
+        text: Successful login during non-business hours.
+      - element: mitre
+        children:
+        - element: id
+          text: T1078
+      - element: group
+        text: login_time,pci_dss_10.2.5,pci_dss_10.6.1,gpg13_7.1,gpg13_7.2,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AC.7,nist_800_53_AU.6,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '17102'
+        level: '9'
+      children:
+      - element: if_group
+        text: authentication_success
+      - element: weekday
+        text: weekends
+      - element: description
+        text: Successful login during weekend.
+      - element: mitre
+        children:
+        - element: id
+          text: T1078
+      - element: group
+        text: login_day,pci_dss_10.2.5,pci_dss_10.6.1,gpg13_7.1,gpg13_7.2,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AC.7,nist_800_53_AU.6,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+  original_xml: |
+    <!--
+      -  Policy rules
+      -  Author: Daniel Cid.
+      -  Updated by Wazuh, Inc.
+      -  Copyright (C) 2015, Wazuh Inc.
+      -  Copyright (C) 2009 Trend Micro Inc.
+      -  This program is a free software; you can redistribute it and/or modify it under the terms of GPLv2.
+    -->
+
+    <group name="policy_violation,">
+      <rule id="17101" level="9">
+        <if_group>authentication_success</if_group>
+        <time>6 pm - 8:30 am</time>
+        <description>Successful login during non-business hours.</description>
+        <mitre>
+          <id>T1078</id>
+        </mitre>
+        <group>login_time,pci_dss_10.2.5,pci_dss_10.6.1,gpg13_7.1,gpg13_7.2,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AC.7,nist_800_53_AU.6,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="17102" level="9">
+        <if_group>authentication_success</if_group>
+        <weekday>weekends</weekday>
+        <description>Successful login during weekend.</description>
+        <mitre>
+          <id>T1078</id>
+        </mitre>
+        <group>login_day,pci_dss_10.2.5,pci_dss_10.6.1,gpg13_7.1,gpg13_7.2,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AC.7,nist_800_53_AU.6,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+    </group>

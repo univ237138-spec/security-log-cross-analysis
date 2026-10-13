@@ -1,0 +1,559 @@
+schema: wazuh-original-rules-yaml/v1
+format_only_conversion: true
+native_runtime_format: Wazuh XML
+authoritative_field: sources[].original_xml
+upstream:
+  repository: https://github.com/wazuh/wazuh
+  tag: v4.14.8
+  commit: f470ad7db717b18db7feeed568949643698f0f34
+sources:
+- file: ruleset/rules/0025-sendmail_rules.xml
+  url: https://github.com/wazuh/wazuh/blob/f470ad7db717b18db7feeed568949643698f0f34/ruleset/rules/0025-sendmail_rules.xml
+  sha256: 533e363d05ef1dbcbb26f4df41c466ddef9f2cd099e21eb2364d0f32a7eaafec
+  rule_count: 19
+  elements:
+  - element: group
+    attributes:
+      name: syslog,sendmail,
+    children:
+    - element: rule
+      attributes:
+        id: '3100'
+        level: '0'
+      children:
+      - element: decoded_as
+        text: sendmail-reject
+      - element: description
+        text: Grouping of the sendmail rules.
+    - element: rule
+      attributes:
+        id: '3101'
+        level: '0'
+        noalert: '1'
+      children:
+      - element: if_sid
+        text: '3100'
+      - element: match
+        text: reject=
+      - element: description
+        text: Grouping of the sendmail reject rules.
+    - element: rule
+      attributes:
+        id: '3102'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '3101'
+      - element: match
+        text: 'reject=451 4.1.8 '
+      - element: description
+        text: 'sendmail: Sender domain does not have any valid '
+      - element: description
+        text: MX record (Requested action aborted).
+      - element: mitre
+        children:
+        - element: id
+          text: T1114
+      - element: group
+        text: spam,pci_dss_11.4,gdpr_IV_35.7.d,nist_800_53_SI.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '3103'
+        level: '6'
+      children:
+      - element: if_sid
+        text: '3101'
+      - element: match
+        text: reject=550 5.0.0 |reject=553 5.3.0
+      - element: description
+        text: 'sendmail: Rejected by access list '
+      - element: description
+        text: '(55x: Requested action not taken).'
+      - element: mitre
+        children:
+        - element: id
+          text: T1114
+      - element: group
+        text: spam,pci_dss_11.4,gdpr_IV_35.7.d,nist_800_53_SI.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '3104'
+        level: '6'
+      children:
+      - element: if_sid
+        text: '3101'
+      - element: match
+        text: 'reject=550 5.7.1 '
+      - element: description
+        text: 'sendmail: Attempt to use mail server as relay '
+      - element: description
+        text: '(550: Requested action not taken).'
+      - element: mitre
+        children:
+        - element: id
+          text: T1114
+      - element: group
+        text: spam,pci_dss_11.4,gdpr_IV_35.7.d,nist_800_53_SI.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '3105'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '3101'
+      - element: match
+        text: 'reject=553 5.1.8 '
+      - element: description
+        text: 'sendmail: Sender domain is not found '
+      - element: description
+        text: ' (553: Requested action not taken).'
+      - element: mitre
+        children:
+        - element: id
+          text: T1114
+      - element: group
+        text: spam,pci_dss_11.4,gdpr_IV_35.7.d,nist_800_53_SI.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '3106'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '3101'
+      - element: match
+        text: 'reject=553 5.5.4 '
+      - element: description
+        text: 'sendmail: Sender address does not have domain '
+      - element: description
+        text: '(553: Requested action not taken).'
+      - element: mitre
+        children:
+        - element: id
+          text: T1114
+      - element: group
+        text: spam,pci_dss_11.4,gdpr_IV_35.7.d,nist_800_53_SI.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '3107'
+        level: '4'
+      children:
+      - element: if_sid
+        text: '3101'
+      - element: description
+        text: 'sendmail: Sendmail rejected message.'
+    - element: rule
+      attributes:
+        id: '3108'
+        level: '6'
+      children:
+      - element: if_sid
+        text: '3100'
+      - element: match
+        text: rejecting commands from
+      - element: description
+        text: 'sendmail: Sendmail rejected due to pre-greeting.'
+      - element: mitre
+        children:
+        - element: id
+          text: T1114
+      - element: group
+        text: spam,pci_dss_11.4,gdpr_IV_35.7.d,nist_800_53_SI.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '3109'
+        level: '8'
+      children:
+      - element: if_sid
+        text: '3100'
+      - element: match
+        text: savemail panic
+      - element: description
+        text: 'sendmail: Sendmail save mail panic.'
+      - element: group
+        text: system_error,gdpr_IV_35.7.d,
+    - element: rule
+      attributes:
+        id: '3151'
+        level: '10'
+        frequency: '8'
+        timeframe: '120'
+      children:
+      - element: if_matched_sid
+        text: '3102'
+      - element: same_source_ip
+        text: ''
+      - element: description
+        text: 'sendmail: Sender domain has bogus MX record. '
+      - element: description
+        text: It should not be sending e-mail.
+      - element: mitre
+        children:
+        - element: id
+          text: T1114
+        - element: id
+          text: T1499
+      - element: group
+        text: multiple_spam,pci_dss_11.4,gdpr_IV_35.7.d,nist_800_53_SI.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '3152'
+        level: '6'
+        frequency: '8'
+        timeframe: '120'
+      children:
+      - element: if_matched_sid
+        text: '3103'
+      - element: same_source_ip
+        text: ''
+      - element: description
+        text: 'sendmail: Multiple attempts to send e-mail from a '
+      - element: description
+        text: previously rejected sender (access).
+      - element: mitre
+        children:
+        - element: id
+          text: T1114
+        - element: id
+          text: T1499
+      - element: group
+        text: multiple_spam,pci_dss_11.4,gdpr_IV_35.7.d,nist_800_53_SI.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '3153'
+        level: '6'
+        frequency: '8'
+        timeframe: '120'
+      children:
+      - element: if_matched_sid
+        text: '3104'
+      - element: same_source_ip
+        text: ''
+      - element: description
+        text: 'sendmail: Multiple relaying attempts of spam.'
+      - element: mitre
+        children:
+        - element: id
+          text: T1114
+        - element: id
+          text: T1499
+      - element: group
+        text: multiple_spam,pci_dss_11.4,gdpr_IV_35.7.d,nist_800_53_SI.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '3154'
+        level: '10'
+        frequency: '8'
+        timeframe: '120'
+      children:
+      - element: if_matched_sid
+        text: '3105'
+      - element: same_source_ip
+        text: ''
+      - element: description
+        text: 'sendmail: Multiple attempts to send e-mail '
+      - element: description
+        text: from invalid/unknown sender domain.
+      - element: mitre
+        children:
+        - element: id
+          text: T1114
+        - element: id
+          text: T1499
+      - element: group
+        text: multiple_spam,pci_dss_11.4,gdpr_IV_35.7.d,nist_800_53_SI.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '3155'
+        level: '10'
+        frequency: '8'
+        timeframe: '120'
+      children:
+      - element: if_matched_sid
+        text: '3106'
+      - element: same_source_ip
+        text: ''
+      - element: description
+        text: 'sendmail: Multiple attempts to send e-mail from '
+      - element: description
+        text: invalid/unknown sender.
+      - element: mitre
+        children:
+        - element: id
+          text: T1114
+        - element: id
+          text: T1499
+      - element: group
+        text: multiple_spam,pci_dss_11.4,gdpr_IV_35.7.d,nist_800_53_SI.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '3156'
+        level: '10'
+        frequency: '12'
+        timeframe: '120'
+      children:
+      - element: if_matched_sid
+        text: '3107'
+      - element: same_source_ip
+        text: ''
+      - element: description
+        text: 'sendmail: Multiple rejected e-mails from same source ip.'
+      - element: mitre
+        children:
+        - element: id
+          text: T1114
+        - element: id
+          text: T1499
+      - element: group
+        text: multiple_spam,pci_dss_11.4,gdpr_IV_35.7.d,nist_800_53_SI.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '3158'
+        level: '10'
+        frequency: '8'
+        timeframe: '120'
+      children:
+      - element: if_matched_sid
+        text: '3108'
+      - element: same_source_ip
+        text: ''
+      - element: description
+        text: 'sendmail: Multiple pre-greetings rejects.'
+      - element: mitre
+        children:
+        - element: id
+          text: T1114
+        - element: id
+          text: T1499
+      - element: group
+        text: multiple_spam,pci_dss_11.4,gdpr_IV_35.7.d,nist_800_53_SI.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '3190'
+        level: '0'
+      children:
+      - element: decoded_as
+        text: smf-sav-reject
+      - element: description
+        text: Grouping of the smf-sav sendmail milter rules.
+      - element: group
+        text: smf-sav,
+    - element: rule
+      attributes:
+        id: '3191'
+        level: '6'
+      children:
+      - element: if_sid
+        text: '3190'
+      - element: match
+        text: ^sender check failed|^sender check tempfailed
+      - element: description
+        text: 'sendmail: SMF-SAV sendmail milter unable to verify '
+      - element: description
+        text: address (REJECTED).
+      - element: mitre
+        children:
+        - element: id
+          text: T1114
+      - element: group
+        text: smf-sav,spam,pci_dss_11.4,gdpr_IV_35.7.d,nist_800_53_SI.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+  original_xml: |
+    <!--
+      -  Sendmail rules
+      -  Author: Daniel Cid.
+      -  Author: Ahmet Ozturk
+      -  Updated by Wazuh, Inc.
+      -  Copyright (C) 2015, Wazuh Inc.
+      -  Copyright (C) 2009 Trend Micro Inc.
+      -  This program is a free software; you can redistribute it and/or modify it under the terms of GPLv2.
+    -->
+
+    <group name="syslog,sendmail,">
+      <rule id="3100" level="0">
+        <decoded_as>sendmail-reject</decoded_as>
+        <description>Grouping of the sendmail rules.</description>
+      </rule>
+
+      <rule id="3101" level="0" noalert="1">
+        <if_sid>3100</if_sid>
+        <match>reject=</match>
+        <description>Grouping of the sendmail reject rules.</description>
+      </rule>
+
+      <rule id="3102" level="5">
+        <if_sid>3101</if_sid>
+        <match>reject=451 4.1.8 </match>
+        <description>sendmail: Sender domain does not have any valid </description>
+        <description>MX record (Requested action aborted).</description>
+        <mitre>
+          <id>T1114</id>
+        </mitre>
+        <group>spam,pci_dss_11.4,gdpr_IV_35.7.d,nist_800_53_SI.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="3103" level="6">
+        <if_sid>3101</if_sid>
+        <match>reject=550 5.0.0 |reject=553 5.3.0</match>
+        <description>sendmail: Rejected by access list </description>
+        <description>(55x: Requested action not taken).</description>
+        <mitre>
+          <id>T1114</id>
+        </mitre>
+        <group>spam,pci_dss_11.4,gdpr_IV_35.7.d,nist_800_53_SI.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="3104" level="6">
+        <if_sid>3101</if_sid>
+        <match>reject=550 5.7.1 </match>
+        <description>sendmail: Attempt to use mail server as relay </description>
+        <description>(550: Requested action not taken).</description>
+        <mitre>
+          <id>T1114</id>
+        </mitre>
+        <group>spam,pci_dss_11.4,gdpr_IV_35.7.d,nist_800_53_SI.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="3105" level="5">
+        <if_sid>3101</if_sid>
+        <match>reject=553 5.1.8 </match>
+        <description>sendmail: Sender domain is not found </description>
+        <description> (553: Requested action not taken).</description>
+        <mitre>
+          <id>T1114</id>
+        </mitre>
+        <group>spam,pci_dss_11.4,gdpr_IV_35.7.d,nist_800_53_SI.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="3106" level="5">
+        <if_sid>3101</if_sid>
+        <match>reject=553 5.5.4 </match>
+        <description>sendmail: Sender address does not have domain </description>
+        <description>(553: Requested action not taken).</description>
+        <mitre>
+          <id>T1114</id>
+        </mitre>
+        <group>spam,pci_dss_11.4,gdpr_IV_35.7.d,nist_800_53_SI.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="3107" level="4">
+        <if_sid>3101</if_sid>
+        <description>sendmail: Sendmail rejected message.</description>
+      </rule>
+
+      <rule id="3108" level="6">
+        <if_sid>3100</if_sid>
+        <match>rejecting commands from</match>
+        <description>sendmail: Sendmail rejected due to pre-greeting.</description>
+        <mitre>
+          <id>T1114</id>
+        </mitre>
+        <group>spam,pci_dss_11.4,gdpr_IV_35.7.d,nist_800_53_SI.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="3109" level="8">
+        <if_sid>3100</if_sid>
+        <match>savemail panic</match>
+        <description>sendmail: Sendmail save mail panic.</description>
+        <group>system_error,gdpr_IV_35.7.d,</group>
+      </rule>
+
+      <rule id="3151" level="10" frequency="8" timeframe="120">
+        <if_matched_sid>3102</if_matched_sid>
+        <same_source_ip />
+        <description>sendmail: Sender domain has bogus MX record. </description>
+        <description>It should not be sending e-mail.</description>
+        <mitre>
+          <id>T1114</id>
+          <id>T1499</id>
+        </mitre>
+        <group>multiple_spam,pci_dss_11.4,gdpr_IV_35.7.d,nist_800_53_SI.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="3152" level="6" frequency="8" timeframe="120">
+        <if_matched_sid>3103</if_matched_sid>
+        <same_source_ip />
+        <description>sendmail: Multiple attempts to send e-mail from a </description>
+        <description>previously rejected sender (access).</description>
+        <mitre>
+          <id>T1114</id>
+          <id>T1499</id>
+        </mitre>
+        <group>multiple_spam,pci_dss_11.4,gdpr_IV_35.7.d,nist_800_53_SI.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="3153" level="6" frequency="8" timeframe="120">
+        <if_matched_sid>3104</if_matched_sid>
+        <same_source_ip />
+        <description>sendmail: Multiple relaying attempts of spam.</description>
+        <mitre>
+          <id>T1114</id>
+          <id>T1499</id>
+        </mitre>
+        <group>multiple_spam,pci_dss_11.4,gdpr_IV_35.7.d,nist_800_53_SI.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="3154" level="10" frequency="8" timeframe="120">
+        <if_matched_sid>3105</if_matched_sid>
+        <same_source_ip />
+        <description>sendmail: Multiple attempts to send e-mail </description>
+        <description>from invalid/unknown sender domain.</description>
+        <mitre>
+          <id>T1114</id>
+          <id>T1499</id>
+        </mitre>
+        <group>multiple_spam,pci_dss_11.4,gdpr_IV_35.7.d,nist_800_53_SI.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="3155" level="10" frequency="8" timeframe="120">
+        <if_matched_sid>3106</if_matched_sid>
+        <same_source_ip />
+        <description>sendmail: Multiple attempts to send e-mail from </description>
+        <description>invalid/unknown sender.</description>
+        <mitre>
+          <id>T1114</id>
+          <id>T1499</id>
+        </mitre>
+        <group>multiple_spam,pci_dss_11.4,gdpr_IV_35.7.d,nist_800_53_SI.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="3156" level="10" frequency="12" timeframe="120">
+        <if_matched_sid>3107</if_matched_sid>
+        <same_source_ip />
+        <description>sendmail: Multiple rejected e-mails from same source ip.</description>
+        <mitre>
+          <id>T1114</id>
+          <id>T1499</id>
+        </mitre>
+        <group>multiple_spam,pci_dss_11.4,gdpr_IV_35.7.d,nist_800_53_SI.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="3158" level="10" frequency="8" timeframe="120">
+        <if_matched_sid>3108</if_matched_sid>
+        <same_source_ip />
+        <description>sendmail: Multiple pre-greetings rejects.</description>
+        <mitre>
+          <id>T1114</id>
+          <id>T1499</id>
+        </mitre>
+        <group>multiple_spam,pci_dss_11.4,gdpr_IV_35.7.d,nist_800_53_SI.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+
+       <!-- Rules for SMF-SAV -->
+       <rule id="3190" level="0">
+         <decoded_as>smf-sav-reject</decoded_as>
+         <description>Grouping of the smf-sav sendmail milter rules.</description>
+         <group>smf-sav,</group>
+       </rule>
+
+       <rule id="3191" level="6">
+         <if_sid>3190</if_sid>
+         <match>^sender check failed|^sender check tempfailed</match>
+         <description>sendmail: SMF-SAV sendmail milter unable to verify </description>
+         <description>address (REJECTED).</description>
+         <mitre>
+           <id>T1114</id>
+         </mitre>
+         <group>smf-sav,spam,pci_dss_11.4,gdpr_IV_35.7.d,nist_800_53_SI.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>
+       </rule>
+
+    </group>

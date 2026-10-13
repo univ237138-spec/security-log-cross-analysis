@@ -1,0 +1,206 @@
+schema: wazuh-original-rules-yaml/v1
+format_only_conversion: true
+native_runtime_format: Wazuh XML
+authoritative_field: sources[].original_xml
+upstream:
+  repository: https://github.com/wazuh/wazuh
+  tag: v4.14.8
+  commit: f470ad7db717b18db7feeed568949643698f0f34
+sources:
+- file: ruleset/rules/0490-virustotal_rules.xml
+  url: https://github.com/wazuh/wazuh/blob/f470ad7db717b18db7feeed568949643698f0f34/ruleset/rules/0490-virustotal_rules.xml
+  sha256: 574318453e06e9b43534272960caa1ff9aba2a1afcde7126e5302b4b0072eaf7
+  rule_count: 7
+  elements:
+  - element: group
+    attributes:
+      name: virustotal,
+    children:
+    - element: rule
+      attributes:
+        id: '87100'
+        level: '0'
+      children:
+      - element: decoded_as
+        text: json
+      - element: field
+        attributes:
+          name: integration
+        text: virustotal
+      - element: description
+        text: VirusTotal integration messages.
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '87101'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '87100'
+      - element: field
+        attributes:
+          name: virustotal.error
+        text: '204'
+      - element: description
+        text: 'VirusTotal: Error: Public API request rate limit reached'
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '87102'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '87100'
+      - element: field
+        attributes:
+          name: virustotal.error
+        text: '403'
+      - element: description
+        text: 'VirusTotal: Error: Check credentials'
+      - element: group
+        text: gdpr_IV_35.7.d,gdpr_IV_32.2,
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '87103'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '87100'
+      - element: field
+        attributes:
+          name: virustotal.found
+        text: '0'
+      - element: description
+        text: 'VirusTotal: Alert - No records in VirusTotal database'
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '87104'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '87100'
+      - element: field
+        attributes:
+          name: virustotal.found
+        text: '1'
+      - element: field
+        attributes:
+          name: virustotal.malicious
+        text: '0'
+      - element: description
+        text: 'VirusTotal: Alert - $(virustotal.source.file) - No positives found'
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '87105'
+        level: '12'
+      children:
+      - element: if_sid
+        text: '87100'
+      - element: field
+        attributes:
+          name: virustotal.malicious
+        text: '1'
+      - element: description
+        text: 'VirusTotal: Alert - $(virustotal.source.file) - $(virustotal.positives) engines detected this file'
+      - element: group
+        text: pci_dss_10.6.1,pci_dss_11.4,gdpr_IV_35.7.d,
+      - element: options
+        text: no_full_log
+      - element: mitre
+        children:
+        - element: id
+          text: T1203
+    - element: rule
+      attributes:
+        id: '87106'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '87100'
+      - element: field
+        attributes:
+          name: virustotal.error
+        text: '408'
+      - element: description
+        text: 'VirusTotal: Error: API request timed out'
+      - element: group
+        text: gdpr_IV_35.7.d,gdpr_IV_32.2,
+      - element: options
+        text: no_full_log
+  original_xml: |
+    <!--
+      -  VirusTotal integration rules
+      -  Created by Wazuh, Inc.
+      -  Copyright (C) 2015, Wazuh Inc.
+      -  This program is a free software; you can redistribute it and/or modify it under the terms of GPLv2.
+    -->
+
+    <!-- ID: 87100 - 87199 -->
+
+    <group name="virustotal,">
+
+        <rule id="87100" level="0">
+            <decoded_as>json</decoded_as>
+            <field name="integration">virustotal</field>
+            <description>VirusTotal integration messages.</description>
+            <options>no_full_log</options>
+        </rule>
+
+        <rule id="87101" level="3">
+            <if_sid>87100</if_sid>
+            <field name="virustotal.error">204</field>
+            <description>VirusTotal: Error: Public API request rate limit reached</description>
+            <options>no_full_log</options>
+        </rule>
+
+        <rule id="87102" level="3">
+            <if_sid>87100</if_sid>
+            <field name="virustotal.error">403</field>
+            <description>VirusTotal: Error: Check credentials</description>
+            <group>gdpr_IV_35.7.d,gdpr_IV_32.2,</group>
+            <options>no_full_log</options>
+        </rule>
+
+        <rule id="87103" level="3">
+            <if_sid>87100</if_sid>
+            <field name="virustotal.found">0</field>
+            <description>VirusTotal: Alert - No records in VirusTotal database</description>
+            <options>no_full_log</options>
+        </rule>
+
+        <rule id="87104" level="3">
+            <if_sid>87100</if_sid>
+            <field name="virustotal.found">1</field>
+            <field name="virustotal.malicious">0</field>
+            <description>VirusTotal: Alert - $(virustotal.source.file) - No positives found</description>
+            <options>no_full_log</options>
+        </rule>
+
+        <rule id="87105" level="12">
+            <if_sid>87100</if_sid>
+            <field name="virustotal.malicious">1</field>
+            <description>VirusTotal: Alert - $(virustotal.source.file) - $(virustotal.positives) engines detected this file</description>
+            <group>pci_dss_10.6.1,pci_dss_11.4,gdpr_IV_35.7.d,</group>
+            <options>no_full_log</options>
+            <mitre>
+                <id>T1203</id>
+            </mitre>
+        </rule>
+
+        <rule id="87106" level="3">
+             <if_sid>87100</if_sid>
+             <field name="virustotal.error">408</field>
+             <description>VirusTotal: Error: API request timed out</description>
+             <group>gdpr_IV_35.7.d,gdpr_IV_32.2,</group>
+             <options>no_full_log</options>
+         </rule>
+
+    </group>

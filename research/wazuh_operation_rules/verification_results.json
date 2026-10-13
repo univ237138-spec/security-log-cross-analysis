@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "tag": "v4.14.8",
+  "commit": "f470ad7db717b18db7feeed568949643698f0f34",
+  "original_files": 522,
+  "rule_xml_files": 168,
+  "rule_count": 4512,
+  "level_zero_rules_retained": 672,
+  "correlation_rules_retained": 211,
+  "yaml_files_checked": 169,
+  "successful_checks": 1532,
+  "checks": {
+    "original_file_sha256": 522,
+    "aggregate_file_coverage": 1,
+    "aggregate_xml_exact_bytes": 168,
+    "aggregate_xml_sha256": 168,
+    "ordered_element_attributes_text": 168,
+    "individual_matches_aggregate": 168,
+    "individual_metadata_matches": 168,
+    "rule_count_preserved": 168,
+    "rule_ids_unique": 1
+  },
+  "errors": [],
+  "unresolved_numeric_sid_references": [],
+  "inspection_parser_notices": [
+    {
+      "source": "ruleset/rules/0910-ms-exchange-proxylogon_rules.xml",
+      "stdlib_xml_error": "not well-formed (invalid token): line 57, column 56",
+      "inspection_parser": "escape literal backslash-< in memory only",
+      "original_xml_changed": false
+    }
+  ],
+  "wazuh_runtime_test": "NOT_RUN: no Wazuh Manager session in this workspace",
+  "log_data_adaptation": false,
+  "detection_logic_changes": false
+}

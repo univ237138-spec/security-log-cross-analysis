@@ -1,0 +1,133 @@
+schema: wazuh-original-rules-yaml/v1
+format_only_conversion: true
+native_runtime_format: Wazuh XML
+authoritative_field: sources[].original_xml
+upstream:
+  repository: https://github.com/wazuh/wazuh
+  tag: v4.14.8
+  commit: f470ad7db717b18db7feeed568949643698f0f34
+sources:
+- file: ruleset/rules/0045-mailscanner_rules.xml
+  url: https://github.com/wazuh/wazuh/blob/f470ad7db717b18db7feeed568949643698f0f34/ruleset/rules/0045-mailscanner_rules.xml
+  sha256: 989b8f18c2d316afadf5f6a427ddbc57498187f0f46e53bd10e90b9323d0eed0
+  rule_count: 5
+  elements:
+  - element: group
+    attributes:
+      name: syslog,mailscanner,
+    children:
+    - element: rule
+      attributes:
+        id: '3700'
+        level: '0'
+      children:
+      - element: decoded_as
+        text: mailscanner
+      - element: description
+        text: Grouping of mailscanner rules.
+    - element: rule
+      attributes:
+        id: '3701'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '3700'
+      - element: action
+        text: not
+      - element: description
+        text: 'mailscanner: Non spam message. Ignored.'
+    - element: rule
+      attributes:
+        id: '3702'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '3700'
+      - element: action
+        text: spam
+      - element: description
+        text: 'mailscanner: spam detected.'
+      - element: group
+        text: spam,
+    - element: rule
+      attributes:
+        id: '3751'
+        level: '6'
+        frequency: '8'
+        timeframe: '180'
+      children:
+      - element: if_matched_sid
+        text: '3702'
+      - element: same_source_ip
+        text: ''
+      - element: description
+        text: 'mailscanner: Multiple attempts of spam.'
+      - element: mitre
+        children:
+        - element: id
+          text: T1110
+        - element: id
+          text: T1114
+      - element: group
+        text: multiple_spam,pci_dss_10.6.1,gpg13_4.12,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '3752'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '1002'
+      - element: program_name
+        text: update.bad.phishing.sites
+      - element: match
+        text: ^Phishing bad sites list updated
+      - element: description
+        text: ignore
+  original_xml: |
+    <!--
+      -  Mailscanner rules
+      -  Author: Daniel Cid.
+      -  Updated by Wazuh, Inc.
+      -  Copyright (C) 2015, Wazuh Inc.
+      -  Copyright (C) 2009 Trend Micro Inc.
+      -  This program is a free software; you can redistribute it and/or modify it under the terms of GPLv2.
+    -->
+
+    <group name="syslog,mailscanner,">
+      <rule id="3700" level="0">
+        <decoded_as>mailscanner</decoded_as>
+        <description>Grouping of mailscanner rules.</description>
+      </rule>
+
+      <rule id="3701" level="0">
+        <if_sid>3700</if_sid>
+        <action>not</action>
+        <description>mailscanner: Non spam message. Ignored.</description>
+      </rule>
+
+      <rule id="3702" level="5">
+        <if_sid>3700</if_sid>
+        <action>spam</action>
+        <description>mailscanner: spam detected.</description>
+        <group>spam,</group>
+      </rule>
+
+      <rule id="3751" level="6" frequency="8" timeframe="180">
+        <if_matched_sid>3702</if_matched_sid>
+        <same_source_ip />
+        <description>mailscanner: Multiple attempts of spam.</description>
+        <mitre>
+          <id>T1110</id>
+          <id>T1114</id>
+        </mitre>
+        <group>multiple_spam,pci_dss_10.6.1,gpg13_4.12,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="3752" level="0">
+          <if_sid>1002</if_sid>
+          <program_name>update.bad.phishing.sites</program_name>
+          <match>^Phishing bad sites list updated</match>
+          <description>ignore</description>
+      </rule>
+
+    </group>

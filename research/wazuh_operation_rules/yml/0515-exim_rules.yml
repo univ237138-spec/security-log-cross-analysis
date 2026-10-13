@@ -1,0 +1,146 @@
+schema: wazuh-original-rules-yaml/v1
+format_only_conversion: true
+native_runtime_format: Wazuh XML
+authoritative_field: sources[].original_xml
+upstream:
+  repository: https://github.com/wazuh/wazuh
+  tag: v4.14.8
+  commit: f470ad7db717b18db7feeed568949643698f0f34
+sources:
+- file: ruleset/rules/0515-exim_rules.xml
+  url: https://github.com/wazuh/wazuh/blob/f470ad7db717b18db7feeed568949643698f0f34/ruleset/rules/0515-exim_rules.xml
+  sha256: 9cd1f885e7e4e457b5a766e55c3e7bc6ae87bb108c74b352255d9b7df4f650ed
+  rule_count: 9
+  elements:
+  - element: group
+    attributes:
+      name: exim,
+    children:
+    - element: rule
+      attributes:
+        id: '87500'
+        level: '0'
+      children:
+      - element: decoded_as
+        text: windows-date-format
+      - element: regex
+        text: '^\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d SMTP '
+      - element: description
+        text: 'Exim: SMTP Messages Grouped.'
+    - element: rule
+      attributes:
+        id: '87501'
+        level: '0'
+      children:
+      - element: decoded_as
+        text: windows-date-format
+      - element: regex
+        text: ^\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d dovecot
+      - element: description
+        text: dovecot messages grouped.
+    - element: rule
+      attributes:
+        id: '87502'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '87501'
+      - element: match
+        text: authenticator failed
+      - element: description
+        text: 'Exim: Auth failed.'
+      - element: group
+        text: authentication_failed,gdpr_IV_32.2,gdpr_IV_35.7.d,invalid_login,pci_dss_10.2.4,pci_dss_10.2.5,
+    - element: rule
+      attributes:
+        id: '87503'
+        level: '10'
+        frequency: '8'
+        timeframe: '240'
+      children:
+      - element: if_matched_sid
+        text: '87502'
+      - element: same_source_ip
+        text: ''
+      - element: description
+        text: 'Exim: brute force attack (multiple auth failures).'
+      - element: mitre
+        children:
+        - element: id
+          text: T1110
+      - element: group
+        text: authentication_failures,gdpr_IV_32.2,gdpr_IV_35.7.d,pci_dss_10.2.4,pci_dss_10.2.5,pci_dss_11.4,
+    - element: rule
+      attributes:
+        id: '87504'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '87500'
+      - element: match
+        text: connection count =
+      - element: description
+        text: 'Exim: connection.'
+    - element: rule
+      attributes:
+        id: '87505'
+        level: '1'
+      children:
+      - element: if_sid
+        text: '87500'
+      - element: match
+        text: lost$
+      - element: description
+        text: 'Exim: connection lost.'
+    - element: rule
+      attributes:
+        id: '87506'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '87500'
+      - element: match
+        text: 'dropped: too many syntax or protocol errors'
+      - element: description
+        text: 'Exim: syntax or protocol errors.'
+    - element: rule
+      attributes:
+        id: '87507'
+        level: '6'
+      children:
+      - element: if_sid
+        text: '87500'
+      - element: match
+        text: input sent without waiting for greeting
+      - element: description
+        text: 'Exim: SMTP protocol synchronization error (input sent without waiting for greeting).'
+    - element: rule
+      attributes:
+        id: '87508'
+        level: '6'
+      children:
+      - element: decoded_as
+        text: windows-date-format
+      - element: match
+        text: rejected RCPT
+      - element: description
+        text: 'Exim: RCPT rejected. Error: $(error_message).'
+  original_xml: "<!--\n  -  Copyright (C) 2015, Wazuh Inc.\n-->\n\n<!--\n  Exim 4 rules \n-->\n\n<!-- ID: 87500\
+    \ - 87600 -->\n\n\n<group name=\"exim,\">\n\n  <rule id=\"87500\" level=\"0\">\n    <decoded_as>windows-date-format</decoded_as>\n\
+    \    <regex>^\\d\\d\\d\\d-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d SMTP </regex>\n    <description>Exim: SMTP Messages\
+    \ Grouped.</description>\n  </rule>\n\n  <rule id=\"87501\" level=\"0\">\n    <decoded_as>windows-date-format</decoded_as>\n\
+    \    <regex>^\\d\\d\\d\\d-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d dovecot</regex>\n    <description>dovecot messages\
+    \ grouped.</description>\n  </rule>\n\n  <rule id=\"87502\" level=\"5\">\n    <if_sid>87501</if_sid>\n    <match>authenticator\
+    \ failed</match>\n    <description>Exim: Auth failed.</description>\n    <group>authentication_failed,gdpr_IV_32.2,gdpr_IV_35.7.d,invalid_login,pci_dss_10.2.4,pci_dss_10.2.5,</group>\n\
+    \  </rule>\n\n  <rule id=\"87503\" level=\"10\" frequency=\"8\" timeframe=\"240\">\n    <if_matched_sid>87502</if_matched_sid>\n\
+    \    <same_source_ip />\n    <description>Exim: brute force attack (multiple auth failures).</description>\n\
+    \    <mitre>\n      <id>T1110</id>\n    </mitre>\n    <group>authentication_failures,gdpr_IV_32.2,gdpr_IV_35.7.d,pci_dss_10.2.4,pci_dss_10.2.5,pci_dss_11.4,</group>\n\
+    \  </rule>\n\n  <rule id=\"87504\" level=\"0\">\n    <if_sid>87500</if_sid>\n    <match>connection count =</match>\n\
+    \    <description>Exim: connection.</description>\n  </rule>\n\n  <rule id=\"87505\" level=\"1\">\n    <if_sid>87500</if_sid>\n\
+    \    <match>lost$</match>\n    <description>Exim: connection lost.</description>\n  </rule>\n\n  <rule id=\"\
+    87506\" level=\"5\">\n    <if_sid>87500</if_sid>\n    <match>dropped: too many syntax or protocol errors</match>\n\
+    \    <description>Exim: syntax or protocol errors.</description>\n  </rule>\n\n  <rule id=\"87507\" level=\"\
+    6\">\n    <if_sid>87500</if_sid>\n    <match>input sent without waiting for greeting</match>\n    <description>Exim:\
+    \ SMTP protocol synchronization error (input sent without waiting for greeting).</description>\n  </rule>\n\n\
+    \  <rule id=\"87508\" level=\"6\">\n    <decoded_as>windows-date-format</decoded_as>\n    <match>rejected RCPT</match>\n\
+    \    <description>Exim: RCPT rejected. Error: $(error_message).</description>\n  </rule>\n\n</group>\n"

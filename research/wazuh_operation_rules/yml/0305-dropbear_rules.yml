@@ -1,0 +1,286 @@
+schema: wazuh-original-rules-yaml/v1
+format_only_conversion: true
+native_runtime_format: Wazuh XML
+authoritative_field: sources[].original_xml
+upstream:
+  repository: https://github.com/wazuh/wazuh
+  tag: v4.14.8
+  commit: f470ad7db717b18db7feeed568949643698f0f34
+sources:
+- file: ruleset/rules/0305-dropbear_rules.xml
+  url: https://github.com/wazuh/wazuh/blob/f470ad7db717b18db7feeed568949643698f0f34/ruleset/rules/0305-dropbear_rules.xml
+  sha256: b2279078a5612a302fdf89fe8e27b8cbcd69dc37131e8ec472f328df9051e648
+  rule_count: 12
+  elements:
+  - element: group
+    attributes:
+      name: syslog,sshd,dropbear,
+    children:
+    - element: rule
+      attributes:
+        id: '51000'
+        level: '0'
+        noalert: '1'
+      children:
+      - element: decoded_as
+        text: dropbear
+      - element: description
+        text: Grouping for dropbear rules.
+    - element: rule
+      attributes:
+        id: '51001'
+        level: '1'
+      children:
+      - element: if_sid
+        text: '51000'
+      - element: match
+        text: Failed to get kex value
+      - element: description
+        text: 'Dropbear: Failed to get key exchange value'
+    - element: rule
+      attributes:
+        id: '51002'
+        level: '1'
+      children:
+      - element: if_sid
+        text: '51000'
+      - element: match
+        text: Premature kexdh_init message received
+      - element: description
+        text: 'Dropbear: Premature kexdh_init message'
+    - element: rule
+      attributes:
+        id: '51003'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '51000'
+      - element: match
+        text: bad password attempt for
+      - element: description
+        text: 'Dropbear: Bad password attempt.'
+      - element: group
+        text: authentication_failed,pci_dss_10.2.4,pci_dss_10.2.5,pci_dss_8.1.5,gpg13_7.1,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.b,hipaa_164.312.a.1,nist_800_53_AU.14,nist_800_53_AC.7,nist_800_53_AC.2,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '51093'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '51000'
+      - element: match
+        text: attempt for nonexistent user
+      - element: description
+        text: 'Dropbear: Bad password attempt for non existent user.'
+      - element: group
+        text: authentication_failed,pci_dss_10.2.4,pci_dss_10.2.5,pci_dss_8.1.5,gpg13_7.1,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.b,hipaa_164.312.a.1,nist_800_53_AU.14,nist_800_53_AC.7,nist_800_53_AC.2,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '51005'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '51000'
+      - element: regex
+        text: 'exit after auth \(\S+\): Disconnect received'
+      - element: description
+        text: 'Dropbear: User disconnected.'
+      - element: group
+        text: pci_dss_10.2.5,pci_dss_8.1.5,gpg13_7.1,gpg13_7.2,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.b,hipaa_164.312.a.1,nist_800_53_AU.14,nist_800_53_AC.7,nist_800_53_AC.2,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,tsc_CC6.1,
+    - element: rule
+      attributes:
+        id: '51006'
+        level: '2'
+      children:
+      - element: if_sid
+        text: '51000'
+      - element: match
+        text: exit before auth
+      - element: description
+        text: 'Dropbear: Client exited before authentication.'
+      - element: group
+        text: recon,pci_dss_10.6.1,pci_dss_11.4,pci_dss_8.1.5,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.b,hipaa_164.312.a.1,nist_800_53_AU.6,nist_800_53_SI.4,nist_800_53_AC.2,tsc_CC7.2,tsc_CC7.3,tsc_CC6.1,tsc_CC6.8,
+    - element: rule
+      attributes:
+        id: '51007'
+        level: '10'
+        frequency: '8'
+        timeframe: '120'
+        ignore: '60'
+      children:
+      - element: if_matched_sid
+        text: '51003'
+      - element: same_source_ip
+        text: ''
+      - element: description
+        text: 'Dropbear: brute force attempt.'
+      - element: mitre
+        children:
+        - element: id
+          text: T1110
+      - element: group
+        text: authentication_failures,pci_dss_10.2.4,pci_dss_10.2.5,pci_dss_11.4,pci_dss_8.1.5,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.b,hipaa_164.312.a.1,nist_800_53_AU.14,nist_800_53_AC.7,nist_800_53_SI.4,nist_800_53_AC.2,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '51008'
+        level: '1'
+      children:
+      - element: if_sid
+        text: '51000'
+      - element: match
+        text: Incompatible remote version
+      - element: description
+        text: 'Dropbear: Incompatible remote version.'
+      - element: group
+        text: recon,pci_dss_10.6.1,pci_dss_11.4,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,tsc_CC7.2,tsc_CC7.3,tsc_CC6.1,tsc_CC6.8,
+    - element: rule
+      attributes:
+        id: '51009'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '51000'
+      - element: match
+        text: password auth succeeded for
+      - element: description
+        text: 'Dropbear: User successfully logged in using a password.'
+      - element: mitre
+        children:
+        - element: id
+          text: T1078
+      - element: group
+        text: authentication_success,pci_dss_10.2.5,pci_dss_8.1.5,gpg13_7.1,gpg13_7.2,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.b,hipaa_164.312.a.1,nist_800_53_AU.14,nist_800_53_AC.7,nist_800_53_AC.2,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,tsc_CC6.1,
+    - element: rule
+      attributes:
+        id: '51010'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '51000'
+      - element: match
+        text: Pubkey auth succeeded
+      - element: description
+        text: 'Dropbear: User successfully logged in using a public key.'
+      - element: mitre
+        children:
+        - element: id
+          text: T1078
+      - element: group
+        text: authentication_success,pci_dss_10.2.5,pci_dss_8.1.5,gpg13_7.1,gpg13_7.2,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.b,hipaa_164.312.a.1,nist_800_53_AU.14,nist_800_53_AC.7,nist_800_53_AC.2,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,tsc_CC6.1,
+    - element: rule
+      attributes:
+        id: '51011'
+        level: '10'
+        frequency: '8'
+        timeframe: '120'
+        ignore: '60'
+      children:
+      - element: if_matched_sid
+        text: '51093'
+      - element: same_source_ip
+        text: ''
+      - element: description
+        text: 'Dropbear: dropbear brute force attempt for nonexistent user.'
+      - element: group
+        text: authentication_failures,pci_dss_10.2.4,pci_dss_10.2.5,pci_dss_11.4,pci_dss_8.1.5,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.b,hipaa_164.312.a.1,nist_800_53_AU.14,nist_800_53_AC.7,nist_800_53_SI.4,nist_800_53_AC.2,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+  original_xml: |
+    <!--
+      -  Dropbear rules
+      -  Author: Dan Parriott (ddpbsd@gmail.com).
+      -  Updated by Wazuh, Inc.
+      -  Copyright (C) 2015, Wazuh Inc.
+      -  Copyright (C) 2009 Trend Micro Inc.
+      -  This program is a free software; you can redistribute it and/or modify it under the terms of GPLv2.
+    -->
+
+    <group name="syslog,sshd,dropbear,">
+
+      <rule id="51000" level="0" noalert="1">
+        <decoded_as>dropbear</decoded_as>
+        <description>Grouping for dropbear rules.</description>
+      </rule>
+
+      <rule id="51001" level="1">
+        <if_sid>51000</if_sid>
+        <match>Failed to get kex value</match>
+        <description>Dropbear: Failed to get key exchange value</description>
+      </rule>
+
+      <rule id="51002" level="1">
+        <if_sid>51000</if_sid>
+        <match>Premature kexdh_init message received</match>
+        <description>Dropbear: Premature kexdh_init message</description>
+      </rule>
+
+      <rule id="51003" level="5">
+        <if_sid>51000</if_sid>
+        <match>bad password attempt for</match>
+        <description>Dropbear: Bad password attempt.</description>
+        <group>authentication_failed,pci_dss_10.2.4,pci_dss_10.2.5,pci_dss_8.1.5,gpg13_7.1,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.b,hipaa_164.312.a.1,nist_800_53_AU.14,nist_800_53_AC.7,nist_800_53_AC.2,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="51093" level="5">
+        <if_sid>51000</if_sid>
+        <match>attempt for nonexistent user</match>
+        <description>Dropbear: Bad password attempt for non existent user.</description>
+        <group>authentication_failed,pci_dss_10.2.4,pci_dss_10.2.5,pci_dss_8.1.5,gpg13_7.1,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.b,hipaa_164.312.a.1,nist_800_53_AU.14,nist_800_53_AC.7,nist_800_53_AC.2,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+      <rule id="51005" level="0">
+        <if_sid>51000</if_sid>
+        <regex>exit after auth \(\S+\): Disconnect received</regex>
+        <description>Dropbear: User disconnected.</description>
+        <group>pci_dss_10.2.5,pci_dss_8.1.5,gpg13_7.1,gpg13_7.2,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.b,hipaa_164.312.a.1,nist_800_53_AU.14,nist_800_53_AC.7,nist_800_53_AC.2,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,tsc_CC6.1,</group>
+      </rule>
+
+      <rule id="51006" level="2">
+        <if_sid>51000</if_sid>
+        <match>exit before auth</match>
+        <description>Dropbear: Client exited before authentication.</description>
+        <group>recon,pci_dss_10.6.1,pci_dss_11.4,pci_dss_8.1.5,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.b,hipaa_164.312.a.1,nist_800_53_AU.6,nist_800_53_SI.4,nist_800_53_AC.2,tsc_CC7.2,tsc_CC7.3,tsc_CC6.1,tsc_CC6.8,</group>
+      </rule>
+
+      <rule id="51007" level="10" frequency="8" timeframe="120" ignore="60">
+        <if_matched_sid>51003</if_matched_sid>
+        <same_source_ip />
+        <description>Dropbear: brute force attempt.</description>
+        <mitre>
+          <id>T1110</id>
+        </mitre>
+        <group>authentication_failures,pci_dss_10.2.4,pci_dss_10.2.5,pci_dss_11.4,pci_dss_8.1.5,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.b,hipaa_164.312.a.1,nist_800_53_AU.14,nist_800_53_AC.7,nist_800_53_SI.4,nist_800_53_AC.2,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="51008" level="1">
+        <if_sid>51000</if_sid>
+        <match>Incompatible remote version</match>
+        <description>Dropbear: Incompatible remote version.</description>
+        <group>recon,pci_dss_10.6.1,pci_dss_11.4,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,tsc_CC7.2,tsc_CC7.3,tsc_CC6.1,tsc_CC6.8,</group>
+      </rule>
+
+      <rule id="51009" level="0">
+        <if_sid>51000</if_sid>
+        <match>password auth succeeded for</match>
+        <description>Dropbear: User successfully logged in using a password.</description>
+        <mitre>
+          <id>T1078</id>
+        </mitre>
+        <group>authentication_success,pci_dss_10.2.5,pci_dss_8.1.5,gpg13_7.1,gpg13_7.2,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.b,hipaa_164.312.a.1,nist_800_53_AU.14,nist_800_53_AC.7,nist_800_53_AC.2,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,tsc_CC6.1,</group>
+      </rule>
+
+      <rule id="51010" level="0">
+        <if_sid>51000</if_sid>
+        <match>Pubkey auth succeeded</match>
+        <description>Dropbear: User successfully logged in using a public key.</description>
+        <mitre>
+          <id>T1078</id>
+        </mitre>
+        <group>authentication_success,pci_dss_10.2.5,pci_dss_8.1.5,gpg13_7.1,gpg13_7.2,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.b,hipaa_164.312.a.1,nist_800_53_AU.14,nist_800_53_AC.7,nist_800_53_AC.2,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,tsc_CC6.1,</group>
+      </rule>
+
+      <rule id="51011" level="10" frequency="8" timeframe="120" ignore="60">
+        <if_matched_sid>51093</if_matched_sid>
+        <same_source_ip />
+        <description>Dropbear: dropbear brute force attempt for nonexistent user.</description>
+        <group>authentication_failures,pci_dss_10.2.4,pci_dss_10.2.5,pci_dss_11.4,pci_dss_8.1.5,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.b,hipaa_164.312.a.1,nist_800_53_AU.14,nist_800_53_AC.7,nist_800_53_SI.4,nist_800_53_AC.2,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+    </group>

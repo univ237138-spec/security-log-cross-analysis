@@ -1,0 +1,209 @@
+schema: wazuh-original-rules-yaml/v1
+format_only_conversion: true
+native_runtime_format: Wazuh XML
+authoritative_field: sources[].original_xml
+upstream:
+  repository: https://github.com/wazuh/wazuh
+  tag: v4.14.8
+  commit: f470ad7db717b18db7feeed568949643698f0f34
+sources:
+- file: ruleset/rules/0325-opensmtpd_rules.xml
+  url: https://github.com/wazuh/wazuh/blob/f470ad7db717b18db7feeed568949643698f0f34/ruleset/rules/0325-opensmtpd_rules.xml
+  sha256: 35a9599d2a0049b683ec01d98eadde47764496b3957f30f12d051bc57ce9f6b2
+  rule_count: 9
+  elements:
+  - element: group
+    attributes:
+      name: syslog,smtpd,
+    children:
+    - element: rule
+      attributes:
+        id: '53500'
+        level: '0'
+      children:
+      - element: decoded_as
+        text: smtpd
+      - element: description
+        text: OpenSMTPd grouping.
+    - element: rule
+      attributes:
+        id: '53501'
+        level: '3'
+      children:
+      - element: decoded_as
+        text: smtpd
+      - element: if_sid
+        text: '53500'
+      - element: status
+        text: Failed
+      - element: description
+        text: Message failed.
+    - element: rule
+      attributes:
+        id: '53502'
+        level: '0'
+      children:
+      - element: decoded_as
+        text: smtpd
+      - element: if_sid
+        text: '53500'
+      - element: match
+        text: ' New session'
+      - element: description
+        text: New session created.
+    - element: rule
+      attributes:
+        id: '53503'
+        level: '0'
+      children:
+      - element: decoded_as
+        text: smtpd
+      - element: if_sid
+        text: '53500'
+      - element: match
+        text: ' Closing session'
+      - element: description
+        text: Session closed.
+    - element: rule
+      attributes:
+        id: '53504'
+        level: '0'
+      children:
+      - element: decoded_as
+        text: smtpd
+      - element: if_sid
+        text: '53500'
+      - element: status
+        text: Accepted
+      - element: description
+        text: Message accepted.
+    - element: rule
+      attributes:
+        id: '53505'
+        level: '0'
+      children:
+      - element: decoded_as
+        text: smtpd
+      - element: if_sid
+        text: '53500'
+      - element: match
+        text: 'delivery: Ok'
+      - element: description
+        text: Email delivered.
+    - element: rule
+      attributes:
+        id: '53506'
+        level: '2'
+      children:
+      - element: if_sid
+        text: '53501'
+      - element: match
+        text: Command not supported$
+      - element: description
+        text: SMTP command not supported.
+    - element: rule
+      attributes:
+        id: '53507'
+        level: '2'
+      children:
+      - element: decoded_as
+        text: smtpd
+      - element: if_sid
+        text: '53500'
+      - element: match
+        text: 'IO error: No SSL error$'
+      - element: description
+        text: 'OpenSMTPd: no SSL'
+    - element: rule
+      attributes:
+        id: '53508'
+        level: '5'
+      children:
+      - element: decoded_as
+        text: smtpd
+      - element: if_sid
+        text: '53500'
+      - element: match
+        text: Server certificate verification failed
+      - element: description
+        text: Server TLS certificate verification failed.
+      - element: group
+        text: gdpr_IV_35.7.d,
+  original_xml: |
+    <!--
+      -  Open smtpd rules
+      -  Author: Daniel Cid.
+      -  Updated by Wazuh, Inc.
+      -  Copyright (C) 2015, Wazuh Inc.
+      -  Copyright (C) 2009 Trend Micro Inc.
+      -  This program is a free software; you can redistribute it and/or modify it under the terms of GPLv2.
+    -->
+
+    <!--
+    Aug 14 10:15:25 junction.example.com smtpd[28882]: smtp-in: Failed command on session 1f55bdcdf16e28a3: "MAIL FROM:<root@junction.example.com>  " => 421 4.3.0: Temporar
+    y Error
+    -->
+    <group name="syslog,smtpd,">
+
+      <rule id="53500" level="0">
+        <decoded_as>smtpd</decoded_as>
+        <description>OpenSMTPd grouping.</description>
+      </rule>
+
+      <rule id="53501" level="3">
+        <decoded_as>smtpd</decoded_as>
+        <if_sid>53500</if_sid>
+        <status>Failed</status>
+        <description>Message failed.</description>
+      </rule>
+
+      <rule id="53502" level="0">
+        <decoded_as>smtpd</decoded_as>
+        <if_sid>53500</if_sid>
+        <match> New session</match>
+        <description>New session created.</description>
+      </rule>
+
+      <rule id="53503" level="0">
+        <decoded_as>smtpd</decoded_as>
+        <if_sid>53500</if_sid>
+        <match> Closing session</match>
+        <description>Session closed.</description>
+      </rule>
+
+      <rule id="53504" level="0">
+        <decoded_as>smtpd</decoded_as>
+        <if_sid>53500</if_sid>
+        <status>Accepted</status>
+        <description>Message accepted.</description>
+      </rule>
+
+      <rule id="53505" level="0">
+        <decoded_as>smtpd</decoded_as>
+        <if_sid>53500</if_sid>
+        <match>delivery: Ok</match>
+        <description>Email delivered.</description>
+      </rule>
+
+      <rule id="53506" level="2">
+        <if_sid>53501</if_sid>
+        <match>Command not supported$</match>
+        <description>SMTP command not supported.</description>
+      </rule>
+
+      <rule id="53507" level="2">
+        <decoded_as>smtpd</decoded_as>
+        <if_sid>53500</if_sid>
+        <match>IO error: No SSL error$</match>
+        <description>OpenSMTPd: no SSL</description>
+      </rule>
+
+      <rule id="53508" level="5">
+        <decoded_as>smtpd</decoded_as>
+        <if_sid>53500</if_sid>
+        <match>Server certificate verification failed</match>
+        <description>Server TLS certificate verification failed.</description>
+        <group>gdpr_IV_35.7.d,</group>
+      </rule>
+
+    </group>

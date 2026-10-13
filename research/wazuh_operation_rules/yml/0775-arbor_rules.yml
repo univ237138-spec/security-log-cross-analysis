@@ -1,0 +1,62 @@
+schema: wazuh-original-rules-yaml/v1
+format_only_conversion: true
+native_runtime_format: Wazuh XML
+authoritative_field: sources[].original_xml
+upstream:
+  repository: https://github.com/wazuh/wazuh
+  tag: v4.14.8
+  commit: f470ad7db717b18db7feeed568949643698f0f34
+sources:
+- file: ruleset/rules/0775-arbor_rules.xml
+  url: https://github.com/wazuh/wazuh/blob/f470ad7db717b18db7feeed568949643698f0f34/ruleset/rules/0775-arbor_rules.xml
+  sha256: 610b17295ffbe8a44ff969921d9936808609ae2ee09a4fd84f7f004c5127d5d4
+  rule_count: 2
+  elements:
+  - element: group
+    attributes:
+      name: arbor,
+    children:
+    - element: rule
+      attributes:
+        id: '88800'
+        level: '0'
+      children:
+      - element: decoded_as
+        text: arbor
+      - element: description
+        text: Arbor
+    - element: rule
+      attributes:
+        id: '88801'
+        level: '7'
+      children:
+      - element: if_sid
+        text: '88800'
+      - element: description
+        text: 'Arbor: $(category)'
+  original_xml: |
+    <!--
+      -  Arbor rules
+      -  Created by Wazuh, Inc. <support@wazuh.com>.
+      -  Copyright (C) 2015, Wazuh Inc.
+      -  This program is a free software; you can redistribute it and/or modify it under the terms of GPLv2.
+    -->
+
+    <!-- ID: 88800 - 88899 -->
+
+    <group name="arbor,">
+
+        <rule id="88800" level="0">
+            <decoded_as>arbor</decoded_as>
+            <description>Arbor</description>
+        </rule>
+
+        <!--
+             Sep 11 23:23:32 BDCAPS1 arbor-networks-aps: Blocked Host: Blocked host 192.168.0.180 at 11:22 by TCP SYN Flood Detection using TCP/3306 (MYSQL) destination 172.168.0.150 source port 6000,URL: https://BDCAPS1/summary/
+        -->
+        <rule id="88801" level="7">
+            <if_sid>88800</if_sid>
+            <description>Arbor: $(category)</description>
+        </rule>
+
+    </group>

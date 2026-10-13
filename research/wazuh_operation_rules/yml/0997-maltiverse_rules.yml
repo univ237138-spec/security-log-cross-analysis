@@ -1,0 +1,107 @@
+schema: wazuh-original-rules-yaml/v1
+format_only_conversion: true
+native_runtime_format: Wazuh XML
+authoritative_field: sources[].original_xml
+upstream:
+  repository: https://github.com/wazuh/wazuh
+  tag: v4.14.8
+  commit: f470ad7db717b18db7feeed568949643698f0f34
+sources:
+- file: ruleset/rules/0997-maltiverse_rules.xml
+  url: https://github.com/wazuh/wazuh/blob/f470ad7db717b18db7feeed568949643698f0f34/ruleset/rules/0997-maltiverse_rules.xml
+  sha256: 0d4fbf34fa3fbb3de660a69c318fe3f1e359fa16b2d0e481228454fab94df06e
+  rule_count: 3
+  elements:
+  - element: group
+    attributes:
+      name: maltiverse,
+    children:
+    - element: rule
+      attributes:
+        id: '99700'
+        level: '10'
+      children:
+      - element: decoded_as
+        text: json
+      - element: field
+        attributes:
+          name: integration
+        text: maltiverse
+      - element: description
+        text: Maltiverse integration messages.
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '99701'
+        level: '12'
+      children:
+      - element: if_sid
+        text: '99700'
+      - element: decoded_as
+        text: json
+      - element: field
+        attributes:
+          name: threat.software.id
+          type: pcre2
+        text: ^S\d{4}$
+      - element: description
+        text: 'Maltiverse: Alert Software $(threat.software.name) - Detected IoC $(threat.indicator.name) of type
+          $(threat.indicator.type) with [$(threat.indicator.confidence)] that is related to $(threat.software.id)-$(threat.software.name)
+          software known attack.'
+      - element: options
+        text: no_full_log
+      - element: mitre
+        children:
+        - element: id
+          text: $(threat.software.id)
+    - element: rule
+      attributes:
+        id: '99702'
+        level: '12'
+      children:
+      - element: if_sid
+        text: '99700'
+      - element: decoded_as
+        text: json
+      - element: field
+        attributes:
+          name: threat.indicator.confidence
+        text: Low|Medium|High
+      - element: description
+        text: 'Maltiverse: Alert Indicator $(threat.indicator.name) - Detected IoC of type $(threat.indicator.type)
+          with [$(threat.indicator.confidence)] confidence.'
+      - element: options
+        text: no_full_log
+  original_xml: |
+    <group name="maltiverse,">
+
+        <rule id="99700" level="10">
+            <decoded_as>json</decoded_as>
+            <field name="integration">maltiverse</field>
+            <description>Maltiverse integration messages.</description>
+            <options>no_full_log</options>
+        </rule>
+
+        <!-- mitre attack software related -->
+        <rule id="99701" level="12">
+            <if_sid>99700</if_sid>
+            <decoded_as>json</decoded_as>
+            <field name="threat.software.id" type="pcre2">^S\d{4}$</field>
+            <description>Maltiverse: Alert Software $(threat.software.name) - Detected IoC $(threat.indicator.name) of type $(threat.indicator.type) with [$(threat.indicator.confidence)] that is related to $(threat.software.id)-$(threat.software.name) software known attack.</description>
+            <options>no_full_log</options>
+            <mitre>
+                <id>$(threat.software.id)</id>
+            </mitre>
+        </rule>
+
+        <!-- threat indicator confidence high, medium or low -->
+        <rule id="99702" level="12">
+            <if_sid>99700</if_sid>
+            <decoded_as>json</decoded_as>
+            <field name="threat.indicator.confidence">Low|Medium|High</field>
+            <description>Maltiverse: Alert Indicator $(threat.indicator.name) - Detected IoC of type $(threat.indicator.type) with [$(threat.indicator.confidence)] confidence.</description>
+            <options>no_full_log</options>
+        </rule>
+
+    </group>

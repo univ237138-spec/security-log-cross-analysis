@@ -1,0 +1,843 @@
+schema: wazuh-original-rules-yaml/v1
+format_only_conversion: true
+native_runtime_format: Wazuh XML
+authoritative_field: sources[].original_xml
+upstream:
+  repository: https://github.com/wazuh/wazuh
+  tag: v4.14.8
+  commit: f470ad7db717b18db7feeed568949643698f0f34
+sources:
+- file: ruleset/rules/0365-auditd_rules.xml
+  url: https://github.com/wazuh/wazuh/blob/f470ad7db717b18db7feeed568949643698f0f34/ruleset/rules/0365-auditd_rules.xml
+  sha256: 026f9aeab3c170b9154ec1bb306688d17d3059a97147d6472715fe66b28fc39f
+  rule_count: 44
+  elements:
+  - element: group
+    attributes:
+      name: audit,
+    children:
+    - element: rule
+      attributes:
+        id: '80700'
+        level: '0'
+      children:
+      - element: decoded_as
+        text: auditd
+      - element: description
+        text: 'Audit: Messages grouped.'
+    - element: rule
+      attributes:
+        id: '80701'
+        level: '1'
+      children:
+      - element: if_sid
+        text: '80700'
+      - element: field
+        attributes:
+          name: audit.type
+        text: DAEMON_RESUME|DAEMON_START
+      - element: field
+        attributes:
+          name: audit.res
+        text: success
+      - element: description
+        text: 'Auditd: Daemon Start / Resume.'
+      - element: group
+        text: gdpr_IV_30.1.g,gpg13_4.14,gpg13_10.1,
+    - element: rule
+      attributes:
+        id: '80702'
+        level: '10'
+      children:
+      - element: if_sid
+        text: '80700'
+      - element: field
+        attributes:
+          name: audit.type
+        text: DAEMON_RESUME|DAEMON_START
+      - element: field
+        attributes:
+          name: audit.res
+        text: failed
+      - element: description
+        text: 'Auditd: Daemon Start / Resume FAILED.'
+      - element: group
+        text: audit_daemon,gdpr_IV_30.1.g,gdpr_IV_35.7.d,gpg13_4.14,gpg13_10.1,hipaa_164.312.b,nist_800_53_AU.6,pci_dss_10.6.1,service_availability,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '80703'
+        level: '10'
+      children:
+      - element: if_sid
+        text: '80700'
+      - element: field
+        attributes:
+          name: audit.type
+        text: DAEMON_END
+      - element: field
+        attributes:
+          name: audit.res
+        text: success
+      - element: description
+        text: 'Auditd: Daemon End.'
+      - element: group
+        text: audit_daemon,gdpr_IV_30.1.g,gdpr_IV_35.7.d,gpg13_4.14,gpg13_10.1,hipaa_164.312.b,nist_800_53_AU.6,pci_dss_10.6.1,service_availability,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '80704'
+        level: '10'
+      children:
+      - element: if_sid
+        text: '80700'
+      - element: field
+        attributes:
+          name: audit.type
+        text: DAEMON_ABORT
+      - element: description
+        text: 'Auditd: Daemon Abort.'
+      - element: group
+        text: audit_daemon,gdpr_IV_30.1.g,gdpr_IV_35.7.d,gpg13_4.14,gpg13_10.1,hipaa_164.312.b,nist_800_53_AU.6,pci_dss_10.6.1,service_availability,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '80705'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '80700'
+      - element: field
+        attributes:
+          name: audit.type
+        text: CONFIG_CHANGE|DAEMON_CONFIG
+      - element: description
+        text: 'Auditd: Configuration changed.'
+      - element: group
+        text: audit_configuration,gdpr_IV_30.1.g,gpg13_10.1,
+    - element: rule
+      attributes:
+        id: '80710'
+        level: '10'
+      children:
+      - element: if_sid
+        text: '80700'
+      - element: field
+        attributes:
+          name: audit.type
+        text: ANOM_PROMISCUOUS
+      - element: match
+        text: prom=256
+      - element: description
+        text: 'Auditd: Device enables promiscuous mode.'
+      - element: group
+        text: audit_anom,gdpr_IV_30.1.g,gdpr_IV_35.7.d,gpg13_4.14,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,pci_dss_10.6.1,pci_dss_11.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '80711'
+        level: '10'
+      children:
+      - element: if_sid
+        text: '80700'
+      - element: field
+        attributes:
+          name: audit.type
+        text: ANOM_ABEND
+      - element: description
+        text: 'Auditd: Process ended abnormally.'
+      - element: group
+        text: audit_anom,gdpr_IV_30.1.g,gdpr_IV_35.7.d,gpg13_4.14,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,pci_dss_10.6.1,pci_dss_11.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '80712'
+        level: '10'
+      children:
+      - element: if_sid
+        text: '80700'
+      - element: field
+        attributes:
+          name: audit.type
+        text: ANOM_EXEC
+      - element: description
+        text: 'Auditd: Execution of a file ended abnormally.'
+      - element: mitre
+        children:
+        - element: id
+          text: T1204
+      - element: group
+        text: audit_anom,gdpr_IV_30.1.g,gdpr_IV_35.7.d,gpg13_4.14,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,pci_dss_10.6.1,pci_dss_11.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '80713'
+        level: '7'
+      children:
+      - element: if_sid
+        text: '80700'
+      - element: field
+        attributes:
+          name: audit.type
+        text: ANOM_MK_EXEC
+      - element: description
+        text: 'Auditd: File is made executable.'
+      - element: group
+        text: audit_anom,gdpr_IV_30.1.g,gdpr_IV_35.7.d,gpg13_4.6,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,pci_dss_10.6.1,pci_dss_11.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '80714'
+        level: '8'
+      children:
+      - element: if_sid
+        text: '80700'
+      - element: field
+        attributes:
+          name: audit.type
+        text: ANOM_ACCESS_FS
+      - element: description
+        text: 'Auditd: File or a directory access ended abnormally.'
+      - element: mitre
+        children:
+        - element: id
+          text: T1203
+        - element: id
+          text: T1565.001
+      - element: group
+        text: audit_anom,gdpr_IV_30.1.g,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,pci_dss_10.6.1,pci_dss_11.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '80715'
+        level: '8'
+      children:
+      - element: if_sid
+        text: '80700'
+      - element: field
+        attributes:
+          name: audit.type
+        text: ANOM_AMTU_FAIL
+      - element: description
+        text: 'Auditd: Failure of the Abstract Machine Test Utility (AMTU) detected.'
+      - element: group
+        text: audit_anom,gdpr_IV_30.1.g,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,pci_dss_10.6.1,pci_dss_11.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '80716'
+        level: '8'
+      children:
+      - element: if_sid
+        text: '80700'
+      - element: field
+        attributes:
+          name: audit.type
+        text: ANOM_MAX_DAC|ANOM_MAX_MAC
+      - element: description
+        text: 'Auditd: Maximum amount of Discretionary Access Control (DAC) or Mandatory Access Control (MAC) failures
+          reached.'
+      - element: group
+        text: audit_anom,gdpr_IV_30.1.g,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,pci_dss_10.6.1,pci_dss_11.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '80717'
+        level: '8'
+      children:
+      - element: if_sid
+        text: '80700'
+      - element: field
+        attributes:
+          name: audit.type
+        text: ANOM_RBAC_FAIL|ANOM_RBAC_INTEGRITY_FAIL
+      - element: description
+        text: 'Auditd: Role-Based Access Control (RBAC) failure detected.'
+      - element: group
+        text: audit_anom,gdpr_IV_30.1.g,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,pci_dss_10.6.1,pci_dss_11.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '80718'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '80700'
+      - element: field
+        attributes:
+          name: audit.type
+        text: ANOM_ADD_ACCT
+      - element: description
+        text: 'Auditd: User-space account addition ended abnormally.'
+      - element: mitre
+        children:
+        - element: id
+          text: T1136
+      - element: group
+        text: audit_anom,gdpr_IV_30.1.g,gdpr_IV_35.7.d,gpg13_7.9,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,pci_dss_10.6.1,pci_dss_11.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '80719'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '80700'
+      - element: field
+        attributes:
+          name: audit.type
+        text: ANOM_DEL_ACCT
+      - element: description
+        text: 'Auditd: User-space account deletion ended abnormally.'
+      - element: mitre
+        children:
+        - element: id
+          text: T1531
+      - element: group
+        text: audit_anom,gdpr_IV_30.1.g,gdpr_IV_35.7.d,gpg13_7.9,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,pci_dss_10.6.1,pci_dss_11.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '80720'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '80700'
+      - element: field
+        attributes:
+          name: audit.type
+        text: ANOM_MOD_ACCT
+      - element: description
+        text: 'Auditd: User-space account modification ended abnormally.'
+      - element: group
+        text: audit_anom,gdpr_IV_30.1.g,gdpr_IV_35.7.d,gpg13_7.9,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,pci_dss_10.6.1,pci_dss_11.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '80721'
+        level: '10'
+      children:
+      - element: if_sid
+        text: '80700'
+      - element: field
+        attributes:
+          name: audit.type
+        text: ANOM_ROOT_TRANS
+      - element: description
+        text: 'Auditd: User becomes root.'
+      - element: mitre
+        children:
+        - element: id
+          text: T1548.003
+      - element: group
+        text: audit_anom,gdpr_IV_35.7.d,gpg13_7.9,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,pci_dss_10.6.1,pci_dss_11.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '80722'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '80700'
+      - element: field
+        attributes:
+          name: audit.type
+        text: ANOM_LOGIN_ACCT
+      - element: description
+        text: 'Auditd: Account login attempt ended abnormally.'
+      - element: group
+        text: audit_anom,gdpr_IV_30.1.g,gdpr_IV_32.2,gdpr_IV_35.7.d,gpg13_7.9,hipaa_164.312.b,nist_800_53_AC.7,nist_800_53_AU.14,nist_800_53_AU.6,nist_800_53_SI.4,pci_dss_10.2.4,pci_dss_10.2.5,pci_dss_10.6.1,pci_dss_11.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '80723'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '80700'
+      - element: field
+        attributes:
+          name: audit.type
+        text: ANOM_LOGIN_FAILURES
+      - element: description
+        text: 'Auditd: Limit of failed login attempts reached.'
+      - element: mitre
+        children:
+        - element: id
+          text: T1110
+      - element: group
+        text: audit_anom,gdpr_IV_30.1.g,gdpr_IV_32.2,gdpr_IV_35.7.d,gpg13_7.5,hipaa_164.312.b,nist_800_53_AC.7,nist_800_53_AU.14,pci_dss_10.2.4,pci_dss_10.2.5,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '80724'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '80700'
+      - element: field
+        attributes:
+          name: audit.type
+        text: ANOM_LOGIN_LOCATION
+      - element: description
+        text: 'Auditd: Login attempt from a forbidden location.'
+      - element: group
+        text: audit_anom,gdpr_IV_30.1.g,gdpr_IV_32.2,gdpr_IV_35.7.d,gpg13_7.5,hipaa_164.312.b,nist_800_53_AC.7,nist_800_53_AU.14,nist_800_53_AU.6,pci_dss_10.2.4,pci_dss_10.2.5,pci_dss_10.6.1,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '80725'
+        level: '4'
+      children:
+      - element: if_sid
+        text: '80700'
+      - element: field
+        attributes:
+          name: audit.type
+        text: ANOM_LOGIN_SESSIONS
+      - element: description
+        text: 'Auditd: Login attempt reached the maximum amount of concurrent sessions.'
+      - element: group
+        text: audit_anom,gdpr_IV_30.1.g,gdpr_IV_32.2,gdpr_IV_35.7.d,gpg13_7.5,hipaa_164.312.b,nist_800_53_AC.7,nist_800_53_AU.14,nist_800_53_AU.6,pci_dss_10.2.4,pci_dss_10.2.5,pci_dss_10.6.1,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '80726'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '80700'
+      - element: field
+        attributes:
+          name: audit.type
+        text: ANOM_LOGIN_TIME
+      - element: description
+        text: 'Auditd: Login attempt is made at a time when it is prevented.'
+      - element: group
+        text: audit_anom,gdpr_IV_30.1.g,gdpr_IV_32.2,gdpr_IV_35.7.d,gpg13_7.5,hipaa_164.312.b,nist_800_53_AC.7,nist_800_53_AU.14,nist_800_53_AU.6,pci_dss_10.2.4,pci_dss_10.2.5,pci_dss_10.6.1,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '80730'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '80700'
+      - element: field
+        attributes:
+          name: audit.type
+        text: AVC
+      - element: description
+        text: 'Auditd: SELinux permission check.'
+      - element: group
+        text: audit_selinux,gdpr_IV_30.1.g,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,pci_dss_10.6.1,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '80731'
+        level: '10'
+      children:
+      - element: if_sid
+        text: '80700'
+      - element: field
+        attributes:
+          name: audit.type
+        text: MAC_STATUS
+      - element: description
+        text: 'Auditd: SELinux mode (enforcing, permissive, off) is changed.'
+      - element: group
+        text: audit_selinux,gdpr_IV_30.1.g,gdpr_IV_35.7.d,gpg13_4.14,hipaa_164.312.b,nist_800_53_AU.6,pci_dss_10.6.1,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '80732'
+        level: '10'
+      children:
+      - element: if_sid
+        text: '80700'
+      - element: field
+        attributes:
+          name: audit.type
+        text: SELINUX_ERR|USER_SELINUX_ERR
+      - element: description
+        text: 'Auditd: SELinux error.'
+      - element: group
+        text: audit_selinux,gdpr_IV_30.1.g,gdpr_IV_35.7.d,gpg13_4.3,hipaa_164.312.b,nist_800_53_AU.6,pci_dss_10.6.1,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '80740'
+        level: '12'
+      children:
+      - element: if_sid
+        text: '80700'
+      - element: field
+        attributes:
+          name: audit.type
+        text: CRYPTO_REPLAY_USER
+      - element: description
+        text: 'Auditd: Replay attack detected.'
+      - element: mitre
+        children:
+        - element: id
+          text: T1212
+      - element: group
+        text: audit_anom,gdpr_IV_30.1.g,gdpr_IV_35.7.d,nist_800_53_SI.4,pci_dss_11.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '80741'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '80700'
+      - element: field
+        attributes:
+          name: audit.type
+        text: CHGRP_ID
+      - element: description
+        text: 'Auditd: Group ID changed.'
+      - element: group
+        text: audit_anom,gdpr_IV_30.1.g,gdpr_IV_35.7.d,gpg13_7.9,hipaa_164.312.b,nist_800_53_AU.6,pci_dss_10.6.1,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '80742'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '80700'
+      - element: field
+        attributes:
+          name: audit.type
+        text: CHUSER_ID
+      - element: description
+        text: 'Auditd: User ID changed.'
+      - element: group
+        text: audit_anom,gdpr_IV_30.1.g,gdpr_IV_35.7.d,gpg13_7.9,hipaa_164.312.b,nist_800_53_AU.6,pci_dss_10.6.1,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '80780'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '80700'
+      - element: list
+        attributes:
+          field: audit.key
+          lookup: match_key_value
+          check_value: write
+        text: etc/lists/audit-keys
+      - element: description
+        text: 'Audit: Watch - Write access.'
+      - element: group
+        text: audit_watch_write,gdpr_IV_30.1.g,
+    - element: rule
+      attributes:
+        id: '80781'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '80780'
+      - element: field
+        attributes:
+          name: audit.file.name
+        text: \.+
+      - element: description
+        text: 'Audit: Watch - Write access: $(audit.file.name).'
+      - element: group
+        text: audit_watch_write,gdpr_IV_30.1.g,
+    - element: rule
+      attributes:
+        id: '80782'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '80780'
+      - element: field
+        attributes:
+          name: audit.directory.name
+        text: \.+
+      - element: description
+        text: 'Audit: Watch - Write access: $(audit.directory.name).'
+      - element: group
+        text: audit_watch_write,gdpr_IV_30.1.g,
+    - element: rule
+      attributes:
+        id: '80783'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '80700'
+      - element: list
+        attributes:
+          field: audit.key
+          lookup: match_key_value
+          check_value: read
+        text: etc/lists/audit-keys
+      - element: description
+        text: 'Audit: Watch - Read access.'
+      - element: group
+        text: audit_watch_read,gdpr_IV_30.1.g,
+    - element: rule
+      attributes:
+        id: '80784'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '80783'
+      - element: field
+        attributes:
+          name: audit.file.name
+        text: \.+
+      - element: description
+        text: 'Audit: Watch - Read access: $(audit.file.name).'
+      - element: group
+        text: audit_watch_read,gdpr_IV_30.1.g,
+    - element: rule
+      attributes:
+        id: '80785'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '80783'
+      - element: field
+        attributes:
+          name: audit.directory.name
+        text: \.+
+      - element: description
+        text: 'Audit: Watch - Read access: $(audit.directory.name).'
+      - element: group
+        text: audit_watch_read,gdpr_IV_30.1.g,
+    - element: rule
+      attributes:
+        id: '80786'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '80700'
+      - element: list
+        attributes:
+          field: audit.key
+          lookup: match_key_value
+          check_value: attribute
+        text: etc/lists/audit-keys
+      - element: description
+        text: 'Audit: Watch - Change attribute.'
+      - element: group
+        text: audit_watch_attribute,gdpr_IV_30.1.g,
+    - element: rule
+      attributes:
+        id: '80787'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '80786'
+      - element: field
+        attributes:
+          name: audit.file.name
+        text: \.+
+      - element: description
+        text: 'Audit: Watch - Change attribute: $(audit.file.name).'
+      - element: group
+        text: audit_watch_attribute,gdpr_IV_30.1.g,
+    - element: rule
+      attributes:
+        id: '80788'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '80786'
+      - element: field
+        attributes:
+          name: audit.directory.name
+        text: \.+
+      - element: description
+        text: 'Audit: Watch - Change attribute: $(audit.directory.name).'
+      - element: group
+        text: audit_watch_attribute,gdpr_IV_30.1.g,
+    - element: rule
+      attributes:
+        id: '80789'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '80700'
+      - element: list
+        attributes:
+          field: audit.key
+          lookup: match_key_value
+          check_value: execute
+        text: etc/lists/audit-keys
+      - element: description
+        text: 'Audit: Watch - Execute access: $(audit.file.name).'
+      - element: group
+        text: audit_watch_execute,gdpr_IV_30.1.g,
+    - element: rule
+      attributes:
+        id: '80790'
+        level: '3'
+      children:
+      - element: if_group
+        text: audit_watch_write
+      - element: match
+        text: type=CREATE
+      - element: description
+        text: 'Audit: Created: $(audit.file.name).'
+      - element: group
+        text: audit_watch_create,audit_watch_write,gdpr_II_5.1.f,gdpr_IV_30.1.g,
+    - element: rule
+      attributes:
+        id: '80791'
+        level: '3'
+      children:
+      - element: if_group
+        text: audit_watch_write
+      - element: match
+        text: type=DELETE
+      - element: description
+        text: 'Audit: Deleted: $(audit.file.name).'
+      - element: mitre
+        children:
+        - element: id
+          text: T1070.004
+      - element: group
+        text: audit_watch_delete,audit_watch_write,gdpr_II_5.1.f,gdpr_IV_30.1.g,
+    - element: rule
+      attributes:
+        id: '80792'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '80700'
+      - element: list
+        attributes:
+          field: audit.key
+          lookup: match_key_value
+          check_value: command
+        text: etc/lists/audit-keys
+      - element: description
+        text: 'Audit: Command: $(audit.exe).'
+      - element: group
+        text: audit_command,gdpr_IV_30.1.g,
+    - element: rule
+      attributes:
+        id: '80793'
+        level: '8'
+      children:
+      - element: if_sid
+        text: '80700'
+      - element: field
+        attributes:
+          name: audit.type
+        text: ACCT_LOCK
+      - element: description
+        text: 'Audit: Passwd was used to lock an account.'
+      - element: group
+        text: audit_command,gdpr_IV_30.1.g,
+    - element: rule
+      attributes:
+        id: '80794'
+        level: '8'
+      children:
+      - element: if_sid
+        text: '80700'
+      - element: field
+        attributes:
+          name: audit.type
+        text: ACCT_UNLOCK
+      - element: description
+        text: 'Audit: Passwd was used to unlock an account.'
+      - element: group
+        text: audit_command,gdpr_IV_30.1.g,
+  original_xml: "<!--\n  -  Copyright (C) 2015, Wazuh Inc.\n-->\n\n<!--\n  Audit rules for:\n    Audit rules ID:\
+    \           80700 - 80792\n    Passwd rules ID:          80793 - 80799\n-->\n\n<group name=\"audit,\">\n\n \
+    \ <rule id=\"80700\" level=\"0\">\n    <decoded_as>auditd</decoded_as>\n    <description>Audit: Messages grouped.</description>\n\
+    \  </rule>\n\n  <rule id=\"80701\" level=\"1\">\n    <if_sid>80700</if_sid>\n    <field name=\"audit.type\"\
+    >DAEMON_RESUME|DAEMON_START</field>\n    <field name=\"audit.res\">success</field>\n    <description>Auditd:\
+    \ Daemon Start / Resume.</description>\n    <group>gdpr_IV_30.1.g,gpg13_4.14,gpg13_10.1,</group>\n  </rule>\n\
+    \n  <rule id=\"80702\" level=\"10\">\n    <if_sid>80700</if_sid>\n    <field name=\"audit.type\">DAEMON_RESUME|DAEMON_START</field>\n\
+    \    <field name=\"audit.res\">failed</field>\n    <description>Auditd: Daemon Start / Resume FAILED.</description>\n\
+    \    <group>audit_daemon,gdpr_IV_30.1.g,gdpr_IV_35.7.d,gpg13_4.14,gpg13_10.1,hipaa_164.312.b,nist_800_53_AU.6,pci_dss_10.6.1,service_availability,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"80703\" level=\"10\">\n    <if_sid>80700</if_sid>\n    <field name=\"audit.type\"\
+    >DAEMON_END</field>\n    <field name=\"audit.res\">success</field>\n    <description>Auditd: Daemon End.</description>\n\
+    \    <group>audit_daemon,gdpr_IV_30.1.g,gdpr_IV_35.7.d,gpg13_4.14,gpg13_10.1,hipaa_164.312.b,nist_800_53_AU.6,pci_dss_10.6.1,service_availability,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"80704\" level=\"10\">\n    <if_sid>80700</if_sid>\n    <field name=\"audit.type\"\
+    >DAEMON_ABORT</field>\n    <description>Auditd: Daemon Abort.</description>\n    <group>audit_daemon,gdpr_IV_30.1.g,gdpr_IV_35.7.d,gpg13_4.14,gpg13_10.1,hipaa_164.312.b,nist_800_53_AU.6,pci_dss_10.6.1,service_availability,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"80705\" level=\"3\">\n    <if_sid>80700</if_sid>\n    <field name=\"audit.type\"\
+    >CONFIG_CHANGE|DAEMON_CONFIG</field>\n    <description>Auditd: Configuration changed.</description>\n    <group>audit_configuration,gdpr_IV_30.1.g,gpg13_10.1,</group>\n\
+    \  </rule>\n\n  <rule id=\"80710\" level=\"10\">\n    <if_sid>80700</if_sid>\n    <field name=\"audit.type\"\
+    >ANOM_PROMISCUOUS</field>\n    <match>prom=256</match>\n    <description>Auditd: Device enables promiscuous\
+    \ mode.</description>\n    <group>audit_anom,gdpr_IV_30.1.g,gdpr_IV_35.7.d,gpg13_4.14,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,pci_dss_10.6.1,pci_dss_11.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"80711\" level=\"10\">\n    <if_sid>80700</if_sid>\n    <field name=\"audit.type\"\
+    >ANOM_ABEND</field>\n    <description>Auditd: Process ended abnormally.</description>\n    <group>audit_anom,gdpr_IV_30.1.g,gdpr_IV_35.7.d,gpg13_4.14,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,pci_dss_10.6.1,pci_dss_11.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"80712\" level=\"10\">\n    <if_sid>80700</if_sid>\n    <field name=\"audit.type\"\
+    >ANOM_EXEC</field>\n    <description>Auditd: Execution of a file ended abnormally.</description>\n    <mitre>\n\
+    \      <id>T1204</id>\n    </mitre>\n    <group>audit_anom,gdpr_IV_30.1.g,gdpr_IV_35.7.d,gpg13_4.14,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,pci_dss_10.6.1,pci_dss_11.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"80713\" level=\"7\">\n    <if_sid>80700</if_sid>\n    <field name=\"audit.type\"\
+    >ANOM_MK_EXEC</field>\n    <description>Auditd: File is made executable.</description>\n    <group>audit_anom,gdpr_IV_30.1.g,gdpr_IV_35.7.d,gpg13_4.6,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,pci_dss_10.6.1,pci_dss_11.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"80714\" level=\"8\">\n    <if_sid>80700</if_sid>\n    <field name=\"audit.type\"\
+    >ANOM_ACCESS_FS</field>\n    <description>Auditd: File or a directory access ended abnormally.</description>\n\
+    \    <mitre>\n      <id>T1203</id>\n      <id>T1565.001</id>\n    </mitre>\n    <group>audit_anom,gdpr_IV_30.1.g,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,pci_dss_10.6.1,pci_dss_11.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"80715\" level=\"8\">\n    <if_sid>80700</if_sid>\n    <field name=\"audit.type\"\
+    >ANOM_AMTU_FAIL</field>\n    <description>Auditd: Failure of the Abstract Machine Test Utility (AMTU) detected.</description>\n\
+    \    <group>audit_anom,gdpr_IV_30.1.g,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,pci_dss_10.6.1,pci_dss_11.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"80716\" level=\"8\">\n    <if_sid>80700</if_sid>\n    <field name=\"audit.type\"\
+    >ANOM_MAX_DAC|ANOM_MAX_MAC</field>\n    <description>Auditd: Maximum amount of Discretionary Access Control\
+    \ (DAC) or Mandatory Access Control (MAC) failures reached.</description>\n    <group>audit_anom,gdpr_IV_30.1.g,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,pci_dss_10.6.1,pci_dss_11.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"80717\" level=\"8\">\n    <if_sid>80700</if_sid>\n    <field name=\"audit.type\"\
+    >ANOM_RBAC_FAIL|ANOM_RBAC_INTEGRITY_FAIL</field>\n    <description>Auditd: Role-Based Access Control (RBAC)\
+    \ failure detected.</description>\n    <group>audit_anom,gdpr_IV_30.1.g,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,pci_dss_10.6.1,pci_dss_11.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"80718\" level=\"3\">\n    <if_sid>80700</if_sid>\n    <field name=\"audit.type\"\
+    >ANOM_ADD_ACCT</field>\n    <description>Auditd: User-space account addition ended abnormally.</description>\n\
+    \    <mitre>\n      <id>T1136</id>\n    </mitre>\n    <group>audit_anom,gdpr_IV_30.1.g,gdpr_IV_35.7.d,gpg13_7.9,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,pci_dss_10.6.1,pci_dss_11.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \ </rule>\n\n  <rule id=\"80719\" level=\"3\">\n    <if_sid>80700</if_sid>\n    <field name=\"audit.type\">ANOM_DEL_ACCT</field>\n\
+    \    <description>Auditd: User-space account deletion ended abnormally.</description>\n    <mitre>\n      <id>T1531</id>\n\
+    \    </mitre>\n    <group>audit_anom,gdpr_IV_30.1.g,gdpr_IV_35.7.d,gpg13_7.9,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,pci_dss_10.6.1,pci_dss_11.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"80720\" level=\"3\">\n    <if_sid>80700</if_sid>\n    <field name=\"audit.type\"\
+    >ANOM_MOD_ACCT</field>\n    <description>Auditd: User-space account modification ended abnormally.</description>\n\
+    \    <group>audit_anom,gdpr_IV_30.1.g,gdpr_IV_35.7.d,gpg13_7.9,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,pci_dss_10.6.1,pci_dss_11.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"80721\" level=\"10\">\n    <if_sid>80700</if_sid>\n    <field name=\"audit.type\"\
+    >ANOM_ROOT_TRANS</field>\n    <description>Auditd: User becomes root.</description>\n    <mitre>\n      <id>T1548.003</id>\n\
+    \    </mitre>\n    <group>audit_anom,gdpr_IV_35.7.d,gpg13_7.9,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,pci_dss_10.6.1,pci_dss_11.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"80722\" level=\"5\">\n    <if_sid>80700</if_sid>\n    <field name=\"audit.type\"\
+    >ANOM_LOGIN_ACCT</field>\n    <description>Auditd: Account login attempt ended abnormally.</description>\n \
+    \   <group>audit_anom,gdpr_IV_30.1.g,gdpr_IV_32.2,gdpr_IV_35.7.d,gpg13_7.9,hipaa_164.312.b,nist_800_53_AC.7,nist_800_53_AU.14,nist_800_53_AU.6,nist_800_53_SI.4,pci_dss_10.2.4,pci_dss_10.2.5,pci_dss_10.6.1,pci_dss_11.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"80723\" level=\"5\">\n    <if_sid>80700</if_sid>\n    <field name=\"audit.type\"\
+    >ANOM_LOGIN_FAILURES</field>\n    <description>Auditd: Limit of failed login attempts reached.</description>\n\
+    \    <mitre>\n      <id>T1110</id>\n    </mitre>\n    <group>audit_anom,gdpr_IV_30.1.g,gdpr_IV_32.2,gdpr_IV_35.7.d,gpg13_7.5,hipaa_164.312.b,nist_800_53_AC.7,nist_800_53_AU.14,pci_dss_10.2.4,pci_dss_10.2.5,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"80724\" level=\"5\">\n    <if_sid>80700</if_sid>\n    <field name=\"audit.type\"\
+    >ANOM_LOGIN_LOCATION</field>\n    <description>Auditd: Login attempt from a forbidden location.</description>\n\
+    \    <group>audit_anom,gdpr_IV_30.1.g,gdpr_IV_32.2,gdpr_IV_35.7.d,gpg13_7.5,hipaa_164.312.b,nist_800_53_AC.7,nist_800_53_AU.14,nist_800_53_AU.6,pci_dss_10.2.4,pci_dss_10.2.5,pci_dss_10.6.1,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"80725\" level=\"4\">\n    <if_sid>80700</if_sid>\n    <field name=\"audit.type\"\
+    >ANOM_LOGIN_SESSIONS</field>\n    <description>Auditd: Login attempt reached the maximum amount of concurrent\
+    \ sessions.</description>\n    <group>audit_anom,gdpr_IV_30.1.g,gdpr_IV_32.2,gdpr_IV_35.7.d,gpg13_7.5,hipaa_164.312.b,nist_800_53_AC.7,nist_800_53_AU.14,nist_800_53_AU.6,pci_dss_10.2.4,pci_dss_10.2.5,pci_dss_10.6.1,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"80726\" level=\"5\">\n    <if_sid>80700</if_sid>\n    <field name=\"audit.type\"\
+    >ANOM_LOGIN_TIME</field>\n    <description>Auditd: Login attempt is made at a time when it is prevented.</description>\n\
+    \    <group>audit_anom,gdpr_IV_30.1.g,gdpr_IV_32.2,gdpr_IV_35.7.d,gpg13_7.5,hipaa_164.312.b,nist_800_53_AC.7,nist_800_53_AU.14,nist_800_53_AU.6,pci_dss_10.2.4,pci_dss_10.2.5,pci_dss_10.6.1,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <!-- SELinux rules -->\n  <rule id=\"80730\" level=\"3\">\n    <if_sid>80700</if_sid>\n    <field\
+    \ name=\"audit.type\">AVC</field>\n    <description>Auditd: SELinux permission check.</description>\n    <group>audit_selinux,gdpr_IV_30.1.g,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,pci_dss_10.6.1,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"80731\" level=\"10\">\n    <if_sid>80700</if_sid>\n    <field name=\"audit.type\"\
+    >MAC_STATUS</field>\n    <description>Auditd: SELinux mode (enforcing, permissive, off) is changed.</description>\n\
+    \    <group>audit_selinux,gdpr_IV_30.1.g,gdpr_IV_35.7.d,gpg13_4.14,hipaa_164.312.b,nist_800_53_AU.6,pci_dss_10.6.1,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"80732\" level=\"10\">\n    <if_sid>80700</if_sid>\n    <field name=\"audit.type\"\
+    >SELINUX_ERR|USER_SELINUX_ERR</field>\n    <description>Auditd: SELinux error.</description>\n    <group>audit_selinux,gdpr_IV_30.1.g,gdpr_IV_35.7.d,gpg13_4.3,hipaa_164.312.b,nist_800_53_AU.6,pci_dss_10.6.1,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <!-- Miscellaneous rules -->\n  <rule id=\"80740\" level=\"12\">\n    <if_sid>80700</if_sid>\n\
+    \    <field name=\"audit.type\">CRYPTO_REPLAY_USER</field>\n    <description>Auditd: Replay attack detected.</description>\n\
+    \    <mitre>\n      <id>T1212</id>\n    </mitre>\n    <group>audit_anom,gdpr_IV_30.1.g,gdpr_IV_35.7.d,nist_800_53_SI.4,pci_dss_11.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"80741\" level=\"5\">\n    <if_sid>80700</if_sid>\n    <field name=\"audit.type\"\
+    >CHGRP_ID</field>\n    <description>Auditd: Group ID changed.</description>\n    <group>audit_anom,gdpr_IV_30.1.g,gdpr_IV_35.7.d,gpg13_7.9,hipaa_164.312.b,nist_800_53_AU.6,pci_dss_10.6.1,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"80742\" level=\"5\">\n    <if_sid>80700</if_sid>\n    <field name=\"audit.type\"\
+    >CHUSER_ID</field>\n    <description>Auditd: User ID changed.</description>\n    <group>audit_anom,gdpr_IV_30.1.g,gdpr_IV_35.7.d,gpg13_7.9,hipaa_164.312.b,nist_800_53_AU.6,pci_dss_10.6.1,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <!-- File system rules (watch rules) -->\n  <rule id=\"80780\" level=\"3\">\n    <if_sid>80700</if_sid>\n\
+    \    <list field=\"audit.key\" lookup=\"match_key_value\" check_value=\"write\">etc/lists/audit-keys</list>\n\
+    \    <description>Audit: Watch - Write access.</description>\n    <group>audit_watch_write,gdpr_IV_30.1.g,</group>\n\
+    \  </rule>\n\n  <rule id=\"80781\" level=\"3\">\n    <if_sid>80780</if_sid>\n    <field name=\"audit.file.name\"\
+    >\\.+</field>\n    <description>Audit: Watch - Write access: $(audit.file.name).</description>\n    <group>audit_watch_write,gdpr_IV_30.1.g,</group>\n\
+    \  </rule>\n\n  <rule id=\"80782\" level=\"3\">\n    <if_sid>80780</if_sid>\n    <field name=\"audit.directory.name\"\
+    >\\.+</field>\n    <description>Audit: Watch - Write access: $(audit.directory.name).</description>\n    <group>audit_watch_write,gdpr_IV_30.1.g,</group>\n\
+    \  </rule>\n\n  <rule id=\"80783\" level=\"3\">\n    <if_sid>80700</if_sid>\n    <list field=\"audit.key\" lookup=\"\
+    match_key_value\" check_value=\"read\">etc/lists/audit-keys</list>\n    <description>Audit: Watch - Read access.</description>\n\
+    \    <group>audit_watch_read,gdpr_IV_30.1.g,</group>\n  </rule>\n\n  <rule id=\"80784\" level=\"3\">\n    <if_sid>80783</if_sid>\n\
+    \    <field name=\"audit.file.name\">\\.+</field>\n    <description>Audit: Watch - Read access: $(audit.file.name).</description>\n\
+    \    <group>audit_watch_read,gdpr_IV_30.1.g,</group>\n  </rule>\n\n  <rule id=\"80785\" level=\"3\">\n    <if_sid>80783</if_sid>\n\
+    \    <field name=\"audit.directory.name\">\\.+</field>\n    <description>Audit: Watch - Read access: $(audit.directory.name).</description>\n\
+    \    <group>audit_watch_read,gdpr_IV_30.1.g,</group>\n  </rule>\n\n  <rule id=\"80786\" level=\"3\">\n    <if_sid>80700</if_sid>\n\
+    \    <list field=\"audit.key\" lookup=\"match_key_value\" check_value=\"attribute\">etc/lists/audit-keys</list>\n\
+    \    <description>Audit: Watch - Change attribute.</description>\n    <group>audit_watch_attribute,gdpr_IV_30.1.g,</group>\n\
+    \  </rule>\n\n  <rule id=\"80787\" level=\"3\">\n    <if_sid>80786</if_sid>\n    <field name=\"audit.file.name\"\
+    >\\.+</field>\n    <description>Audit: Watch - Change attribute: $(audit.file.name).</description>\n    <group>audit_watch_attribute,gdpr_IV_30.1.g,</group>\n\
+    \  </rule>\n\n  <rule id=\"80788\" level=\"3\">\n    <if_sid>80786</if_sid>\n    <field name=\"audit.directory.name\"\
+    >\\.+</field>\n    <description>Audit: Watch - Change attribute: $(audit.directory.name).</description>\n  \
+    \  <group>audit_watch_attribute,gdpr_IV_30.1.g,</group>\n  </rule>\n\n  <rule id=\"80789\" level=\"3\">\n  \
+    \  <if_sid>80700</if_sid>\n    <list field=\"audit.key\" lookup=\"match_key_value\" check_value=\"execute\"\
+    >etc/lists/audit-keys</list>\n    <description>Audit: Watch - Execute access: $(audit.file.name).</description>\n\
+    \    <group>audit_watch_execute,gdpr_IV_30.1.g,</group>\n  </rule>\n\n  <rule id=\"80790\" level=\"3\">\n  \
+    \  <if_group>audit_watch_write</if_group>\n    <match>type=CREATE</match>\n    <description>Audit: Created:\
+    \ $(audit.file.name).</description>\n    <group>audit_watch_create,audit_watch_write,gdpr_II_5.1.f,gdpr_IV_30.1.g,</group>\n\
+    \  </rule>\n\n  <rule id=\"80791\" level=\"3\">\n    <if_group>audit_watch_write</if_group>\n    <match>type=DELETE</match>\n\
+    \    <description>Audit: Deleted: $(audit.file.name).</description>\n    <mitre>\n      <id>T1070.004</id>\n\
+    \    </mitre>\n    <group>audit_watch_delete,audit_watch_write,gdpr_II_5.1.f,gdpr_IV_30.1.g,</group>\n  </rule>\n\
+    \n  <!-- System call rules -->\n  <rule id=\"80792\" level=\"3\">\n    <if_sid>80700</if_sid>\n    <list field=\"\
+    audit.key\" lookup=\"match_key_value\" check_value=\"command\">etc/lists/audit-keys</list>\n    <description>Audit:\
+    \ Command: $(audit.exe).</description>\n    <group>audit_command,gdpr_IV_30.1.g,</group>\n  </rule>\n\n  <!--\
+    \ Passwd rules -->\n  <rule id=\"80793\" level=\"8\">\n    <if_sid>80700</if_sid>\n    <field name=\"audit.type\"\
+    >ACCT_LOCK</field>\n    <description>Audit: Passwd was used to lock an account.</description>\n    <group>audit_command,gdpr_IV_30.1.g,</group>\n\
+    \  </rule>\n\n  <rule id=\"80794\" level=\"8\">\n    <if_sid>80700</if_sid>\n    <field name=\"audit.type\"\
+    >ACCT_UNLOCK</field>\n    <description>Audit: Passwd was used to unlock an account.</description>\n    <group>audit_command,gdpr_IV_30.1.g,</group>\n\
+    \  </rule>\n    \n</group>\n"

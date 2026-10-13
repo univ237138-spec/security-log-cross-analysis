@@ -1,0 +1,92 @@
+schema: wazuh-original-rules-yaml/v1
+format_only_conversion: true
+native_runtime_format: Wazuh XML
+authoritative_field: sources[].original_xml
+upstream:
+  repository: https://github.com/wazuh/wazuh
+  tag: v4.14.8
+  commit: f470ad7db717b18db7feeed568949643698f0f34
+sources:
+- file: ruleset/rules/0150-cimserver_rules.xml
+  url: https://github.com/wazuh/wazuh/blob/f470ad7db717b18db7feeed568949643698f0f34/ruleset/rules/0150-cimserver_rules.xml
+  sha256: c336c1e426ec4d9fb3e19aa005c160bd7e680bed36ff7295b5941b5257811c9b
+  rule_count: 3
+  elements:
+  - element: group
+    attributes:
+      name: syslog,cimserver,
+    children:
+    - element: rule
+      attributes:
+        id: '9600'
+        level: '0'
+        noalert: '1'
+      children:
+      - element: decoded_as
+        text: cimserver
+      - element: description
+        text: cimserver messages grouped.
+    - element: rule
+      attributes:
+        id: '9610'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '9600'
+      - element: match
+        text: Authentication failed
+      - element: description
+        text: 'cimserver: Compaq Insight Manager authentication failure.'
+      - element: group
+        text: authentication_failed,pci_dss_10.2.4,pci_dss_10.2.5,gpg13_7.8,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AC.7,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '9611'
+        level: '12'
+      children:
+      - element: if_sid
+        text: '9600'
+      - element: match
+        text: Server stopped
+      - element: description
+        text: 'cimserver: Compaq Insight Manager stopped.'
+      - element: mitre
+        children:
+        - element: id
+          text: T1499
+      - element: group
+        text: service_availability,pci_dss_10.6.1,gpg13_4.14,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,
+  original_xml: |
+    <!--
+      -  Compaq Insight Manager (cimserver) rules
+      -  Author: Daniel Cid.
+      -  Author: Stephen Kreusch.
+      -  Updated by Wazuh, Inc.
+      -  Copyright (C) 2015, Wazuh Inc.
+      -  Copyright (C) 2009 Trend Micro Inc.
+      -  This program is a free software; you can redistribute it and/or modify it under the terms of GPLv2.
+    -->
+
+    <group name="syslog,cimserver,">
+      <rule id="9600" level="0" noalert="1">
+        <decoded_as>cimserver</decoded_as>
+        <description>cimserver messages grouped.</description>
+      </rule>
+
+      <rule id="9610" level="5">
+        <if_sid>9600</if_sid>
+        <match>Authentication failed</match>
+        <description>cimserver: Compaq Insight Manager authentication failure.</description>
+        <group>authentication_failed,pci_dss_10.2.4,pci_dss_10.2.5,gpg13_7.8,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AC.7,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="9611" level="12">
+        <if_sid>9600</if_sid>
+        <match>Server stopped</match>
+        <description>cimserver: Compaq Insight Manager stopped.</description>
+        <mitre>
+          <id>T1499</id>
+        </mitre>
+        <group>service_availability,pci_dss_10.6.1,gpg13_4.14,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+    </group>

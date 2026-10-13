@@ -1,0 +1,731 @@
+schema: wazuh-original-rules-yaml/v1
+format_only_conversion: true
+native_runtime_format: Wazuh XML
+authoritative_field: sources[].original_xml
+upstream:
+  repository: https://github.com/wazuh/wazuh
+  tag: v4.14.8
+  commit: f470ad7db717b18db7feeed568949643698f0f34
+sources:
+- file: ruleset/rules/0195-named_rules.xml
+  url: https://github.com/wazuh/wazuh/blob/f470ad7db717b18db7feeed568949643698f0f34/ruleset/rules/0195-named_rules.xml
+  sha256: 208c12ec17a418f0b0891ea81ef0715c70383bc5296b7893dafc721ea2241a16
+  rule_count: 49
+  elements:
+  - element: group
+    attributes:
+      name: syslog,named,
+    children:
+    - element: rule
+      attributes:
+        id: '12100'
+        level: '0'
+      children:
+      - element: decoded_as
+        text: named
+      - element: description
+        text: Grouping of the named rules
+    - element: rule
+      attributes:
+        id: '12101'
+        level: '12'
+      children:
+      - element: if_sid
+        text: '12100'
+      - element: match
+        text: dropping source port zero packet from
+      - element: description
+        text: Invalid DNS packet. Possibility of attack.
+      - element: mitre
+        children:
+        - element: id
+          text: T1071
+        - element: id
+          text: T1499
+      - element: group
+        text: invalid_access,pci_dss_10.2.4,pci_dss_11.4,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AC.7,nist_800_53_SI.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '12102'
+        level: '9'
+      children:
+      - element: if_sid
+        text: '12100'
+      - element: match
+        text: denied AXFR from
+      - element: description
+        text: Failed attempt to perform a zone transfer.
+      - element: group
+        text: access_denied,pci_dss_10.2.4,pci_dss_11.4,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AC.7,nist_800_53_SI.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '12103'
+        level: '4'
+      children:
+      - element: if_sid
+        text: '12100'
+      - element: match
+        text: denied update from|unapproved update from
+      - element: description
+        text: 'DNS update denied. '
+      - element: description
+        text: Generally mis-configuration.
+      - element: info
+        attributes:
+          type: link
+        text: http://seclists.org/incidents/2000/May/217
+      - element: group
+        text: client_misconfig,pci_dss_10.2.4,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AC.7,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '12104'
+        level: '4'
+      children:
+      - element: if_sid
+        text: '12100'
+      - element: match
+        text: unable to rename log file
+      - element: description
+        text: Log permission misconfiguration in Named.
+      - element: group
+        text: system_error,pci_dss_10.1,hipaa_164.312.b,nist_800_53_AU.12,tsc_CC6.1,tsc_CC6.2,tsc_CC6.3,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '12105'
+        level: '4'
+      children:
+      - element: if_sid
+        text: '12100'
+      - element: match
+        text: 'unexpected RCODE '
+      - element: description
+        text: Unexpected error while resolving domain.
+    - element: rule
+      attributes:
+        id: '12106'
+        level: '4'
+      children:
+      - element: if_sid
+        text: '12100'
+      - element: match
+        text: refused notify from non-master
+      - element: description
+        text: DNS configuration error.
+      - element: group
+        text: system_error,pci_dss_10.6.1,gpg13_4.3,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '12107'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '12100'
+      - element: regex
+        text: update \S+ denied
+      - element: description
+        text: DNS update using RFC2136 Dynamic protocol.
+      - element: group
+        text: pci_dss_10.2.4,pci_dss_10.6.1,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AC.7,nist_800_53_AU.6,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '12108'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '12100'
+      - element: match
+        text: 'query (cache) denied|: query (cache)'
+      - element: description
+        text: Query cache denied (probably config error).
+      - element: info
+        attributes:
+          type: link
+        text: http://www.reedmedia.net/misc/dns/errors.html
+      - element: group
+        text: system_error,pci_dss_10.2.4,pci_dss_10.6.1,gpg13_4.3,connection_attempt,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AC.7,nist_800_53_AU.6,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '12109'
+        level: '12'
+      children:
+      - element: if_sid
+        text: '12100'
+      - element: match
+        text: exiting (due to fatal error)
+      - element: description
+        text: Named fatal error. DNS service going down.
+      - element: group
+        text: service_availability,pci_dss_10.6.1,gpg13_4.1,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '12110'
+        level: '8'
+      children:
+      - element: regex
+        text: '^zone \S+ serial number \S+ received from master '
+      - element: regex
+        text: \S+ \S ours (\S+)
+      - element: description
+        text: 'Serial number from master is lower '
+      - element: description
+        text: than stored.
+      - element: group
+        text: system_error,gpg13_4.3,
+    - element: rule
+      attributes:
+        id: '12111'
+        level: '8'
+      children:
+      - element: regex
+        text: ^transfer of \S+ from \S+ failed while receiving \S+ REFUSED
+      - element: description
+        text: Unable to perform zone transfer.
+      - element: group
+        text: system_error,pci_dss_10.6.1,gpg13_4.3,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '12112'
+        level: '4'
+      children:
+      - element: regex
+        text: '^zone \S+: expired'
+      - element: description
+        text: Zone transfer error.
+      - element: group
+        text: pci_dss_10.6.1,gpg13_4.3,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '12113'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '12100'
+      - element: match
+        text: zone transfer deferred due to quota
+      - element: description
+        text: Zone transfer deferred.
+      - element: group
+        text: pci_dss_10.6.1,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '12114'
+        level: '1'
+      children:
+      - element: if_sid
+        text: '12100'
+      - element: match
+        text: bad owner name (check-names)
+      - element: description
+        text: Hostname contains characters that check-names does not like.
+    - element: rule
+      attributes:
+        id: '12115'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '12100'
+      - element: match
+        text: loaded serial|transferred serial
+      - element: description
+        text: Zone transfer.
+    - element: rule
+      attributes:
+        id: '12116'
+        level: '1'
+      children:
+      - element: if_sid
+        text: '12100'
+      - element: match
+        text: syntax error near|
+      - element: match
+        text: 'reloading configuration failed: unexpected token'
+      - element: description
+        text: Syntax error in a named configuration file.
+      - element: group
+        text: pci_dss_10.6.1,gpg13_4.3,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '12117'
+        level: '1'
+      children:
+      - element: if_sid
+        text: '12100'
+      - element: regex
+        text: 'refresh: retry limit for master \S+ exceeded'
+      - element: description
+        text: Zone transfer rety limit exceeded
+      - element: group
+        text: pci_dss_10.6.1,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '12118'
+        level: '1'
+      children:
+      - element: if_sid
+        text: '12100'
+      - element: match
+        text: already exists previous definition
+      - element: description
+        text: Zone has been duplicated.
+    - element: rule
+      attributes:
+        id: '12119'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '12100'
+      - element: match
+        text: starting BIND
+      - element: description
+        text: BIND has been started
+    - element: rule
+      attributes:
+        id: '12120'
+        level: '1'
+      children:
+      - element: if_sid
+        text: '12100'
+      - element: match
+        text: has no address records
+      - element: description
+        text: Missing A or AAAA record
+    - element: rule
+      attributes:
+        id: '12121'
+        level: '1'
+      children:
+      - element: if_sid
+        text: '12100'
+      - element: regex
+        text: 'zone \S+: \(master\) removed'
+      - element: description
+        text: Zone has been removed from a master server
+    - element: rule
+      attributes:
+        id: '12122'
+        level: '1'
+      children:
+      - element: if_sid
+        text: '12100'
+      - element: regex
+        text: 'loading from master file \S+ failed: not at top of zone$'
+      - element: description
+        text: Origin of zone and owner name of SOA do not match.
+    - element: rule
+      attributes:
+        id: '12123'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '12100'
+      - element: match
+        text: already exists previous definition
+      - element: description
+        text: Zone has been duplicated
+      - element: group
+        text: pci_dss_10.6.1,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '12125'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '12100'
+      - element: match
+        text: 'reloading configuration failed: unexpected end of input'
+      - element: description
+        text: BIND Configuration error.
+      - element: group
+        text: pci_dss_10.6.1,gpg13_4.3,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '12126'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '12100'
+      - element: regex
+        text: 'zone \S+: \(master\) removed'
+      - element: description
+        text: Zone has been removed from a master server
+      - element: group
+        text: pci_dss_10.6.1,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '12127'
+        level: '1'
+      children:
+      - element: if_sid
+        text: '12100'
+      - element: regex
+        text: 'loading from master file \S+ failed: not at top of zone$'
+      - element: description
+        text: Origin of zone and owner name of SOA do not match.
+    - element: rule
+      attributes:
+        id: '12128'
+        level: '1'
+      children:
+      - element: if_sid
+        text: '12100'
+      - element: match
+        text: ^transfer of|
+      - element: match
+        text: AXFR started$
+      - element: description
+        text: Zone transfer.
+    - element: rule
+      attributes:
+        id: '12129'
+        level: '4'
+      children:
+      - element: if_sid
+        text: '12128'
+      - element: match
+        text: 'failed to connect: connection refused'
+      - element: description
+        text: Zone transfer failed, unable to connect to master.
+      - element: group
+        text: pci_dss_10.6.1,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '12130'
+        level: '2'
+      children:
+      - element: if_sid
+        text: '12100'
+      - element: match
+        text: IPv6 interfaces failed
+      - element: description
+        text: Could not listen on IPv6 interface.
+      - element: group
+        text: pci_dss_10.6.1,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '12131'
+        level: '2'
+      children:
+      - element: if_sid
+        text: '12100'
+      - element: match
+        text: failed; interface ignored
+      - element: description
+        text: Could not bind to an interface.
+      - element: group
+        text: pci_dss_10.6.1,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '12132'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '12128'
+      - element: match
+        text: 'failed while receiving responses: not authoritative'
+      - element: description
+        text: Master is not authoritative for zone.
+    - element: rule
+      attributes:
+        id: '12133'
+        level: '4'
+      children:
+      - element: if_sid
+        text: '12100'
+      - element: regex
+        text: 'open: \S+: permission denied$'
+      - element: description
+        text: Could not open configuration file, permission denied.
+      - element: group
+        text: pci_dss_10.2.4,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AC.7,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '12134'
+        level: '4'
+      children:
+      - element: if_sid
+        text: '12100'
+      - element: match
+        text: 'loading configuration: permission denied'
+      - element: description
+        text: Could not open configuration file, permission denied.
+      - element: group
+        text: pci_dss_10.2.4,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AC.7,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '12135'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '12100'
+      - element: match
+        text: IN SOA -E
+      - element: description
+        text: Domain in SOA -E.
+    - element: rule
+      attributes:
+        id: '12136'
+        level: '4'
+      children:
+      - element: if_sid
+        text: '12128'
+      - element: match
+        text: 'failed to connect: host unreachable'
+      - element: description
+        text: Master appears to be down.
+      - element: group
+        text: pci_dss_10.6.1,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '12137'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '12100'
+      - element: match
+        text: IN AXFR -
+      - element: description
+        text: Domain is queried for a zone transferred.
+    - element: rule
+      attributes:
+        id: '12138'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '12100'
+      - element: match
+        text: ' IN A +'
+      - element: description
+        text: Domain A record found.
+    - element: rule
+      attributes:
+        id: '12139'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '12100'
+      - element: regex
+        text: 'client \S+: bad zone transfer request: \S+: non-authoritative zone \(NOTAUTH\)'
+      - element: description
+        text: Bad zone transfer request.
+    - element: rule
+      attributes:
+        id: '12140'
+        level: '2'
+      children:
+      - element: if_sid
+        text: '12100'
+      - element: match
+        text: 'refresh: failure trying master'
+      - element: description
+        text: Cannot refresh a domain from the master server.
+    - element: rule
+      attributes:
+        id: '12141'
+        level: '1'
+      children:
+      - element: if_sid
+        text: '12100'
+      - element: match
+        text: SOA record not at top of zone
+      - element: description
+        text: Origin of zone and owner name of SOA do not match.
+    - element: rule
+      attributes:
+        id: '12142'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '12100'
+      - element: match
+        text: command channel listening on
+      - element: description
+        text: named command channel is listening.
+    - element: rule
+      attributes:
+        id: '12143'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '12100'
+      - element: match
+        text: automatic empty zone
+      - element: description
+        text: named has created an automatic empty zone.
+    - element: rule
+      attributes:
+        id: '12144'
+        level: '9'
+      children:
+      - element: if_sid
+        text: '12100'
+      - element: match
+        text: 'reloading configuration failed: out of memory'
+      - element: description
+        text: Server does not have enough memory to reload the configuration.
+      - element: group
+        text: pci_dss_10.6.1,gpg13_4.1,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '12145'
+        level: '1'
+      children:
+      - element: if_sid
+        text: '12100'
+      - element: regex
+        text: zone transfer \S+ denied
+      - element: description
+        text: zone transfer denied
+      - element: group
+        text: pci_dss_10.6.1,pci_dss_10.2.4,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_AU.14,nist_800_53_AC.7,tsc_CC7.2,tsc_CC7.3,tsc_CC6.1,tsc_CC6.8,
+    - element: rule
+      attributes:
+        id: '12146'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '12100'
+      - element: match
+        text: 'error sending response: host unreachable$'
+      - element: description
+        text: Cannot send a DNS response.
+    - element: rule
+      attributes:
+        id: '12147'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '12100'
+      - element: regex
+        text: update forwarding \.+ denied$
+      - element: description
+        text: Cannot update forwarding domain.
+    - element: rule
+      attributes:
+        id: '12148'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '12100'
+      - element: match
+        text: ': parsing failed$'
+      - element: description
+        text: Parsing of a configuration file has failed.
+    - element: rule
+      attributes:
+        id: '12149'
+        level: '10'
+        frequency: '8'
+        timeframe: '120'
+      children:
+      - element: if_matched_sid
+        text: '12108'
+      - element: same_source_ip
+        text: ''
+      - element: description
+        text: ' Multiple query (cache) failures.'
+      - element: group
+        text: connection_attempt,
+  original_xml: "<!--\n  -  Named rules\n  -  Author: Daniel Cid.\n  -  Updated by Wazuh, Inc.\n  -  Copyright (C)\
+    \ 2015, Wazuh Inc.\n  -  Copyright (C) 2009 Trend Micro Inc.\n  -  This program is a free software; you can\
+    \ redistribute it and/or modify it under the terms of GPLv2.\n-->\n\n<group name=\"syslog,named,\">\n  <rule\
+    \ id=\"12100\" level=\"0\">\n    <decoded_as>named</decoded_as>\n    <description>Grouping of the named rules</description>\n\
+    \  </rule>\n\n  <rule id=\"12101\" level=\"12\">\n    <if_sid>12100</if_sid>\n    <match>dropping source port\
+    \ zero packet from</match>\n    <description>Invalid DNS packet. Possibility of attack.</description>\n    <mitre>\n\
+    \      <id>T1071</id>\n      <id>T1499</id>\n    </mitre>\n    <group>invalid_access,pci_dss_10.2.4,pci_dss_11.4,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AC.7,nist_800_53_SI.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"12102\" level=\"9\">\n    <if_sid>12100</if_sid>\n    <match>denied AXFR from</match>\n\
+    \    <description>Failed attempt to perform a zone transfer.</description>\n    <group>access_denied,pci_dss_10.2.4,pci_dss_11.4,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AC.7,nist_800_53_SI.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"12103\" level=\"4\">\n    <if_sid>12100</if_sid>\n    <match>denied update from|unapproved\
+    \ update from</match>\n    <description>DNS update denied. </description>\n    <description>Generally mis-configuration.</description>\n\
+    \    <info type=\"link\">http://seclists.org/incidents/2000/May/217</info>\n    <group>client_misconfig,pci_dss_10.2.4,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AC.7,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"12104\" level=\"4\">\n    <if_sid>12100</if_sid>\n    <match>unable to rename log\
+    \ file</match>\n    <description>Log permission misconfiguration in Named.</description>\n    <group>system_error,pci_dss_10.1,hipaa_164.312.b,nist_800_53_AU.12,tsc_CC6.1,tsc_CC6.2,tsc_CC6.3,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"12105\" level=\"4\">\n    <if_sid>12100</if_sid>\n    <match>unexpected RCODE </match>\n\
+    \    <description>Unexpected error while resolving domain.</description>\n  </rule>\n\n  <rule id=\"12106\"\
+    \ level=\"4\">\n    <if_sid>12100</if_sid>\n    <match>refused notify from non-master</match>\n    <description>DNS\
+    \ configuration error.</description>\n\t<group>system_error,pci_dss_10.6.1,gpg13_4.3,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"12107\" level=\"0\">\n    <if_sid>12100</if_sid>\n    <regex>update \\S+ denied</regex>\n\
+    \    <description>DNS update using RFC2136 Dynamic protocol.</description>\n    <group>pci_dss_10.2.4,pci_dss_10.6.1,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AC.7,nist_800_53_AU.6,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"12108\" level=\"5\">\n    <if_sid>12100</if_sid>\n    <match>query (cache) denied|:\
+    \ query (cache)</match>\n    <description>Query cache denied (probably config error).</description>\n    <info\
+    \ type=\"link\">http://www.reedmedia.net/misc/dns/errors.html</info>\n\t<group>system_error,pci_dss_10.2.4,pci_dss_10.6.1,gpg13_4.3,connection_attempt,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AC.7,nist_800_53_AU.6,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"12109\" level=\"12\">\n    <if_sid>12100</if_sid>\n    <match>exiting (due to fatal\
+    \ error)</match>\n    <description>Named fatal error. DNS service going down.</description>\n    <group>service_availability,pci_dss_10.6.1,gpg13_4.1,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"12110\" level=\"8\">\n    <regex>^zone \\S+ serial number \\S+ received from master\
+    \ </regex>\n    <regex>\\S+ \\S ours (\\S+)</regex>\n    <description>Serial number from master is lower </description>\n\
+    \    <description>than stored.</description>\n    <group>system_error,gpg13_4.3,</group>\n  </rule>\n\n  <rule\
+    \ id=\"12111\" level=\"8\">\n    <regex>^transfer of \\S+ from \\S+ failed while receiving \\S+ REFUSED</regex>\n\
+    \    <description>Unable to perform zone transfer.</description>\n    <group>system_error,pci_dss_10.6.1,gpg13_4.3,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"12112\" level=\"4\">\n    <regex>^zone \\S+: expired</regex>\n    <description>Zone\
+    \ transfer error.</description>\n    <group>pci_dss_10.6.1,gpg13_4.3,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"12113\" level=\"0\">\n    <if_sid>12100</if_sid>\n    <match>zone transfer deferred\
+    \ due to quota</match>\n    <description>Zone transfer deferred.</description>\n    <group>pci_dss_10.6.1,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"12114\" level=\"1\">\n    <if_sid>12100</if_sid>\n    <match>bad owner name (check-names)</match>\n\
+    \    <description>Hostname contains characters that check-names does not like.</description>\n  </rule>\n\n\
+    \  <rule id=\"12115\" level=\"0\">\n    <if_sid>12100</if_sid>\n    <match>loaded serial|transferred serial</match>\n\
+    \    <description>Zone transfer.</description>\n  </rule>\n\n  <rule id=\"12116\" level=\"1\">\n    <if_sid>12100</if_sid>\n\
+    \    <match>syntax error near|</match>\n    <match>reloading configuration failed: unexpected token</match>\n\
+    \    <description>Syntax error in a named configuration file.</description>\n\t<group>pci_dss_10.6.1,gpg13_4.3,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n\n  <rule id=\"12117\" level=\"1\">\n    <if_sid>12100</if_sid>\n    <regex>refresh: retry limit\
+    \ for master \\S+ exceeded</regex>\n    <description>Zone transfer rety limit exceeded</description>\n    <group>pci_dss_10.6.1,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"12118\" level=\"1\">\n    <if_sid>12100</if_sid>\n    <match>already exists previous\
+    \ definition</match>\n    <description>Zone has been duplicated.</description>\n  </rule>\n\n  <rule id=\"12119\"\
+    \ level=\"3\">\n    <if_sid>12100</if_sid>\n    <match>starting BIND</match>\n    <description>BIND has been\
+    \ started</description>\n  </rule>\n\n  <rule id=\"12120\" level=\"1\">\n    <if_sid>12100</if_sid>\n    <match>has\
+    \ no address records</match>\n    <description>Missing A or AAAA record</description>\n  </rule>\n\n  <rule\
+    \ id=\"12121\" level=\"1\">\n    <if_sid>12100</if_sid>\n    <regex>zone \\S+: \\(master\\) removed</regex>\n\
+    \    <description>Zone has been removed from a master server</description>\n  </rule>\n\n  <rule id=\"12122\"\
+    \ level=\"1\">\n    <if_sid>12100</if_sid>\n    <regex>loading from master file \\S+ failed: not at top of zone$</regex>\n\
+    \    <description>Origin of zone and owner name of SOA do not match.</description>\n  </rule>\n\n  <rule id=\"\
+    12123\" level=\"0\">\n    <if_sid>12100</if_sid>\n    <match>already exists previous definition</match>\n  \
+    \  <description>Zone has been duplicated</description>\n\t<group>pci_dss_10.6.1,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"12125\" level=\"3\">\n    <if_sid>12100</if_sid>\n    <match>reloading configuration\
+    \ failed: unexpected end of input</match>\n    <description>BIND Configuration error.</description>\n\t<group>pci_dss_10.6.1,gpg13_4.3,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"12126\" level=\"0\">\n    <if_sid>12100</if_sid>\n    <regex>zone \\S+: \\(master\\\
+    ) removed</regex>\n    <description>Zone has been removed from a master server</description>\n\t<group>pci_dss_10.6.1,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"12127\" level=\"1\">\n    <if_sid>12100</if_sid>\n    <regex>loading from master\
+    \ file \\S+ failed: not at top of zone$</regex>\n    <description>Origin of zone and owner name of SOA do not\
+    \ match.</description>\n  </rule>\n\n  <rule id=\"12128\" level=\"1\">\n    <if_sid>12100</if_sid>\n    <match>^transfer\
+    \ of|</match>\n    <match>AXFR started$</match>\n    <description>Zone transfer.</description>\n  </rule>\n\n\
+    \  <rule id=\"12129\" level=\"4\">\n    <if_sid>12128</if_sid>\n    <match>failed to connect: connection refused</match>\n\
+    \    <description>Zone transfer failed, unable to connect to master.</description>\n    <group>pci_dss_10.6.1,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"12130\" level=\"2\">\n    <if_sid>12100</if_sid>\n    <match>IPv6 interfaces failed</match>\n\
+    \    <description>Could not listen on IPv6 interface.</description>\n\t<group>pci_dss_10.6.1,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"12131\" level=\"2\">\n    <if_sid>12100</if_sid>\n    <match>failed; interface ignored</match>\n\
+    \    <description>Could not bind to an interface.</description>\n\t<group>pci_dss_10.6.1,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"12132\" level=\"0\">\n    <if_sid>12128</if_sid>\n    <match>failed while receiving\
+    \ responses: not authoritative</match>\n    <description>Master is not authoritative for zone.</description>\n\
+    \  </rule>\n\n  <rule id=\"12133\" level=\"4\">\n    <if_sid>12100</if_sid>\n    <regex>open: \\S+: permission\
+    \ denied$</regex>\n    <description>Could not open configuration file, permission denied.</description>\n\t\
+    <group>pci_dss_10.2.4,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AC.7,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"12134\" level=\"4\">\n    <if_sid>12100</if_sid>\n    <match>loading configuration:\
+    \ permission denied</match>\n    <description>Could not open configuration file, permission denied.</description>\n\
+    \t<group>pci_dss_10.2.4,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AC.7,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"12135\" level=\"0\">\n    <if_sid>12100</if_sid>\n    <match>IN SOA -E</match>\n\
+    \    <description>Domain in SOA -E.</description>\n  </rule>\n\n  <rule id=\"12136\" level=\"4\">\n    <if_sid>12128</if_sid>\n\
+    \    <match>failed to connect: host unreachable</match>\n    <description>Master appears to be down.</description>\n\
+    \    <group>pci_dss_10.6.1,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,</group>\n  </rule>\n\
+    \n  <rule id=\"12137\" level=\"0\">\n    <if_sid>12100</if_sid>\n    <match>IN AXFR -</match>\n    <description>Domain\
+    \ is queried for a zone transferred.</description>\n  </rule>\n\n  <rule id=\"12138\" level=\"0\">\n    <if_sid>12100</if_sid>\n\
+    \    <match> IN A +</match>\n    <description>Domain A record found.</description>\n  </rule>\n\n  <rule id=\"\
+    12139\" level=\"3\">\n    <if_sid>12100</if_sid>\n    <regex>client \\S+: bad zone transfer request: \\S+: non-authoritative\
+    \ zone \\(NOTAUTH\\)</regex>\n    <description>Bad zone transfer request.</description>\n  </rule>\n\n  <rule\
+    \ id=\"12140\" level=\"2\">\n    <if_sid>12100</if_sid>\n    <match>refresh: failure trying master</match>\n\
+    \    <description>Cannot refresh a domain from the master server.</description>\n  </rule>\n\n  <rule id=\"\
+    12141\" level=\"1\">\n    <if_sid>12100</if_sid>\n    <match>SOA record not at top of zone</match>\n    <description>Origin\
+    \ of zone and owner name of SOA do not match.</description>\n  </rule>\n\n  <rule id=\"12142\" level=\"0\">\n\
+    \    <if_sid>12100</if_sid>\n    <match>command channel listening on</match>\n    <description>named command\
+    \ channel is listening.</description>\n  </rule>\n\n  <rule id=\"12143\" level=\"0\">\n    <if_sid>12100</if_sid>\n\
+    \    <match>automatic empty zone</match>\n    <description>named has created an automatic empty zone.</description>\n\
+    \  </rule>\n\n  <rule id=\"12144\" level=\"9\">\n    <if_sid>12100</if_sid>\n    <match>reloading configuration\
+    \ failed: out of memory</match>\n    <description>Server does not have enough memory to reload the configuration.</description>\n\
+    \    <group>pci_dss_10.6.1,gpg13_4.1,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"12145\" level=\"1\">\n    <if_sid>12100</if_sid>\n    <regex>zone transfer \\S+ denied</regex>\n\
+    \    <description>zone transfer denied</description>\n    <group>pci_dss_10.6.1,pci_dss_10.2.4,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_AU.14,nist_800_53_AC.7,tsc_CC7.2,tsc_CC7.3,tsc_CC6.1,tsc_CC6.8,</group>\n\
+    \  </rule>\n\n  <rule id=\"12146\" level=\"0\">\n    <if_sid>12100</if_sid>\n    <match>error sending response:\
+    \ host unreachable$</match>\n    <description>Cannot send a DNS response.</description>\n  </rule>\n\n  <rule\
+    \ id=\"12147\" level=\"0\">\n    <if_sid>12100</if_sid>\n    <regex>update forwarding \\.+ denied$</regex>\n\
+    \    <description>Cannot update forwarding domain.</description>\n  </rule>\n\n  <rule id=\"12148\" level=\"\
+    0\">\n    <if_sid>12100</if_sid>\n    <match>: parsing failed$</match>\n    <description>Parsing of a configuration\
+    \ file has failed.</description>\n  </rule>\n\n  <rule id=\"12149\" level=\"10\" frequency=\"8\" timeframe=\"\
+    120\">\n    <if_matched_sid>12108</if_matched_sid>\n    <same_source_ip />\n    <description> Multiple query\
+    \ (cache) failures.</description>\n    <group>connection_attempt,</group>\n  </rule>\n\n</group>\n"

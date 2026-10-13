@@ -1,0 +1,188 @@
+schema: wazuh-original-rules-yaml/v1
+format_only_conversion: true
+native_runtime_format: Wazuh XML
+authoritative_field: sources[].original_xml
+upstream:
+  repository: https://github.com/wazuh/wazuh
+  tag: v4.14.8
+  commit: f470ad7db717b18db7feeed568949643698f0f34
+sources:
+- file: ruleset/rules/0850-audit_rules.xml
+  url: https://github.com/wazuh/wazuh/blob/f470ad7db717b18db7feeed568949643698f0f34/ruleset/rules/0850-audit_rules.xml
+  sha256: 0f02595bb7552b4e998b4fe9eb020acbb1f1cfc6d57300c4c59ab514ac426809
+  rule_count: 7
+  elements:
+  - element: group
+    attributes:
+      name: audit_detections,
+    children:
+    - element: rule
+      attributes:
+        id: '92600'
+        level: '0'
+      children:
+      - element: if_group
+        text: audit
+      - element: field
+        attributes:
+          name: audit.exe
+          type: pcre2
+        text: python
+      - element: description
+        text: Executed python script.
+      - element: mitre
+        children:
+        - element: id
+          text: T1059.006
+    - element: rule
+      attributes:
+        id: '92601'
+        level: '6'
+      children:
+      - element: if_sid
+        text: '92600'
+      - element: match
+        attributes:
+          type: pcre2
+        text: a\d="\w+\.py".+cwd="/tmp"|a\d="/tmp/.+\.py
+      - element: description
+        text: Executed python script from /tmp/ folder.
+      - element: mitre
+        children:
+        - element: id
+          text: T1059.006
+    - element: rule
+      attributes:
+        id: '92602'
+        level: '12'
+      children:
+      - element: if_sid
+        text: 92600, 92601
+      - element: match
+        attributes:
+          type: pcre2
+        text: (psexec.py|smbexec.py).+a\d="-hashes".+a\d=".+:.+
+      - element: description
+        text: Suspicious python script matches Impacket signature, possible use of stolen credentials or pass the
+          hash attack.
+      - element: mitre
+        children:
+        - element: id
+          text: T1059.006
+        - element: id
+          text: T1550.002
+    - element: rule
+      attributes:
+        id: '92603'
+        level: '6'
+      children:
+      - element: if_group
+        text: audit
+      - element: field
+        attributes:
+          name: audit.command
+          type: pcre2
+        text: ^scp$
+      - element: field
+        attributes:
+          name: audit.file.name
+          type: pcre2
+        text: .+
+      - element: description
+        text: A file was copied to this system over SSH using SCP.
+      - element: mitre
+        children:
+        - element: id
+          text: T1021.004
+    - element: rule
+      attributes:
+        id: '92604'
+        level: '6'
+      children:
+      - element: if_group
+        text: audit
+      - element: field
+        attributes:
+          name: audit.execve.a0
+          type: pcre2
+        text: ps
+      - element: field
+        attributes:
+          name: audit.execve.a1
+          type: pcre2
+        text: ^(?=.*a)(?=.*x)
+      - element: description
+        text: Processes running for all users were queried with ps command.
+      - element: mitre
+        children:
+        - element: id
+          text: T1057
+    - element: rule
+      attributes:
+        id: '92605'
+        level: '6'
+      children:
+      - element: if_group
+        text: audit
+      - element: field
+        attributes:
+          name: audit.execve.a0
+          type: pcre2
+        text: ls
+      - element: field
+        attributes:
+          name: audit.execve.a2
+          type: pcre2
+        text: ^(?=.*a)(?=.*R)
+      - element: description
+        text: Executed recursive query of all files using ls command.
+      - element: mitre
+        children:
+        - element: id
+          text: T1083
+    - element: rule
+      attributes:
+        id: '92606'
+        level: '6'
+      children:
+      - element: if_group
+        text: audit
+      - element: field
+        attributes:
+          name: audit.command
+          type: pcre2
+        text: lscpu
+      - element: field
+        attributes:
+          name: audit.file.name
+          type: pcre2
+        text: .+
+      - element: description
+        text: A file was copied to this system over SSH using LSCPU.
+      - element: mitre
+        children:
+        - element: id
+          text: T1021.004
+  original_xml: "<!--\n  Copyright (C) 2015, Wazuh Inc.\n-->\n\n<!-- \n  General Linux Audit module channel detection\
+    \ rules:           92600 - 92649\n-->\n\n<group name=\"audit_detections,\">\n\n  <rule id=\"92600\" level=\"\
+    0\">\n    <if_group>audit</if_group>\n    <field name=\"audit.exe\" type=\"pcre2\">python</field>\n    <description>Executed\
+    \ python script.</description>\n    <mitre>\n      <id>T1059.006</id>\n    </mitre>\n  </rule>\n\n  <rule id=\"\
+    92601\" level=\"6\">\n    <if_sid>92600</if_sid>\n    <match type=\"pcre2\">a\\d=\"\\w+\\.py\".+cwd=\"/tmp\"\
+    |a\\d=\"/tmp/.+\\.py</match>\n    <description>Executed python script from /tmp/ folder.</description>\n   \
+    \ <mitre>\n      <id>T1059.006</id>\n    </mitre>\n  </rule>\n\n  <rule id=\"92602\" level=\"12\">\n    <if_sid>92600,\
+    \ 92601</if_sid>\n    <match type=\"pcre2\">(psexec.py|smbexec.py).+a\\d=\"-hashes\".+a\\d=\".+:.+</match>\n\
+    \    <description>Suspicious python script matches Impacket signature, possible use of stolen credentials or\
+    \ pass the hash attack.</description>\n    <mitre>\n      <id>T1059.006</id>\n      <id>T1550.002</id>\n   \
+    \ </mitre>\n  </rule>\n\n  <rule id=\"92603\" level=\"6\">\n    <if_group>audit</if_group>\n    <field name=\"\
+    audit.command\" type=\"pcre2\">^scp$</field>\n    <field name=\"audit.file.name\" type=\"pcre2\">.+</field>\n\
+    \    <description>A file was copied to this system over SSH using SCP.</description>\n    <mitre>\n      <id>T1021.004</id>\n\
+    \    </mitre>\n  </rule>\n\n  <rule id=\"92604\" level=\"6\">\n    <if_group>audit</if_group>\n    <field name=\"\
+    audit.execve.a0\" type=\"pcre2\">ps</field>\n    <field name=\"audit.execve.a1\" type=\"pcre2\">^(?=.*a)(?=.*x)</field>\n\
+    \    <description>Processes running for all users were queried with ps command.</description>\n    <mitre>\n\
+    \      <id>T1057</id>\n    </mitre>\n  </rule>\n\n  <rule id=\"92605\" level=\"6\">\n    <if_group>audit</if_group>\n\
+    \    <field name=\"audit.execve.a0\" type=\"pcre2\">ls</field>\n    <field name=\"audit.execve.a2\" type=\"\
+    pcre2\">^(?=.*a)(?=.*R)</field>\n    <description>Executed recursive query of all files using ls command.</description>\n\
+    \    <mitre>\n      <id>T1083</id>\n    </mitre>\n  </rule>\n\n  <rule id=\"92606\" level=\"6\">\n    <if_group>audit</if_group>\n\
+    \    <field name=\"audit.command\" type=\"pcre2\">lscpu</field>\n    <field name=\"audit.file.name\" type=\"\
+    pcre2\">.+</field>\n    <description>A file was copied to this system over SSH using LSCPU.</description>\n\
+    \    <mitre>\n      <id>T1021.004</id>\n    </mitre>\n  </rule>\n\n</group>\n"

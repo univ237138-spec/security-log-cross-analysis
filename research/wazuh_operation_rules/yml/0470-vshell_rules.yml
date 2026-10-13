@@ -1,0 +1,209 @@
+schema: wazuh-original-rules-yaml/v1
+format_only_conversion: true
+native_runtime_format: Wazuh XML
+authoritative_field: sources[].original_xml
+upstream:
+  repository: https://github.com/wazuh/wazuh
+  tag: v4.14.8
+  commit: f470ad7db717b18db7feeed568949643698f0f34
+sources:
+- file: ruleset/rules/0470-vshell_rules.xml
+  url: https://github.com/wazuh/wazuh/blob/f470ad7db717b18db7feeed568949643698f0f34/ruleset/rules/0470-vshell_rules.xml
+  sha256: 4b2166f57b2f951d92f1e03cf9d6bed35e1fdfe24c4dc8157b5dc346dac47c2e
+  rule_count: 8
+  elements:
+  - element: group
+    attributes:
+      name: vshell,
+    children:
+    - element: rule
+      attributes:
+        id: '86800'
+        level: '0'
+      children:
+      - element: decoded_as
+        text: windows-date-format
+      - element: match
+        text: VShellSSH2
+      - element: description
+        text: VShell message grouped.
+    - element: rule
+      attributes:
+        id: '86801'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '86800'
+      - element: match
+        text: Connection accepted from
+      - element: description
+        text: VShell connection attempt successful
+      - element: group
+        text: pci_dss_10.2.5,gdpr_IV_32.2,
+    - element: rule
+      attributes:
+        id: '86802'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '86800'
+      - element: regex
+        text: Login failed|Authentication for (\w+) failed
+      - element: description
+        text: VShell user failed to login or user does not exist
+      - element: group
+        text: pci_dss_10.2.4,pci_dss_10.2.5,gpg13_7.1,gdpr_IV_35.7.d,gdpr_IV_32.2,
+    - element: rule
+      attributes:
+        id: '86803'
+        level: '7'
+      children:
+      - element: if_sid
+        text: '86802'
+      - element: regex
+        text: Maximum authentication retries for user (\w+) exceeded
+      - element: description
+        text: VShell user used the maximum number of password attempts.
+      - element: mitre
+        children:
+        - element: id
+          text: T1110
+      - element: group
+        text: pci_dss_10.2.4,pci_dss_10.2.5,pci_dss_11.4,gpg13_7.1,gdpr_IV_35.7.d,gdpr_IV_32.2,
+    - element: rule
+      attributes:
+        id: '86804'
+        level: '10'
+      children:
+      - element: if_sid
+        text: '86800'
+      - element: regex
+        text: Connection from (\d+.\d+.\d+.\d+) rejected by Deny Hosts file
+      - element: description
+        text: Host is trying to connect to VShell server but exists in the deny file.
+      - element: group
+        text: gdpr_IV_35.7.d,
+    - element: rule
+      attributes:
+        id: '86805'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '86800'
+      - element: regex
+        text: password for user (\S+) accepted
+      - element: description
+        text: VShell user successfully authenticated.
+      - element: group
+        text: pci_dss_10.2.5,gpg13_7.1,gpg13_7.2,gdpr_IV_32.2,
+    - element: rule
+      attributes:
+        id: '86806'
+        level: '12'
+        frequency: '7'
+        timeframe: '120'
+      children:
+      - element: if_matched_sid
+        text: '86804'
+      - element: same_source_ip
+        text: ''
+      - element: description
+        text: VShell multiple connection attempts within 2 minute by a host in the deny file, potential DOS or brute
+          force attempt.
+      - element: mitre
+        children:
+        - element: id
+          text: T1110
+      - element: group
+        text: pci_dss_10.2.4,pci_dss_10.2.5,pci_dss_11.4,gdpr_IV_35.7.d,gdpr_IV_32.2,
+    - element: rule
+      attributes:
+        id: '86807'
+        level: '12'
+        frequency: '7'
+        timeframe: '60'
+      children:
+      - element: if_matched_sid
+        text: '86802'
+      - element: description
+        text: VShell host has exceeded the number of failed login attempts and has been added to the Hosts Deny
+          file.
+      - element: mitre
+        children:
+        - element: id
+          text: T1110
+      - element: group
+        text: pci_dss_10.2.4,pci_dss_10.2.5,pci_dss_11.4,gdpr_IV_35.7.d,gdpr_IV_32.2,
+  original_xml: |
+    <!--
+      -  vshell rules
+      -  Author: Stephen Hill.
+      -  Updated by Wazuh, Inc.
+      -  Copyright (C) 2015, Wazuh Inc.
+      -  This program is a free software; you can redistribute it and/or modify it under the terms of GPLv2.
+    -->
+
+    <group name="vshell,">
+      <rule id="86800" level="0">
+        <decoded_as>windows-date-format</decoded_as>
+        <match>VShellSSH2</match>
+        <description>VShell message grouped.</description>
+      </rule>
+
+      <rule id="86801" level="3">
+        <if_sid>86800</if_sid>
+        <match>Connection accepted from</match>
+        <description>VShell connection attempt successful</description>
+        <group>pci_dss_10.2.5,gdpr_IV_32.2,</group>
+      </rule>
+
+      <rule id="86802" level="5">
+        <if_sid>86800</if_sid>
+        <regex>Login failed|Authentication for (\w+) failed</regex>
+        <description>VShell user failed to login or user does not exist</description>
+        <group>pci_dss_10.2.4,pci_dss_10.2.5,gpg13_7.1,gdpr_IV_35.7.d,gdpr_IV_32.2,</group>
+      </rule>
+
+      <rule id="86803" level="7">
+        <if_sid>86802</if_sid>
+        <regex>Maximum authentication retries for user (\w+) exceeded</regex>
+        <description>VShell user used the maximum number of password attempts.</description>
+        <mitre>
+          <id>T1110</id>
+        </mitre>
+        <group>pci_dss_10.2.4,pci_dss_10.2.5,pci_dss_11.4,gpg13_7.1,gdpr_IV_35.7.d,gdpr_IV_32.2,</group>
+      </rule>
+
+      <rule id="86804" level="10">
+        <if_sid>86800</if_sid>
+        <regex>Connection from (\d+.\d+.\d+.\d+) rejected by Deny Hosts file</regex>
+        <description>Host is trying to connect to VShell server but exists in the deny file.</description>
+        <group>gdpr_IV_35.7.d,</group>
+      </rule>
+
+      <rule id="86805" level="3">
+        <if_sid>86800</if_sid>
+        <regex>password for user (\S+) accepted</regex>
+        <description>VShell user successfully authenticated.</description>
+        <group>pci_dss_10.2.5,gpg13_7.1,gpg13_7.2,gdpr_IV_32.2,</group>
+      </rule>
+
+      <rule id="86806" level="12" frequency="7" timeframe="120">
+        <if_matched_sid>86804</if_matched_sid>
+        <same_source_ip />
+        <description>VShell multiple connection attempts within 2 minute by a host in the deny file, potential DOS or brute force attempt.</description>
+        <mitre>
+          <id>T1110</id>
+        </mitre>
+        <group>pci_dss_10.2.4,pci_dss_10.2.5,pci_dss_11.4,gdpr_IV_35.7.d,gdpr_IV_32.2,</group>
+      </rule>
+
+      <rule id="86807" level="12" frequency="7" timeframe="60">
+        <if_matched_sid>86802</if_matched_sid>
+        <description>VShell host has exceeded the number of failed login attempts and has been added to the Hosts Deny file.</description>
+        <mitre>
+          <id>T1110</id>
+        </mitre>
+        <group>pci_dss_10.2.4,pci_dss_10.2.5,pci_dss_11.4,gdpr_IV_35.7.d,gdpr_IV_32.2,</group>
+      </rule>
+    </group>

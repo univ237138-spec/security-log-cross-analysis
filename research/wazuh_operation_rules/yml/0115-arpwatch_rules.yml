@@ -1,0 +1,226 @@
+schema: wazuh-original-rules-yaml/v1
+format_only_conversion: true
+native_runtime_format: Wazuh XML
+authoritative_field: sources[].original_xml
+upstream:
+  repository: https://github.com/wazuh/wazuh
+  tag: v4.14.8
+  commit: f470ad7db717b18db7feeed568949643698f0f34
+sources:
+- file: ruleset/rules/0115-arpwatch_rules.xml
+  url: https://github.com/wazuh/wazuh/blob/f470ad7db717b18db7feeed568949643698f0f34/ruleset/rules/0115-arpwatch_rules.xml
+  sha256: 3f93a5a47cd8f1761ee25a1d21a99e6bbcc883a509f8db68fba16336401fd4cd
+  rule_count: 10
+  elements:
+  - element: group
+    attributes:
+      name: syslog,arpwatch,
+    children:
+    - element: rule
+      attributes:
+        id: '7200'
+        level: '0'
+        noalert: '1'
+      children:
+      - element: decoded_as
+        text: arpwatch
+      - element: description
+        text: Arpwatch messages grouped.
+    - element: rule
+      attributes:
+        id: '7201'
+        level: '4'
+      children:
+      - element: if_sid
+        text: '7200'
+      - element: if_fts
+        text: ''
+      - element: description
+        text: Arpwatch new host detected.
+      - element: group
+        text: new_host,pci_dss_10.6.1,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '7202'
+        level: '9'
+      children:
+      - element: if_sid
+        text: '7200'
+      - element: match
+        text: 'flip flop '
+      - element: description
+        text: 'Arpwatch: "flip flop" message. IP address/MAC relation changing too often.'
+      - element: group
+        text: ip_spoof,pci_dss_1.3.4,pci_dss_11.4,gdpr_IV_35.7.d,hipaa_164.312.a.1,nist_800_53_CA.3,nist_800_53_SI.4,tsc_CC6.6,tsc_CC6.7,tsc_CC6.8,tsc_CC7.1,tsc_CC6.1,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '7203'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '7200'
+      - element: match
+        text: 'reaper: pid '
+      - element: description
+        text: 'Arpwatch: exiting.'
+      - element: group
+        text: service_availability,pci_dss_10.6.1,gpg13_4.14,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '7204'
+        level: '9'
+      children:
+      - element: if_sid
+        text: '7200'
+      - element: match
+        text: 'changed ethernet address '
+      - element: description
+        text: 'Arpwatch: Changed network interface for ip address.'
+      - element: group
+        text: ip_spoof,pci_dss_1.3.4,pci_dss_11.4,gdpr_IV_35.7.d,hipaa_164.312.a.1,nist_800_53_CA.3,nist_800_53_SI.4,tsc_CC6.6,tsc_CC6.7,tsc_CC6.8,tsc_CC7.1,tsc_CC6.1,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '7205'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '7200'
+      - element: match
+        text: 'bad interface eth0|exiting|Running as '
+      - element: description
+        text: 'Arpwatch: startup/exiting messages.'
+    - element: rule
+      attributes:
+        id: '7206'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '7200'
+      - element: match
+        text: sent bad addr len
+      - element: description
+        text: 'Arpwatch: detected bad address len (ignored).'
+    - element: rule
+      attributes:
+        id: '7207'
+        level: '1'
+      children:
+      - element: if_sid
+        text: '7200'
+      - element: match
+        text: '/dev/bpf0: Permission denied'
+      - element: description
+        text: arpwatch probably run with wrong permissions
+      - element: group
+        text: pci_dss_10.6.1,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '7208'
+        level: '1'
+      children:
+      - element: if_sid
+        text: '7200'
+      - element: match
+        text: reused old ethernet address
+      - element: description
+        text: 'Arpwatch: An IP has reverted to an old ethernet address.'
+      - element: group
+        text: pci_dss_10.6.1,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '7209'
+        level: '7'
+      children:
+      - element: if_sid
+        text: '7200'
+      - element: match
+        text: ethernet mismatch
+      - element: description
+        text: 'Arpwatch: Possible arpspoofing attempt.'
+      - element: mitre
+        children:
+        - element: id
+          text: T1095
+      - element: group
+        text: ip_spoof,pci_dss_1.3.4,pci_dss_11.4,gdpr_IV_35.7.d,hipaa_164.312.a.1,nist_800_53_CA.3,nist_800_53_SI.4,tsc_CC6.6,tsc_CC6.7,tsc_CC6.8,tsc_CC7.1,tsc_CC6.1,tsc_CC7.2,tsc_CC7.3,
+  original_xml: |
+    <!--
+      -  Arpwatch rules
+      -  Author: Daniel Cid.
+      -  Updated by Wazuh, Inc.
+      -  Copyright (C) 2015, Wazuh Inc.
+      -  Copyright (C) 2009 Trend Micro Inc.
+      -  This program is a free software; you can redistribute it and/or modify it under the terms of GPLv2.
+    -->
+
+    <group name="syslog,arpwatch,">
+      <rule id="7200" level="0" noalert="1">
+        <decoded_as>arpwatch</decoded_as>
+        <description>Arpwatch messages grouped.</description>
+      </rule>
+
+      <rule id="7201" level="4">
+        <if_sid>7200</if_sid>
+        <if_fts />
+        <description>Arpwatch new host detected.</description>
+        <group>new_host,pci_dss_10.6.1,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="7202" level="9">
+        <if_sid>7200</if_sid>
+        <match>flip flop </match>
+        <description>Arpwatch: "flip flop" message. IP address/MAC relation changing too often.</description>
+        <group>ip_spoof,pci_dss_1.3.4,pci_dss_11.4,gdpr_IV_35.7.d,hipaa_164.312.a.1,nist_800_53_CA.3,nist_800_53_SI.4,tsc_CC6.6,tsc_CC6.7,tsc_CC6.8,tsc_CC7.1,tsc_CC6.1,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="7203" level="3">
+        <if_sid>7200</if_sid>
+        <match>reaper: pid </match>
+        <description>Arpwatch: exiting.</description>
+        <group>service_availability,pci_dss_10.6.1,gpg13_4.14,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="7204" level="9">
+        <if_sid>7200</if_sid>
+        <match>changed ethernet address </match>
+        <description>Arpwatch: Changed network interface for ip address.</description>
+        <group>ip_spoof,pci_dss_1.3.4,pci_dss_11.4,gdpr_IV_35.7.d,hipaa_164.312.a.1,nist_800_53_CA.3,nist_800_53_SI.4,tsc_CC6.6,tsc_CC6.7,tsc_CC6.8,tsc_CC7.1,tsc_CC6.1,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="7205" level="0">
+        <if_sid>7200</if_sid>
+        <match>bad interface eth0|exiting|Running as </match>
+        <description>Arpwatch: startup/exiting messages.</description>
+      </rule>
+
+      <rule id="7206" level="0">
+        <if_sid>7200</if_sid>
+        <match>sent bad addr len</match>
+        <description>Arpwatch: detected bad address len (ignored).</description>
+      </rule>
+
+      <rule id="7207" level="1">
+        <if_sid>7200</if_sid>
+        <match>/dev/bpf0: Permission denied</match>
+        <description>arpwatch probably run with wrong permissions</description>
+        <group>pci_dss_10.6.1,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="7208" level="1">
+        <if_sid>7200</if_sid>
+        <match>reused old ethernet address</match>
+        <description>Arpwatch: An IP has reverted to an old ethernet address.</description>
+        <group>pci_dss_10.6.1,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="7209" level="7">
+        <if_sid>7200</if_sid>
+        <match>ethernet mismatch</match>
+        <description>Arpwatch: Possible arpspoofing attempt.</description>
+        <mitre>
+          <id>T1095</id>
+        </mitre>
+        <group>ip_spoof,pci_dss_1.3.4,pci_dss_11.4,gdpr_IV_35.7.d,hipaa_164.312.a.1,nist_800_53_CA.3,nist_800_53_SI.4,tsc_CC6.6,tsc_CC6.7,tsc_CC6.8,tsc_CC7.1,tsc_CC6.1,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+    </group>

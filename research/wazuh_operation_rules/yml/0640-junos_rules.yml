@@ -1,0 +1,66 @@
+schema: wazuh-original-rules-yaml/v1
+format_only_conversion: true
+native_runtime_format: Wazuh XML
+authoritative_field: sources[].original_xml
+upstream:
+  repository: https://github.com/wazuh/wazuh
+  tag: v4.14.8
+  commit: f470ad7db717b18db7feeed568949643698f0f34
+sources:
+- file: ruleset/rules/0640-junos_rules.xml
+  url: https://github.com/wazuh/wazuh/blob/f470ad7db717b18db7feeed568949643698f0f34/ruleset/rules/0640-junos_rules.xml
+  sha256: 559f3fe2f613c39581cd9cbce489014c2b6e3335daebe5e17b520df31f1359d5
+  rule_count: 4
+  elements:
+  - element: group
+    attributes:
+      name: junos-ids,junos,rsyslog,
+    children:
+    - element: rule
+      attributes:
+        id: '67100'
+        level: '0'
+      children:
+      - element: decoded_as
+        text: junos-ids
+      - element: description
+        text: Junos IDS
+    - element: rule
+      attributes:
+        id: '67101'
+        level: '10'
+      children:
+      - element: if_sid
+        text: '67100'
+      - element: description
+        text: 'Junos IDS: $(attack.name)'
+  - element: group
+    attributes:
+      name: rsyslog,junos,junos-rtflow,
+    children:
+    - element: rule
+      attributes:
+        id: '67102'
+        level: '0'
+      children:
+      - element: decoded_as
+        text: junos-rt-flow
+      - element: description
+        text: Junos RT Flow
+    - element: rule
+      attributes:
+        id: '67103'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '67102'
+      - element: description
+        text: 'Junos RT flow: $(subcat)'
+  original_xml: "<!--\n  - Junos rules\n  - Created by Wazuh, Inc.\n  - Copyright (C) 2015, Wazuh Inc.\n  - This\
+    \ program is a free software; you can redistribute it and/or modify it under the terms of GPLv2.\n-->\n\n<group\
+    \ name=\"junos-ids,junos,rsyslog,\">\n\n    <rule id=\"67100\" level=\"0\">\n        <decoded_as>junos-ids</decoded_as>\n\
+    \        <description>Junos IDS</description>\n    </rule>\n\n    <rule id=\"67101\" level=\"10\">\n       \
+    \ <if_sid>67100</if_sid>\n        <description>Junos IDS: $(attack.name)</description>\n    </rule>\n\n</group>\n\
+    \n<group name=\"rsyslog,junos,junos-rtflow,\">\n\n    <rule id=\"67102\" level=\"0\">\n        <decoded_as>junos-rt-flow</decoded_as>\n\
+    \        <description>Junos RT Flow</description>\n    </rule>\n\n    <rule id=\"67103\" level=\"5\">\n    \
+    \    <if_sid>67102</if_sid>\n        <description>Junos RT flow: $(subcat)</description>\n    </rule> \n</group> "

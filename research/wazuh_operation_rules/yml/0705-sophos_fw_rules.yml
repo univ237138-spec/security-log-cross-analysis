@@ -1,0 +1,179 @@
+schema: wazuh-original-rules-yaml/v1
+format_only_conversion: true
+native_runtime_format: Wazuh XML
+authoritative_field: sources[].original_xml
+upstream:
+  repository: https://github.com/wazuh/wazuh
+  tag: v4.14.8
+  commit: f470ad7db717b18db7feeed568949643698f0f34
+sources:
+- file: ruleset/rules/0705-sophos_fw_rules.xml
+  url: https://github.com/wazuh/wazuh/blob/f470ad7db717b18db7feeed568949643698f0f34/ruleset/rules/0705-sophos_fw_rules.xml
+  sha256: 0379bce8e11c4a656aca36be5bdb56159cfb11358d03ecbc740dd94a6962846a
+  rule_count: 11
+  elements:
+  - element: group
+    attributes:
+      name: sophos-fw,
+    children:
+    - element: rule
+      attributes:
+        id: '70020'
+        level: '0'
+      children:
+      - element: decoded_as
+        text: sophos-fw
+      - element: description
+        text: Sophos XG210 Firewall event
+    - element: rule
+      attributes:
+        id: '70021'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '70020'
+      - element: field
+        attributes:
+          name: sophos_fw_status_msg
+        text: Deny
+      - element: description
+        text: 'Traffic Denied: from $(src_ip) to $(dst_ip)'
+    - element: rule
+      attributes:
+        id: '70022'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '70020'
+      - element: field
+        attributes:
+          name: sophos_fw_status_msg
+        text: Allow
+      - element: description
+        text: 'Traffic Allowed: from $(src_ip) to $(dst_ip)'
+    - element: rule
+      attributes:
+        id: '70023'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '70020'
+      - element: field
+        attributes:
+          name: sophos_fw_status_msg
+        text: Detect
+      - element: description
+        text: 'Traffic Detected: from $(src_ip) to $(dst_ip)'
+    - element: rule
+      attributes:
+        id: '70024'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '70020'
+      - element: field
+        attributes:
+          name: sophos_fw_status_msg
+        text: Drop
+      - element: description
+        text: 'Traffic Dropped: from $(src_ip) to $(dst_ip)'
+    - element: rule
+      attributes:
+        id: '70025'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '70020'
+      - element: field
+        attributes:
+          name: sophos_fw_status_msg
+        text: Clean
+      - element: description
+        text: 'Traffic Cleaned: from $(src_ip) to $(dst_ip)'
+    - element: rule
+      attributes:
+        id: '70026'
+        level: '7'
+      children:
+      - element: if_sid
+        text: '70020'
+      - element: field
+        attributes:
+          name: sophos_fw_status_msg
+        text: Virus
+      - element: description
+        text: 'Virus detected: source IP $(src_ip)'
+    - element: rule
+      attributes:
+        id: '70027'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '70020'
+      - element: field
+        attributes:
+          name: sophos_fw_status_msg
+        text: Spam
+      - element: description
+        text: 'Spam: source IP $(src_ip)'
+    - element: rule
+      attributes:
+        id: '70028'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '70020'
+      - element: field
+        attributes:
+          name: sophos_fw_status_msg
+        text: Admin
+      - element: description
+        text: 'Admin Traffic: from $(src_ip) to $(dst_ip)'
+    - element: rule
+      attributes:
+        id: '70029'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '70020'
+      - element: field
+        attributes:
+          name: sophos_fw_status_msg
+        text: Authentication
+      - element: description
+        text: 'Authentication Traffic: from $(src_ip) to $(dst_ip)'
+    - element: rule
+      attributes:
+        id: '70030'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '70020'
+      - element: field
+        attributes:
+          name: sophos_fw_status_msg
+        text: System
+      - element: description
+        text: 'System Traffic : from $(src_ip) to $(dst_ip)'
+  original_xml: "<!--\n  -  Sophos XG210 Firewall rules\n  -  Created by Wazuh, Inc.\n  -  Copyright (C) 2015, Wazuh\
+    \ Inc.\n  -  This program is a free software; you can redistribute it and/or modify it under the terms of GPLv2.\n\
+    -->\n\n<group name=\"sophos-fw,\">\n  <rule id=\"70020\" level=\"0\">\n    <decoded_as>sophos-fw</decoded_as>\n\
+    \    <description>Sophos XG210 Firewall event</description>\n  </rule>\n\n  <rule id=\"70021\" level=\"5\">\n\
+    \    <if_sid>70020</if_sid>\n    <field name=\"sophos_fw_status_msg\">Deny</field>\n    <description>Traffic\
+    \ Denied: from $(src_ip) to $(dst_ip)</description>\n  </rule>\n\n  <rule id=\"70022\" level=\"3\">\n    <if_sid>70020</if_sid>\n\
+    \    <field name=\"sophos_fw_status_msg\">Allow</field>\n    <description>Traffic Allowed: from $(src_ip) to\
+    \ $(dst_ip)</description>\n  </rule>\n\n  <rule id=\"70023\" level=\"3\">\n    <if_sid>70020</if_sid>\n    <field\
+    \ name=\"sophos_fw_status_msg\">Detect</field>\n    <description>Traffic Detected: from $(src_ip) to $(dst_ip)</description>\n\
+    \  </rule>\n\n  <rule id=\"70024\" level=\"3\">\n    <if_sid>70020</if_sid>\n    <field name=\"sophos_fw_status_msg\"\
+    >Drop</field>\n    <description>Traffic Dropped: from $(src_ip) to $(dst_ip)</description>\n  </rule>\n\n  <rule\
+    \ id=\"70025\" level=\"3\">\n    <if_sid>70020</if_sid>\n    <field name=\"sophos_fw_status_msg\">Clean</field>\n\
+    \    <description>Traffic Cleaned: from $(src_ip) to $(dst_ip)</description>\n  </rule>\n\n  <rule id=\"70026\"\
+    \ level=\"7\">\n    <if_sid>70020</if_sid>\n    <field name=\"sophos_fw_status_msg\">Virus</field>\n    <description>Virus\
+    \ detected: source IP $(src_ip)</description>\n  </rule>\n\n  <rule id=\"70027\" level=\"5\">\n    <if_sid>70020</if_sid>\n\
+    \    <field name=\"sophos_fw_status_msg\">Spam</field>\n    <description>Spam: source IP $(src_ip)</description>\n\
+    \  </rule>\n\n  <rule id=\"70028\" level=\"3\">\n    <if_sid>70020</if_sid>\n    <field name=\"sophos_fw_status_msg\"\
+    >Admin</field>\n    <description>Admin Traffic: from $(src_ip) to $(dst_ip)</description>\n  </rule>\n  \n \
+    \ <rule id=\"70029\" level=\"5\">\n    <if_sid>70020</if_sid>\n    <field name=\"sophos_fw_status_msg\">Authentication</field>\n\
+    \    <description>Authentication Traffic: from $(src_ip) to $(dst_ip)</description>\n  </rule>\n  \n  <rule\
+    \ id=\"70030\" level=\"3\">\n    <if_sid>70020</if_sid>\n    <field name=\"sophos_fw_status_msg\">System</field>\n\
+    \    <description>System Traffic : from $(src_ip) to $(dst_ip)</description>\n  </rule>\n\n</group>\n"
