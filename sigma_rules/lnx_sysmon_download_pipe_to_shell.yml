@@ -1,0 +1,28 @@
+# R02
+title: "Download Utility Output Piped To Shell"
+id: "42d03ddb-8554-4feb-8714-21178d796b67"
+status: "experimental"
+description: "Detects curl or wget output piped into a shell in a Sysmon for Linux process command line."
+references:
+    - "https://github.com/SigmaHQ/sigma/blob/8a4813404ea3074890e0cda9272d4d1a8b2941d6/rules/linux/process_creation/proc_creation_lnx_susp_pipe_shell.yml"
+author: "TEIREN Security Log Cross Analysis Team"
+date: "2026-10-12"
+tags:
+    - "attack.execution"
+    - "attack.t1059.004"
+    - "attack.t1105"
+logsource:
+    product: "linux"
+    category: "process_creation"
+    definition: "Sysmon for Linux process creation; Image and CommandLine are required."
+detection:
+    selection:
+        CommandLine|re: "\\b(curl|wget)\\b[^|]*\\|\\s*(ba|da|z)?sh\\b"
+    condition: "selection"
+fields:
+    - "Image"
+    - "CommandLine"
+    - "User"
+falsepositives:
+    - "Approved installation scripts that execute downloaded content."
+level: "high"
