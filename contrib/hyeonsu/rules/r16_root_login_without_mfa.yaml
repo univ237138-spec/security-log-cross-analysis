@@ -1,0 +1,36 @@
+# R16 MFA 없는 최상위 계정 로그인
+# docs/06_탐지규칙_Sigma_대조.yaml 을 규칙별로 나눈 파일이다. 필드 이름과 추가 필드의 뜻은 그 파일 머리말에 있다.
+
+title: R16 MFA 없는 최상위 계정 로그인
+id: 38e4a1fc-34b0-458f-bf89-07f6a72043aa
+name: r16_root_login_without_mfa
+related:
+    - id: 77caf516-34e5-4df9-b4db-20744fea0a60 # AWS Successful Console Login Without MFA (Sigma 등급 medium)
+      type: similar
+    - id: 8ad1600d-e9dc-4251-b0ee-a65268f29add # AWS Root Credentials (Sigma 등급 medium)
+      type: similar
+status: experimental
+description: 테이렌 콘솔의 최상위(root) 계정이 MFA 없이 로그인하면 탐지한다. 행동 이상이 아니라 계정 설정 문제라서, 위험점수에서는 세션 점수에 넣지 않고 설정 위험으로 따로 보고한다.
+references:
+    - docs/06_탐지_위험점수.md
+    - https://github.com/SigmaHQ/sigma/blob/8a4813404ea3074890e0cda9272d4d1a8b2941d6/rules/cloud/aws/cloudtrail/aws_cloudtrail_console_login_success_without_mfa.yml
+    - https://github.com/SigmaHQ/sigma/blob/8a4813404ea3074890e0cda9272d4d1a8b2941d6/rules/cloud/aws/cloudtrail/aws_root_account_usage.yml
+author: security-log-cross-analysis 프로젝트 팀
+date: 2026-10-03
+tags:
+    - attack.initial-access
+    - attack.t1078.004
+logsource:
+    product: teiren
+    service: audit
+detection:
+    selection:
+        event_action: 'ROOT_LOGIN_NO_MFA'
+    condition: selection
+falsepositives:
+    - MFA를 설정하지 않은 관리자 계정의 정상 로그인 (이 데이터의 23건은 모두 admin01의 정상 세션)
+level: low
+project_rule_id: R16
+project_hits: 23
+sigma_match_level: 개념만 같음
+sigma_difference: Sigma에는 'MFA 없는 로그인'과 'root 계정 사용'이 따로 있다. 이 프로젝트는 둘이 겹친 경우 하나만 본다. 테이렌이 ROOT_LOGIN_NO_MFA라는 이벤트를 따로 남기기 때문이다.

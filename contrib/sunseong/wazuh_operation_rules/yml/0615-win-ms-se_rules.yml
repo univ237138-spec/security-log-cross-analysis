@@ -1,0 +1,400 @@
+schema: wazuh-original-rules-yaml/v1
+format_only_conversion: true
+native_runtime_format: Wazuh XML
+authoritative_field: sources[].original_xml
+upstream:
+  repository: https://github.com/wazuh/wazuh
+  tag: v4.14.8
+  commit: f470ad7db717b18db7feeed568949643698f0f34
+sources:
+- file: ruleset/rules/0615-win-ms-se_rules.xml
+  url: https://github.com/wazuh/wazuh/blob/f470ad7db717b18db7feeed568949643698f0f34/ruleset/rules/0615-win-ms-se_rules.xml
+  sha256: aa74144397ed9f52e42b37f0b41938ce8bf73a90b99915950a40c157aced64c5
+  rule_count: 19
+  elements:
+  - element: var
+    attributes:
+      name: MS_FREQ
+    text: '8'
+  - element: group
+    attributes:
+      name: windows,mse,
+    children:
+    - element: rule
+      attributes:
+        id: '63600'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '60008'
+      - element: field
+        attributes:
+          name: win.system.severityValue
+        text: ^INFORMATION$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Microsoft Anti-Malware informational event.
+    - element: rule
+      attributes:
+        id: '63601'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '60008'
+      - element: field
+        attributes:
+          name: win.system.severityValue
+        text: ^WARNING$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Microsoft Anti-Malware warning event.
+      - element: group
+        text: gpg13_4.12,
+    - element: rule
+      attributes:
+        id: '63602'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '60008'
+      - element: field
+        attributes:
+          name: win.system.severityValue
+        text: ^ERROR$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Microsoft Anti-Malware error event.
+      - element: group
+        text: gdpr_IV_35.7.d,gpg13_4.3,system_error,
+    - element: rule
+      attributes:
+        id: '63603'
+        level: '12'
+      children:
+      - element: if_sid
+        text: 63600,63601,63602
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^1118$|^1119$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Microsoft security essentials - Virus detected, but unable to remove.
+      - element: group
+        text: gdpr_IV_35.7.d,gpg13_4.2,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.3,nist_800_53_SI.4,pci_dss_10.6.1,pci_dss_11.4,pci_dss_5.1,pci_dss_5.2,tsc_A1.2,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,virus,
+    - element: rule
+      attributes:
+        id: '63604'
+        level: '7'
+      children:
+      - element: if_sid
+        text: 63600,63601,63602
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^1107$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Microsoft security essentials - Virus detected and properly removed.
+      - element: group
+        text: gdpr_IV_35.7.d,gpg13_4.2,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.3,nist_800_53_SI.4,pci_dss_10.6.1,pci_dss_11.4,pci_dss_5.1,pci_dss_5.2,tsc_A1.2,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,virus,
+    - element: rule
+      attributes:
+        id: '63605'
+        level: '7'
+      children:
+      - element: if_sid
+        text: '63601'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^1119$|^1118$|^1117$|^1116$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Microsoft security essentials - Virus detected.
+      - element: group
+        text: gdpr_IV_35.7.d,gpg13_4.2,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.3,nist_800_53_SI.4,pci_dss_10.6.1,pci_dss_11.4,pci_dss_5.1,pci_dss_5.2,tsc_A1.2,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,virus,
+    - element: rule
+      attributes:
+        id: '63606'
+        level: '7'
+      children:
+      - element: if_sid
+        text: 63600,63601,63602
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^1015$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Microsoft security essentials - Suspicious activity detected.
+      - element: group
+        text: gdpr_IV_35.7.d,gpg13_4.2,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.3,nist_800_53_SI.4,pci_dss_10.6.1,pci_dss_11.4,pci_dss_5.1,pci_dss_5.2,tsc_A1.2,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,virus,
+    - element: rule
+      attributes:
+        id: '63607'
+        level: '3'
+      children:
+      - element: if_sid
+        text: 63600,63601,63602
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^5007$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Microsoft security essentials - Configuration changed.
+      - element: group
+        text: gdpr_IV_35.7.d,gpg13_4.4,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AU.6,pci_dss_10.2.7,pci_dss_10.6.1,policy_changed,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '63608'
+        level: '9'
+      children:
+      - element: if_sid
+        text: 63600,63601,63602
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^5008$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Microsoft security essentials - Service failed.
+      - element: mitre
+        children:
+        - element: id
+          text: T1489
+      - element: group
+        text: gdpr_IV_35.7.d,gpg13_4.14,hipaa_164.312.b,nist_800_53_AU.6,pci_dss_10.6.1,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '63609'
+        level: '9'
+      children:
+      - element: if_sid
+        text: 63600,63601,63602
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^3002$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Microsoft security essentials - Real time protection failed.
+      - element: mitre
+        children:
+        - element: id
+          text: T1489
+      - element: group
+        text: gdpr_IV_35.7.d,gpg13_4.14,hipaa_164.312.b,nist_800_53_AU.6,pci_dss_10.6.1,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '63610'
+        level: '8'
+      children:
+      - element: if_sid
+        text: 63600,63601,63602
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^2012$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Microsoft security essentials - Cannot use dynamic signature service.
+    - element: rule
+      attributes:
+        id: '63611'
+        level: '8'
+      children:
+      - element: if_sid
+        text: 63600,63601,63602
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^2004$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Microsoft security essentials - Loading definitions failed. Using last good set.
+      - element: group
+        text: gdpr_IV_35.7.d,gpg13_4.14,gpg13_4.4,hipaa_164.312.b,nist_800_53_AU.6,pci_dss_10.6.1,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '63612'
+        level: '8'
+      children:
+      - element: if_sid
+        text: 63600,63601,63602
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^2003$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Microsoft security essentials - Engine update failed.
+      - element: group
+        text: gdpr_IV_35.7.d,gpg13_4.14,hipaa_164.312.b,nist_800_53_AU.6,pci_dss_10.6.1,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '63613'
+        level: '8'
+      children:
+      - element: if_sid
+        text: 63600,63601,63602
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^2001$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Microsoft security essentials - Definitions update failed.
+      - element: group
+        text: gdpr_IV_35.7.d,gpg13_4.14,hipaa_164.312.b,nist_800_53_AU.6,pci_dss_10.6.1,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '63614'
+        level: '7'
+      children:
+      - element: if_sid
+        text: 63600,63601,63602
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^1005$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Microsoft security essentials - Scan error. Scan has stopped.
+      - element: mitre
+        children:
+        - element: id
+          text: T1489
+      - element: group
+        text: gdpr_IV_35.7.d,gpg13_4.4,hipaa_164.312.b,nist_800_53_AU.6,pci_dss_10.6.1,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '63615'
+        level: '5'
+      children:
+      - element: if_sid
+        text: 63600,63601,63602
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^1002$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Microsoft security essentials - Scan stopped before completion.
+      - element: group
+        text: gdpr_IV_35.7.d,gpg13_4.14,hipaa_164.312.b,nist_800_53_AU.6,pci_dss_10.6.1,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '63616'
+        level: '5'
+      children:
+      - element: if_sid
+        text: 63604,63605
+      - element: field
+        attributes:
+          name: win.system.message
+        text: \.*DOS/EICAR_Test_File
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Microsoft security essentials - EICAR test file detected.
+    - element: rule
+      attributes:
+        id: '63617'
+        level: '10'
+        frequency: $MS_FREQ
+        timeframe: '240'
+      children:
+      - element: if_matched_sid
+        text: '63602'
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Multiple Microsoft Anti-Malware error events.
+    - element: rule
+      attributes:
+        id: '63618'
+        level: '10'
+        frequency: $MS_FREQ
+        timeframe: '240'
+      children:
+      - element: if_matched_sid
+        text: '63601'
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Multiple Microsoft Anti-Malware warning events.
+  original_xml: "<!--\n  -  Copyright (C) 2015, Wazuh Inc.\n-->\n\n<!--\n  Rules for: \n    Microsoft Anti-Malware\
+    \ channel ID: 63600 - 64099\n-->\n\n<var name=\"MS_FREQ\">8</var>\n\n<group name=\"windows,mse,\">\n\n  <rule\
+    \ id=\"63600\" level=\"0\">\n    <if_sid>60008</if_sid>\n    <field name=\"win.system.severityValue\">^INFORMATION$</field>\n\
+    \    <options>no_full_log</options>\n    <description>Microsoft Anti-Malware informational event.</description>\n\
+    \  </rule>\n\n  <rule id=\"63601\" level=\"0\">\n    <if_sid>60008</if_sid>\n    <field name=\"win.system.severityValue\"\
+    >^WARNING$</field>\n    <options>no_full_log</options>\n    <description>Microsoft Anti-Malware warning event.</description>\n\
+    \    <group>gpg13_4.12,</group>\n  </rule>\n\n  <rule id=\"63602\" level=\"5\">\n    <if_sid>60008</if_sid>\n\
+    \    <field name=\"win.system.severityValue\">^ERROR$</field>\n    <options>no_full_log</options>\n    <description>Microsoft\
+    \ Anti-Malware error event.</description>\n    <group>gdpr_IV_35.7.d,gpg13_4.3,system_error,</group>\n  </rule>\n\
+    \n <!-- MS SE rules -->\n\n  <rule id=\"63603\" level=\"12\">\n    <if_sid>63600,63601,63602</if_sid>\n    <field\
+    \ name=\"win.system.eventID\">^1118$|^1119$</field>\n    <options>no_full_log</options>\n    <description>Microsoft\
+    \ security essentials - Virus detected, but unable to remove.</description>\n    <group>gdpr_IV_35.7.d,gpg13_4.2,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.3,nist_800_53_SI.4,pci_dss_10.6.1,pci_dss_11.4,pci_dss_5.1,pci_dss_5.2,tsc_A1.2,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,virus,</group>\n\
+    \  </rule>\n\n  <rule id=\"63604\" level=\"7\">\n    <if_sid>63600,63601,63602</if_sid>\n    <field name=\"\
+    win.system.eventID\">^1107$</field>\n    <options>no_full_log</options>\n    <description>Microsoft security\
+    \ essentials - Virus detected and properly removed.</description>\n    <group>gdpr_IV_35.7.d,gpg13_4.2,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.3,nist_800_53_SI.4,pci_dss_10.6.1,pci_dss_11.4,pci_dss_5.1,pci_dss_5.2,tsc_A1.2,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,virus,</group>\n\
+    \  </rule>\n\n  <rule id=\"63605\" level=\"7\">\n    <if_sid>63601</if_sid>\n    <field name=\"win.system.eventID\"\
+    >^1119$|^1118$|^1117$|^1116$</field>\n    <options>no_full_log</options>\n    <description>Microsoft security\
+    \ essentials - Virus detected.</description>\n    <group>gdpr_IV_35.7.d,gpg13_4.2,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.3,nist_800_53_SI.4,pci_dss_10.6.1,pci_dss_11.4,pci_dss_5.1,pci_dss_5.2,tsc_A1.2,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,virus,</group>\n\
+    \  </rule>\n\n   <rule id=\"63606\" level=\"7\">\n    <if_sid>63600,63601,63602</if_sid>\n    <field name=\"\
+    win.system.eventID\">^1015$</field>\n    <options>no_full_log</options>\n    <description>Microsoft security\
+    \ essentials - Suspicious activity detected.</description>\n    <group>gdpr_IV_35.7.d,gpg13_4.2,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.3,nist_800_53_SI.4,pci_dss_10.6.1,pci_dss_11.4,pci_dss_5.1,pci_dss_5.2,tsc_A1.2,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,virus,</group>\n\
+    \  </rule>\n\n  <rule id=\"63607\" level=\"3\">\n    <if_sid>63600,63601,63602</if_sid>\n    <field name=\"\
+    win.system.eventID\">^5007$</field>\n    <options>no_full_log</options>\n    <description>Microsoft security\
+    \ essentials - Configuration changed.</description>\n    <group>gdpr_IV_35.7.d,gpg13_4.4,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AU.6,pci_dss_10.2.7,pci_dss_10.6.1,policy_changed,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"63608\" level=\"9\">\n    <if_sid>63600,63601,63602</if_sid>\n    <field name=\"\
+    win.system.eventID\">^5008$</field>\n    <options>no_full_log</options>\n    <description>Microsoft security\
+    \ essentials - Service failed.</description>\n    <mitre>\n      <id>T1489</id>\n    </mitre>\n    <group>gdpr_IV_35.7.d,gpg13_4.14,hipaa_164.312.b,nist_800_53_AU.6,pci_dss_10.6.1,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"63609\" level=\"9\">\n    <if_sid>63600,63601,63602</if_sid>\n    <field name=\"\
+    win.system.eventID\">^3002$</field>\n    <options>no_full_log</options>\n    <description>Microsoft security\
+    \ essentials - Real time protection failed.</description>\n    <mitre>\n      <id>T1489</id>\n    </mitre>\n\
+    \    <group>gdpr_IV_35.7.d,gpg13_4.14,hipaa_164.312.b,nist_800_53_AU.6,pci_dss_10.6.1,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"63610\" level=\"8\">\n    <if_sid>63600,63601,63602</if_sid>\n    <field name=\"\
+    win.system.eventID\">^2012$</field>\n    <options>no_full_log</options>\n    <description>Microsoft security\
+    \ essentials - Cannot use dynamic signature service.</description>\n  </rule>\n\n  <rule id=\"63611\" level=\"\
+    8\">\n    <if_sid>63600,63601,63602</if_sid>\n    <field name=\"win.system.eventID\">^2004$</field>\n    <options>no_full_log</options>\n\
+    \    <description>Microsoft security essentials - Loading definitions failed. Using last good set.</description>\n\
+    \    <group>gdpr_IV_35.7.d,gpg13_4.14,gpg13_4.4,hipaa_164.312.b,nist_800_53_AU.6,pci_dss_10.6.1,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"63612\" level=\"8\">\n    <if_sid>63600,63601,63602</if_sid>\n    <field name=\"\
+    win.system.eventID\">^2003$</field>\n    <options>no_full_log</options>\n    <description>Microsoft security\
+    \ essentials - Engine update failed.</description>\n    <group>gdpr_IV_35.7.d,gpg13_4.14,hipaa_164.312.b,nist_800_53_AU.6,pci_dss_10.6.1,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"63613\" level=\"8\">\n    <if_sid>63600,63601,63602</if_sid>\n    <field name=\"\
+    win.system.eventID\">^2001$</field>\n    <options>no_full_log</options>\n    <description>Microsoft security\
+    \ essentials - Definitions update failed.</description>\n    <group>gdpr_IV_35.7.d,gpg13_4.14,hipaa_164.312.b,nist_800_53_AU.6,pci_dss_10.6.1,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"63614\" level=\"7\">\n    <if_sid>63600,63601,63602</if_sid>\n    <field name=\"\
+    win.system.eventID\">^1005$</field>\n    <options>no_full_log</options>\n    <description>Microsoft security\
+    \ essentials - Scan error. Scan has stopped.</description>\n    <mitre>\n      <id>T1489</id>\n    </mitre>\n\
+    \    <group>gdpr_IV_35.7.d,gpg13_4.4,hipaa_164.312.b,nist_800_53_AU.6,pci_dss_10.6.1,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"63615\" level=\"5\">\n    <if_sid>63600,63601,63602</if_sid>\n    <field name=\"\
+    win.system.eventID\">^1002$</field>\n    <options>no_full_log</options>\n    <description>Microsoft security\
+    \ essentials - Scan stopped before completion.</description>\n    <group>gdpr_IV_35.7.d,gpg13_4.14,hipaa_164.312.b,nist_800_53_AU.6,pci_dss_10.6.1,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"63616\" level=\"5\">\n    <if_sid>63604,63605</if_sid>\n    <field name=\"win.system.message\"\
+    >\\.*DOS/EICAR_Test_File</field>\n    <options>no_full_log</options>\n    <description>Microsoft security essentials\
+    \ - EICAR test file detected.</description>\n  </rule>\n\n  <rule id=\"63617\" level=\"10\" frequency=\"$MS_FREQ\"\
+    \ timeframe=\"240\">\n    <if_matched_sid>63602</if_matched_sid>\n    <options>no_full_log</options>\n    <description>Multiple\
+    \ Microsoft Anti-Malware error events.</description>\n  </rule>\n\n  <rule id=\"63618\" level=\"10\" frequency=\"\
+    $MS_FREQ\" timeframe=\"240\">\n    <if_matched_sid>63601</if_matched_sid>\n    <options>no_full_log</options>\n\
+    \    <description>Multiple Microsoft Anti-Malware warning events.</description>\n  </rule>\n\n</group>\n"

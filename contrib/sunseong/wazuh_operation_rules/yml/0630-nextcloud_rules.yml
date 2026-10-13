@@ -1,0 +1,326 @@
+schema: wazuh-original-rules-yaml/v1
+format_only_conversion: true
+native_runtime_format: Wazuh XML
+authoritative_field: sources[].original_xml
+upstream:
+  repository: https://github.com/wazuh/wazuh
+  tag: v4.14.8
+  commit: f470ad7db717b18db7feeed568949643698f0f34
+sources:
+- file: ruleset/rules/0630-nextcloud_rules.xml
+  url: https://github.com/wazuh/wazuh/blob/f470ad7db717b18db7feeed568949643698f0f34/ruleset/rules/0630-nextcloud_rules.xml
+  sha256: 73893bf4ab33edf4eabe30eb3f853777fa0cf4340bcf74e32b6ae5a2218786ff
+  rule_count: 17
+  elements:
+  - element: group
+    attributes:
+      name: json,nextcloud,
+    children:
+    - element: rule
+      attributes:
+        id: '88200'
+        level: '0'
+      children:
+      - element: decoded_as
+        text: json
+      - element: field
+        attributes:
+          name: '@source'
+        text: NextCloud
+      - element: options
+        text: no_full_log
+      - element: description
+        text: NextCloud messages grouped.
+    - element: rule
+      attributes:
+        id: '88201'
+        level: '0'
+      children:
+      - element: decoded_as
+        text: nextcloud
+      - element: options
+        text: no_full_log
+      - element: description
+        text: NextCloud messages grouped.
+    - element: rule
+      attributes:
+        id: '88212'
+        level: '6'
+      children:
+      - element: if_sid
+        text: 88200,88201
+      - element: match
+        text: 'Login failed: '
+      - element: options
+        text: no_full_log
+      - element: description
+        text: NextCloud authentication failed.
+      - element: group
+        text: authentication_failed,gdpr_IV_32.2,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AC.7,nist_800_53_AU.14,pci_dss_10.2.4,pci_dss_10.2.5,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '88202'
+        level: '1'
+      children:
+      - element: if_sid
+        text: 88200,88201
+      - element: match
+        text: 'Login attempt: '
+      - element: options
+        text: no_full_log
+      - element: description
+        text: NextCloud authentication attempt.
+      - element: group
+        text: gdpr_IV_32.2,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AC.7,nist_800_53_AU.14,pci_dss_10.2.5,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '88203'
+        level: '10'
+        frequency: '8'
+        timeframe: '120'
+      children:
+      - element: if_matched_sid
+        text: '88212'
+      - element: options
+        text: no_full_log
+      - element: description
+        text: NextCloud brute force (multiple failed logins).
+      - element: mitre
+        children:
+        - element: id
+          text: T1110
+      - element: group
+        text: authentication_failures,gdpr_IV_32.2,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AC.7,nist_800_53_AU.14,nist_800_53_SI.4,pci_dss_10.2.4,pci_dss_10.2.5,pci_dss_11.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '88204'
+        level: '3'
+      children:
+      - element: if_sid
+        text: 88200,88201
+      - element: match
+        text: 'Passed filename is not valid, might be malicious '
+      - element: options
+        text: no_full_log
+      - element: description
+        text: NextCloud possible malicious request.
+      - element: group
+        text: appsec,attack,gdpr_IV_35.7.d,nist_800_53_SA.11,nist_800_53_SI.4,pci_dss_6.5,pci_dss_11.4,tsc_CC6.1,tsc_CC6.6,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC7.3,tsc_CC8.1,web,
+    - element: rule
+      attributes:
+        id: '88205'
+        level: '8'
+      children:
+      - element: if_sid
+        text: 88200,88201
+      - element: field
+        attributes:
+          name: level
+        text: ^4$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: NextCloud FATAL message.
+      - element: group
+        text: gdpr_IV_35.7.d,
+    - element: rule
+      attributes:
+        id: '88206'
+        level: '7'
+      children:
+      - element: if_sid
+        text: 88200,88201
+      - element: field
+        attributes:
+          name: level
+        text: ^3$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: NextCloud ERROR message.
+    - element: rule
+      attributes:
+        id: '88207'
+        level: '3'
+      children:
+      - element: if_sid
+        text: 88200,88201
+      - element: field
+        attributes:
+          name: level
+        text: ^2$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: NextCloud WARN message.
+    - element: rule
+      attributes:
+        id: '88208'
+        level: '2'
+      children:
+      - element: if_sid
+        text: 88200,88201
+      - element: field
+        attributes:
+          name: level
+        text: ^1$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: NextCloud INFO message.
+    - element: rule
+      attributes:
+        id: '88209'
+        level: '1'
+      children:
+      - element: if_sid
+        text: 88200,88201
+      - element: field
+        attributes:
+          name: level
+        text: ^0$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: NextCloud DEBUG message.
+    - element: rule
+      attributes:
+        id: '88210'
+        level: '3'
+      children:
+      - element: if_sid
+        text: 88200,88201
+      - element: match
+        text: Logout occurred
+      - element: options
+        text: no_full_log
+      - element: description
+        text: NextCloud logout successful.
+      - element: group
+        text: gdpr_IV_32.2,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AC.7,nist_800_53_AU.14,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '88211'
+        level: '3'
+      children:
+      - element: if_sid
+        text: 88200,88201
+      - element: match
+        text: 'Login successful: '
+      - element: options
+        text: no_full_log
+      - element: description
+        text: NextCloud authentication successful.
+      - element: group
+        text: authentication_success,gdpr_IV_32.2,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AC.7,nist_800_53_AU.14,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '88213'
+        level: '3'
+      children:
+      - element: if_sid
+        text: 88200,88201
+      - element: match
+        text: 'File accessed: '
+      - element: options
+        text: no_full_log
+      - element: description
+        text: NextCloud file accessed.
+      - element: group
+        text: gdpr_IV_32.2,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AC.7,nist_800_53_AU.14,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '88214'
+        level: '3'
+      children:
+      - element: if_sid
+        text: 88200,88201
+      - element: match
+        text: 'File created: '
+      - element: options
+        text: no_full_log
+      - element: description
+        text: NextCloud file created.
+      - element: group
+        text: gdpr_IV_32.2,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AC.7,nist_800_53_AU.14,pci_dss_11.5,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '88215'
+        level: '3'
+      children:
+      - element: if_sid
+        text: 88200,88201
+      - element: match
+        text: 'File deleted: '
+      - element: options
+        text: no_full_log
+      - element: description
+        text: NextCloud file deleted.
+      - element: group
+        text: gdpr_IV_32.2,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.14,pci_dss_11.5,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '88216'
+        level: '3'
+      children:
+      - element: if_sid
+        text: 88200,88201
+      - element: match
+        text: 'Preview accessed: '
+      - element: options
+        text: no_full_log
+      - element: description
+        text: NextCloud preview accessed.
+      - element: group
+        text: gdpr_IV_32.2,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AC.7,nist_800_53_AU.14,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+  original_xml: "<!--\n  Copyright (C) 2015, Wazuh Inc.\n\n  Rules for:\n    NexCloud ID: 88200 - 88299\n-->\n\n\
+    <!--\n  Two log sources are valid for NextCloud rules:\n\n  To use the NextCloud decoder paste the following\
+    \ in /var/ossec/etc/ossec.conf:\n  <localfile>\n    <location>ABSOLUTE_PATH_TO_YOUR_NEXTCLOUD_.json_LOG_FILE</location>\n\
+    \    <log_format>json</log_format>\n    <label key=\"@source\">NextCloud</label>\n  </localfile>\n\n  If you\
+    \ enabled audit in your Nextcloud system you may use those logs instead.\n  Paste the following in /var/ossec/etc/ossec.conf:\n\
+    \  <localfile>\n    <location>ABSOLUTE_PATH_TO_YOUR_AUDIT_.json_LOG_FILE</location>\n    <log_format>json</log_format>\n\
+    \    <label key=\"@source\">NextCloud</label>\n  </localfile>\n-->\n\n<group name=\"json,nextcloud,\">\n\n \
+    \ <rule id=\"88200\" level=\"0\">\n    <decoded_as>json</decoded_as>\n    <field name=\"@source\">NextCloud</field>\n\
+    \    <options>no_full_log</options>\n    <description>NextCloud messages grouped.</description>\n  </rule>\n\
+    \n  <rule id=\"88201\" level=\"0\">\n    <decoded_as>nextcloud</decoded_as>\n    <options>no_full_log</options>\n\
+    \    <description>NextCloud messages grouped.</description>\n  </rule>\n\n  <rule id=\"88212\" level=\"6\">\n\
+    \    <if_sid>88200,88201</if_sid>\n    <match>Login failed: </match>\n    <options>no_full_log</options>\n \
+    \   <description>NextCloud authentication failed.</description>\n    <group>authentication_failed,gdpr_IV_32.2,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AC.7,nist_800_53_AU.14,pci_dss_10.2.4,pci_dss_10.2.5,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n  \n  <rule id=\"88202\" level=\"1\">\n    <if_sid>88200,88201</if_sid>\n    <match>Login attempt:\
+    \ </match>\n    <options>no_full_log</options>\n    <description>NextCloud authentication attempt.</description>\n\
+    \    <group>gdpr_IV_32.2,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AC.7,nist_800_53_AU.14,pci_dss_10.2.5,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"88203\" level=\"10\" frequency=\"8\" timeframe=\"120\">\n    <if_matched_sid>88212</if_matched_sid>\n\
+    \    <options>no_full_log</options>\n    <description>NextCloud brute force (multiple failed logins).</description>\n\
+    \    <mitre>\n      <id>T1110</id>\n    </mitre>\n    <group>authentication_failures,gdpr_IV_32.2,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AC.7,nist_800_53_AU.14,nist_800_53_SI.4,pci_dss_10.2.4,pci_dss_10.2.5,pci_dss_11.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"88204\" level=\"3\">\n    <if_sid>88200,88201</if_sid>\n    <match>Passed filename\
+    \ is not valid, might be malicious </match>\n    <options>no_full_log</options>\n    <description>NextCloud\
+    \ possible malicious request.</description>\n    <group>appsec,attack,gdpr_IV_35.7.d,nist_800_53_SA.11,nist_800_53_SI.4,pci_dss_6.5,pci_dss_11.4,tsc_CC6.1,tsc_CC6.6,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC7.3,tsc_CC8.1,web,</group>\n\
+    \  </rule>\n\n  <rule id=\"88205\" level=\"8\">\n    <if_sid>88200,88201</if_sid>\n    <field name=\"level\"\
+    >^4$</field>\n    <options>no_full_log</options>\n    <description>NextCloud FATAL message.</description>\n\
+    \    <group>gdpr_IV_35.7.d,</group>\n  </rule>\n\n  <rule id=\"88206\" level=\"7\">\n    <if_sid>88200,88201</if_sid>\n\
+    \    <field name=\"level\">^3$</field>\n    <options>no_full_log</options>\n    <description>NextCloud ERROR\
+    \ message.</description>\n  </rule>\n\n  <rule id=\"88207\" level=\"3\">\n    <if_sid>88200,88201</if_sid>\n\
+    \    <field name=\"level\">^2$</field>\n    <options>no_full_log</options>\n    <description>NextCloud WARN\
+    \ message.</description>\n  </rule>\n\n  <rule id=\"88208\" level=\"2\">\n    <if_sid>88200,88201</if_sid>\n\
+    \    <field name=\"level\">^1$</field>\n    <options>no_full_log</options>\n    <description>NextCloud INFO\
+    \ message.</description>\n  </rule>\n\n  <rule id=\"88209\" level=\"1\">\n    <if_sid>88200,88201</if_sid>\n\
+    \    <field name=\"level\">^0$</field>\n    <options>no_full_log</options>\n    <description>NextCloud DEBUG\
+    \ message.</description>\n  </rule>\n\n  <rule id=\"88210\" level=\"3\">\n    <if_sid>88200,88201</if_sid>\n\
+    \    <match>Logout occurred</match>\n    <options>no_full_log</options>\n    <description>NextCloud logout successful.</description>\n\
+    \    <group>gdpr_IV_32.2,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AC.7,nist_800_53_AU.14,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"88211\" level=\"3\">\n    <if_sid>88200,88201</if_sid>\n    <match>Login successful:\
+    \ </match>\n    <options>no_full_log</options>\n    <description>NextCloud authentication successful.</description>\n\
+    \    <group>authentication_success,gdpr_IV_32.2,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AC.7,nist_800_53_AU.14,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"88213\" level=\"3\">\n    <if_sid>88200,88201</if_sid>\n    <match>File accessed:\
+    \ </match>\n    <options>no_full_log</options>\n    <description>NextCloud file accessed.</description>\n  \
+    \  <group>gdpr_IV_32.2,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AC.7,nist_800_53_AU.14,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"88214\" level=\"3\">\n    <if_sid>88200,88201</if_sid>\n    <match>File created:\
+    \ </match>\n    <options>no_full_log</options>\n    <description>NextCloud file created.</description>\n   \
+    \ <group>gdpr_IV_32.2,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AC.7,nist_800_53_AU.14,pci_dss_11.5,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"88215\" level=\"3\">\n    <if_sid>88200,88201</if_sid>\n    <match>File deleted:\
+    \ </match>\n    <options>no_full_log</options>\n    <description>NextCloud file deleted.</description>\n   \
+    \ <group>gdpr_IV_32.2,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.14,pci_dss_11.5,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"88216\" level=\"3\">\n    <if_sid>88200,88201</if_sid>\n    <match>Preview accessed:\
+    \ </match>\n    <options>no_full_log</options>\n    <description>NextCloud preview accessed.</description>\n\
+    \    <group>gdpr_IV_32.2,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AC.7,nist_800_53_AU.14,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n</group>\n"

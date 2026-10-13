@@ -1,0 +1,484 @@
+schema: wazuh-original-rules-yaml/v1
+format_only_conversion: true
+native_runtime_format: Wazuh XML
+authoritative_field: sources[].original_xml
+upstream:
+  repository: https://github.com/wazuh/wazuh
+  tag: v4.14.8
+  commit: f470ad7db717b18db7feeed568949643698f0f34
+sources:
+- file: ruleset/rules/0605-win-mcafee_rules.xml
+  url: https://github.com/wazuh/wazuh/blob/f470ad7db717b18db7feeed568949643698f0f34/ruleset/rules/0605-win-mcafee_rules.xml
+  sha256: 2e2c504db45c8f662e7b792aa7cc1aabcd5018080c63e4899d9e529cd8bc70ed
+  rule_count: 19
+  elements:
+  - element: var
+    attributes:
+      name: MCAFEE_INFO
+    text: ^257$|^5000$|^5026$|^5052$|^5055$
+  - element: var
+    attributes:
+      name: MCAFEE_WARN
+    text: ^258$|^5001$|^5028$|^5036$|^5037$|^5038$|^5039$|^5040$|^5041$|^5053$|^5056$|^5061$|^5062$|^5065$
+  - element: var
+    attributes:
+      name: MCAFEE_ERROR
+    text: ^259$|^100$|^1000$|^1001$|^1002$|^1003$|^1004$|^1005$|^1006$|^1007$|^1008$|^5003$|^5005$|^5008$|^5010$|^5011$|^5019$|^5020$|^5021$|^5022$|^5030$|^5031$|^5032$|^5033$|^5034$|^5035$|^5046$|^5047$|^5048$|^5049$|^5051$|^5054$|^5057$|^5059$|^5060$|^5063$|^5063$
+  - element: var
+    attributes:
+      name: MCAFEE_VIRUS_OK
+    text: quarantined|moved to quarantine|file was deleted|deleted successfully|has been deleted|message deleted|deleted
+      after|cleaned|successfully deleted
+  - element: var
+    attributes:
+      name: MCAFEE_VIRUS
+    text: The file \.+ contain|infected with|User defined detection|scan found|error attempting to clean
+  - element: var
+    attributes:
+      name: MCAFEE_FREQ
+    text: '12'
+  - element: group
+    attributes:
+      name: windows,mcafee,
+    children:
+    - element: rule
+      attributes:
+        id: '62600'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '60006'
+      - element: field
+        attributes:
+          name: win.system.severityValue
+        text: ^INFORMATION$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Windows McAfee informational event.
+    - element: rule
+      attributes:
+        id: '62601'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '60006'
+      - element: field
+        attributes:
+          name: win.system.severityValue
+        text: ^WARNING$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Windows McAfee warning event.
+      - element: group
+        text: gpg13_4.12,
+    - element: rule
+      attributes:
+        id: '62602'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '60006'
+      - element: field
+        attributes:
+          name: win.system.severityValue
+        text: ^ERROR$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Windows McAfee error event.
+      - element: group
+        text: gdpr_IV_35.7.d,gpg13_4.3,system_error,
+    - element: rule
+      attributes:
+        id: '62603'
+        level: '2'
+      children:
+      - element: if_sid
+        text: '62600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: $MCAFEE_INFO
+      - element: description
+        text: McAfee Windows AV informational event.
+    - element: rule
+      attributes:
+        id: '62604'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '62601'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: $MCAFEE_WARN
+      - element: description
+        text: McAfee Windows AV warning event.
+      - element: group
+        text: gpg13_4.12,
+    - element: rule
+      attributes:
+        id: '62605'
+        level: '4'
+      children:
+      - element: if_sid
+        text: '62602'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: $MCAFEE_ERROR
+      - element: description
+        text: McAfee Windows AV error event.
+      - element: group
+        text: gpg13_4.3,
+    - element: rule
+      attributes:
+        id: '62606'
+        level: '12'
+      children:
+      - element: if_sid
+        text: 62600,62601,62602
+      - element: field
+        attributes:
+          name: win.system.message
+        text: $MCAFEE_VIRUS
+      - element: description
+        text: McAfee Windows AV - Virus detected and not removed.
+      - element: group
+        text: gdpr_IV_35.7.d,gpg13_4.2,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.3,nist_800_53_SI.4,pci_dss_10.6.1,pci_dss_11.4,pci_dss_5.1,pci_dss_5.2,tsc_A1.2,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,virus,
+    - element: rule
+      attributes:
+        id: '62607'
+        level: '7'
+      children:
+      - element: if_sid
+        text: '62606'
+      - element: field
+        attributes:
+          name: win.system.message
+        text: $MCAFEE_VIRUS_OK
+      - element: description
+        text: McAfee Windows AV - Virus detected and properly removed.
+      - element: group
+        text: gdpr_IV_35.7.d,gpg13_4.2,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.3,nist_800_53_SI.4,pci_dss_10.6.1,pci_dss_11.4,pci_dss_5.1,pci_dss_5.2,tsc_A1.2,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,virus,
+    - element: rule
+      attributes:
+        id: '62608'
+        level: '7'
+      children:
+      - element: if_sid
+        text: '62606'
+      - element: field
+        attributes:
+          name: win.system.message
+        text: Will be deleted
+      - element: description
+        text: McAfee Windows AV - Virus detected and file will be deleted.
+      - element: group
+        text: gdpr_IV_35.7.d,gpg13_4.2,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.3,nist_800_53_SI.4,pci_dss_10.6.1,pci_dss_11.4,pci_dss_5.1,pci_dss_5.2,tsc_A1.2,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,virus,
+    - element: rule
+      attributes:
+        id: '62609'
+        level: '3'
+      children:
+      - element: if_sid
+        text: 62600,62601,62602
+      - element: field
+        attributes:
+          name: win.system.message
+        text: scan started|scan stopped
+      - element: description
+        text: McAfee Windows AV - Scan started or stopped.
+      - element: group
+        text: gdpr_IV_35.7.d,gpg13_10.1,gpg13_4.14,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AU.5,nist_800_53_AU.6,nist_800_53_SI.3,pci_dss_10.2.6,pci_dss_10.6.1,pci_dss_5.1,tsc_A1.2,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '62610'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '62603'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^257$
+      - element: field
+        attributes:
+          name: win.system.message
+        text: completed. No detections
+      - element: description
+        text: McAfee Windows AV - Scan completed with no viruses found.
+      - element: group
+        text: gdpr_IV_35.7.d,gpg13_10.1,gpg13_4.14,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AU.5,nist_800_53_AU.6,nist_800_53_SI.3,pci_dss_10.2.6,pci_dss_10.6.1,pci_dss_5.1,tsc_A1.2,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '62611'
+        level: '5'
+      children:
+      - element: if_sid
+        text: 62600,62601,62602
+      - element: field
+        attributes:
+          name: win.system.message
+        text: scan was cancelled |has taken too long
+      - element: description
+        text: McAfee Windows AV - Virus scan cancelled.
+      - element: group
+        text: gdpr_IV_35.7.d,gpg13_10.1,gpg13_4.14,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AU.5,nist_800_53_AU.6,nist_800_53_SI.3,pci_dss_10.2.6,pci_dss_10.6.1,pci_dss_5.1,tsc_A1.2,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '62612'
+        level: '5'
+      children:
+      - element: if_sid
+        text: 62600,62601,62602
+      - element: field
+        attributes:
+          name: win.system.message
+        text: scan was canceled because
+      - element: description
+        text: McAfee Windows AV - Virus scan cancelled due to shutdown.
+      - element: group
+        text: gdpr_IV_35.7.d,gpg13_10.1,gpg13_4.14,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AU.5,nist_800_53_AU.6,nist_800_53_SI.3,pci_dss_10.2.6,pci_dss_10.6.1,pci_dss_5.1,tsc_A1.2,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '62613'
+        level: '3'
+      children:
+      - element: if_sid
+        text: 62600,62601,62602
+      - element: field
+        attributes:
+          name: win.system.message
+        text: update was successful
+      - element: description
+        text: McAfee Windows AV - Virus program or DAT update succeeded.
+      - element: group
+        text: gdpr_IV_35.7.d,gpg13_4.14,gpg13_4.4,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.3,pci_dss_10.6.1,pci_dss_5.1,pci_dss_5.2,tsc_A1.2,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '62614'
+        level: '7'
+      children:
+      - element: if_sid
+        text: 62600,62601,62602
+      - element: field
+        attributes:
+          name: win.system.message
+        text: update failed
+      - element: description
+        text: McAfee Windows AV - Virus program or DAT update failed.
+      - element: group
+        text: gdpr_IV_35.7.d,gpg13_4.14,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.3,pci_dss_10.6.1,pci_dss_5.1,pci_dss_5.2,tsc_A1.2,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '62615'
+        level: '7'
+      children:
+      - element: if_sid
+        text: 62600,62601,62602
+      - element: field
+        attributes:
+          name: win.system.message
+        text: update was cancelled
+      - element: description
+        text: McAfee Windows AV - Virus program or DAT update cancelled.
+      - element: group
+        text: gdpr_IV_35.7.d,gpg13_4.14,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.3,pci_dss_10.6.1,pci_dss_5.1,pci_dss_5.2,tsc_A1.2,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '62616'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '62607'
+      - element: field
+        attributes:
+          name: win.system.message
+        text: contains the EICAR test file
+      - element: description
+        text: McAfee Windows AV - EICAR test file detected.
+    - element: rule
+      attributes:
+        id: '62617'
+        level: '10'
+        frequency: $MCAFEE_FREQ
+        timeframe: '240'
+      children:
+      - element: if_matched_sid
+        text: '62604'
+      - element: description
+        text: Multiple McAfee AV warning events.
+      - element: group
+        text: gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.3,pci_dss_10.6.1,pci_dss_5.1,tsc_A1.2,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '62618'
+        level: '10'
+        frequency: $MCAFEE_FREQ
+        timeframe: '240'
+      children:
+      - element: if_matched_sid
+        text: '62605'
+      - element: description
+        text: Multiple McAfee AV error events.
+      - element: group
+        text: gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.3,pci_dss_10.6.1,pci_dss_5.1,tsc_A1.2,tsc_CC7.2,tsc_CC7.3,
+  original_xml: |
+    <!--
+      -  Copyright (C) 2015, Wazuh Inc.
+    -->
+
+    <!--
+      Rules for:
+        Windows McAfee rules ID: 62600 - 63099
+    -->
+
+    <var name="MCAFEE_INFO">^257$|^5000$|^5026$|^5052$|^5055$</var>
+    <var name="MCAFEE_WARN">^258$|^5001$|^5028$|^5036$|^5037$|^5038$|^5039$|^5040$|^5041$|^5053$|^5056$|^5061$|^5062$|^5065$</var>
+    <var name="MCAFEE_ERROR">^259$|^100$|^1000$|^1001$|^1002$|^1003$|^1004$|^1005$|^1006$|^1007$|^1008$|^5003$|^5005$|^5008$|^5010$|^5011$|^5019$|^5020$|^5021$|^5022$|^5030$|^5031$|^5032$|^5033$|^5034$|^5035$|^5046$|^5047$|^5048$|^5049$|^5051$|^5054$|^5057$|^5059$|^5060$|^5063$|^5063$</var>
+    <var name="MCAFEE_VIRUS_OK">quarantined|moved to quarantine|file was deleted|deleted successfully|has been deleted|message deleted|deleted after|cleaned|successfully deleted</var>
+    <var name="MCAFEE_VIRUS">The file \.+ contain|infected with|User defined detection|scan found|error attempting to clean</var>
+    <var name="MCAFEE_FREQ">12</var>
+
+    <!-- MS Windows Defender rules -->
+    <group name="windows,mcafee,">
+
+      <rule id="62600" level="0">
+        <if_sid>60006</if_sid>
+        <field name="win.system.severityValue">^INFORMATION$</field>
+        <options>no_full_log</options>
+        <description>Windows McAfee informational event.</description>
+      </rule>
+
+      <rule id="62601" level="0">
+        <if_sid>60006</if_sid>
+        <field name="win.system.severityValue">^WARNING$</field>
+        <options>no_full_log</options>
+        <description>Windows McAfee warning event.</description>
+        <group>gpg13_4.12,</group>
+      </rule>
+
+      <rule id="62602" level="5">
+        <if_sid>60006</if_sid>
+        <field name="win.system.severityValue">^ERROR$</field>
+        <options>no_full_log</options>
+        <description>Windows McAfee error event.</description>
+        <group>gdpr_IV_35.7.d,gpg13_4.3,system_error,</group>
+      </rule>
+
+     <!-- McAfee rules -->
+
+      <rule id="62603" level="2">
+        <if_sid>62600</if_sid>
+        <field name="win.system.eventID">$MCAFEE_INFO</field>
+        <description>McAfee Windows AV informational event.</description>
+      </rule>
+
+      <rule id="62604" level="3">
+        <if_sid>62601</if_sid>
+        <field name="win.system.eventID">$MCAFEE_WARN</field>
+        <description>McAfee Windows AV warning event.</description>
+        <group>gpg13_4.12,</group>
+      </rule>
+
+      <rule id="62605" level="4">
+        <if_sid>62602</if_sid>
+        <field name="win.system.eventID">$MCAFEE_ERROR</field>
+        <description>McAfee Windows AV error event.</description>
+        <group>gpg13_4.3,</group>
+      </rule>
+
+      <rule id="62606" level="12">
+        <if_sid>62600,62601,62602</if_sid>
+        <field name="win.system.message">$MCAFEE_VIRUS</field>
+        <description>McAfee Windows AV - Virus detected and not removed.</description>
+        <group>gdpr_IV_35.7.d,gpg13_4.2,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.3,nist_800_53_SI.4,pci_dss_10.6.1,pci_dss_11.4,pci_dss_5.1,pci_dss_5.2,tsc_A1.2,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,virus,</group>
+      </rule>
+
+      <rule id="62607" level="7">
+        <if_sid>62606</if_sid>
+        <field name="win.system.message">$MCAFEE_VIRUS_OK</field>
+        <description>McAfee Windows AV - Virus detected and properly removed.</description>
+        <group>gdpr_IV_35.7.d,gpg13_4.2,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.3,nist_800_53_SI.4,pci_dss_10.6.1,pci_dss_11.4,pci_dss_5.1,pci_dss_5.2,tsc_A1.2,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,virus,</group>
+      </rule>
+
+      <rule id="62608" level="7">
+        <if_sid>62606</if_sid>
+        <field name="win.system.message">Will be deleted</field>
+        <description>McAfee Windows AV - Virus detected and file will be deleted.</description>
+        <group>gdpr_IV_35.7.d,gpg13_4.2,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.3,nist_800_53_SI.4,pci_dss_10.6.1,pci_dss_11.4,pci_dss_5.1,pci_dss_5.2,tsc_A1.2,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,virus,</group>
+      </rule>
+
+      <rule id="62609" level="3">
+        <if_sid>62600,62601,62602</if_sid>
+        <field name="win.system.message">scan started|scan stopped</field>
+        <description>McAfee Windows AV - Scan started or stopped.</description>
+        <group>gdpr_IV_35.7.d,gpg13_10.1,gpg13_4.14,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AU.5,nist_800_53_AU.6,nist_800_53_SI.3,pci_dss_10.2.6,pci_dss_10.6.1,pci_dss_5.1,tsc_A1.2,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="62610" level="3">
+        <if_sid>62603</if_sid>
+        <field name="win.system.eventID">^257$</field>
+        <field name="win.system.message">completed. No detections</field>
+        <description>McAfee Windows AV - Scan completed with no viruses found.</description>
+        <group>gdpr_IV_35.7.d,gpg13_10.1,gpg13_4.14,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AU.5,nist_800_53_AU.6,nist_800_53_SI.3,pci_dss_10.2.6,pci_dss_10.6.1,pci_dss_5.1,tsc_A1.2,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="62611" level="5">
+        <if_sid>62600,62601,62602</if_sid>
+        <field name="win.system.message">scan was cancelled |has taken too long</field>
+        <description>McAfee Windows AV - Virus scan cancelled.</description>
+        <group>gdpr_IV_35.7.d,gpg13_10.1,gpg13_4.14,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AU.5,nist_800_53_AU.6,nist_800_53_SI.3,pci_dss_10.2.6,pci_dss_10.6.1,pci_dss_5.1,tsc_A1.2,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="62612" level="5">
+        <if_sid>62600,62601,62602</if_sid>
+        <field name="win.system.message">scan was canceled because</field>
+        <description>McAfee Windows AV - Virus scan cancelled due to shutdown.</description>
+        <group>gdpr_IV_35.7.d,gpg13_10.1,gpg13_4.14,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AU.5,nist_800_53_AU.6,nist_800_53_SI.3,pci_dss_10.2.6,pci_dss_10.6.1,pci_dss_5.1,tsc_A1.2,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="62613" level="3">
+        <if_sid>62600,62601,62602</if_sid>
+        <field name="win.system.message">update was successful</field>
+        <description>McAfee Windows AV - Virus program or DAT update succeeded.</description>
+        <group>gdpr_IV_35.7.d,gpg13_4.14,gpg13_4.4,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.3,pci_dss_10.6.1,pci_dss_5.1,pci_dss_5.2,tsc_A1.2,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="62614" level="7">
+        <if_sid>62600,62601,62602</if_sid>
+        <field name="win.system.message">update failed</field>
+        <description>McAfee Windows AV - Virus program or DAT update failed.</description>
+        <group>gdpr_IV_35.7.d,gpg13_4.14,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.3,pci_dss_10.6.1,pci_dss_5.1,pci_dss_5.2,tsc_A1.2,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="62615" level="7">
+        <if_sid>62600,62601,62602</if_sid>
+        <field name="win.system.message">update was cancelled</field>
+        <description>McAfee Windows AV - Virus program or DAT update cancelled.</description>
+        <group>gdpr_IV_35.7.d,gpg13_4.14,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.3,pci_dss_10.6.1,pci_dss_5.1,pci_dss_5.2,tsc_A1.2,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="62616" level="5">
+        <if_sid>62607</if_sid>
+        <field name="win.system.message">contains the EICAR test file</field>
+        <description>McAfee Windows AV - EICAR test file detected.</description>
+      </rule>
+
+      <!-- Composite rules -->
+      <rule id="62617" level="10" frequency="$MCAFEE_FREQ" timeframe="240">
+        <if_matched_sid>62604</if_matched_sid>
+        <description>Multiple McAfee AV warning events.</description>
+        <group>gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.3,pci_dss_10.6.1,pci_dss_5.1,tsc_A1.2,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="62618" level="10" frequency="$MCAFEE_FREQ" timeframe="240">
+        <if_matched_sid>62605</if_matched_sid>
+        <description>Multiple McAfee AV error events.</description>
+        <group>gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.3,pci_dss_10.6.1,pci_dss_5.1,tsc_A1.2,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+    </group>

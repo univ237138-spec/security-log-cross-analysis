@@ -1,0 +1,61 @@
+# R15 웹 경로 반복 오류
+# docs/06_탐지규칙_Sigma_대조.yaml 을 규칙별로 나눈 파일이다. 필드 이름과 추가 필드의 뜻은 그 파일 머리말에 있다.
+# 이 파일에는 문서가 2개 있다: 기본 이벤트 룰과 그것을 세는 correlation 룰.
+
+title: R15 기본 이벤트 - 웹 요청의 오류 응답
+id: 99dae124-fb2b-4161-99db-b68a764e35df
+name: r15_base_web_error_response
+status: experimental
+description: R15가 세는 기본 이벤트다. 응답 코드가 4xx나 5xx인 웹 요청이며, 단독으로는 경보가 아니다.
+references:
+    - docs/06_탐지_위험점수.md
+author: security-log-cross-analysis 프로젝트 팀
+date: 2026-10-03
+tags:
+    - attack.initial-access
+    - attack.reconnaissance
+    - attack.t1190
+    - attack.t1595
+logsource:
+    category: webserver
+    product: nginx
+detection:
+    selection:
+        http_status_code|gte: 400
+    condition: selection
+falsepositives:
+    - 없는 주소를 잘못 요청한 정상 사용자
+level: informational
+project_rule_id: R15
+---
+title: R15 웹 경로 반복 오류
+id: 0f2eadfd-4d10-4a36-b5b7-31d4292b4b27
+name: r15_repeated_web_path_errors
+status: experimental
+description: 같은 접속 IP가 같은 경로에서 5분 안에 오류 응답을 5회 이상 받으면 탐지한다.
+references:
+    - docs/06_탐지_위험점수.md
+author: security-log-cross-analysis 프로젝트 팀
+date: 2026-10-03
+tags:
+    - attack.initial-access
+    - attack.reconnaissance
+    - attack.t1190
+    - attack.t1595
+correlation:
+    type: event_count
+    rules:
+        - r15_base_web_error_response
+    group-by:
+        - client_ip # 보강 컬럼
+        - request
+    timespan: 5m
+    condition:
+        gte: 5
+falsepositives:
+    - 알려진 사례 없음 (이 데이터의 정상 세션에서는 0건)
+level: medium
+project_rule_id: R15
+project_hits: 1
+sigma_match_level: 대응 룰 없음
+sigma_difference: Sigma 웹 룰은 요청 내용(경로 조작, SQL 주입 문자열 등)을 본다. 오류 횟수를 세는 룰은 없다.

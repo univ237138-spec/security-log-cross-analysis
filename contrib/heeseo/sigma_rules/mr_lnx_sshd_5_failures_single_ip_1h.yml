@@ -1,0 +1,36 @@
+# R09
+title: "Five SSH Login Failures From One Address"
+id: "4b23f246-0748-45e8-a024-5bcfa5b8cd84"
+status: "experimental"
+description: "Detects five or more SSH authentication failures from one client address within one hour."
+author: "TEIREN Security Log Cross Analysis Team"
+date: "2026-10-12"
+tags:
+    - "attack.credential-access"
+    - "attack.t1110"
+correlation:
+    type: "event_count"
+    rules:
+        - "d0584c76-a3ef-42da-9f2b-177800850552"
+    group-by:
+        - "client_ip"
+    timespan: "1h"
+    condition:
+        gte: 5
+falsepositives:
+    - "Users repeatedly entering incorrect credentials; automated authentication checks."
+level: "low"
+---
+title: "SSH Authentication Failure"
+id: "d0584c76-a3ef-42da-9f2b-177800850552"
+name: "ssh_authentication_failure"
+logsource:
+    product: "linux"
+    service: "sshd"
+    definition: "Project-normalized sshd events; event_action, client_ip, account and client_zone are parser/enrichment fields."
+detection:
+    selection:
+        event_action:
+            - "invalid_user"
+            - "auth_failure"
+    condition: "selection"

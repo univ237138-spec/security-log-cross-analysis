@@ -1,0 +1,49 @@
+# R01 웹 서버 계정의 셸·다운로드 도구 실행
+# docs/06_탐지규칙_Sigma_대조.yaml 을 규칙별로 나눈 파일이다. 필드 이름과 추가 필드의 뜻은 그 파일 머리말에 있다.
+
+title: R01 웹 서버 계정의 셸·다운로드 도구 실행
+id: 4cbdd0e7-2644-468a-a4c6-b93f9945835e
+name: r01_web_account_shell_or_downloader
+related:
+    - id: 818f7b24-0fba-4c49-a073-8b755573b9c7 # Linux Webshell Indicators (Sigma 등급 high)
+      type: similar
+status: experimental
+description: 웹 서버 실행 계정이 셸이나 curl·wget을 실행하면 탐지한다. 웹 요청을 통해 서버에서 명령이 실행됐을 가능성을 본다.
+references:
+    - docs/06_탐지_위험점수.md
+    - https://github.com/SigmaHQ/sigma/blob/8a4813404ea3074890e0cda9272d4d1a8b2941d6/rules/linux/process_creation/proc_creation_lnx_webshell_detection.yml
+author: security-log-cross-analysis 프로젝트 팀
+date: 2026-10-03
+tags:
+    - attack.execution
+    - attack.persistence
+    - attack.t1505.003
+    - attack.t1059.004
+logsource:
+    category: process_creation
+    product: linux
+detection:
+    selection_account:
+        account:
+            - 'www-data'
+            - 'apache'
+            - 'nginx'
+            - 'httpd'
+    selection_img:
+        Image|endswith:
+            - '/bash'
+            - '/sh'
+            - '/dash'
+            - '/zsh'
+            - '/curl'
+            - '/wget'
+    condition: all of selection_*
+falsepositives:
+    - 알려진 사례 없음 (이 데이터의 정상 세션에서는 0건)
+level: high
+project_rule_id: R01
+project_hits: 2
+sigma_match_level: 변형
+sigma_difference: Sigma는 부모 프로세스가 웹 서버(nginx 등)이고 자식이 정찰 명령(whoami, ifconfig, cat 등)일 때 탐지한다. 이 프로젝트는 실행 계정이 웹 서버 계정이고 자식이 셸·curl·wget일 때 탐지한다.
+sigma_original_hits: 0
+sigma_original_note: 부모는 /usr/sbin/nginx로 조건이 맞지만, 자식이 bash라서 정찰 명령 목록에 없다.

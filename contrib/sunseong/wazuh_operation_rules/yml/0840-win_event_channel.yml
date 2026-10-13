@@ -1,0 +1,304 @@
+schema: wazuh-original-rules-yaml/v1
+format_only_conversion: true
+native_runtime_format: Wazuh XML
+authoritative_field: sources[].original_xml
+upstream:
+  repository: https://github.com/wazuh/wazuh
+  tag: v4.14.8
+  commit: f470ad7db717b18db7feeed568949643698f0f34
+sources:
+- file: ruleset/rules/0840-win_event_channel.xml
+  url: https://github.com/wazuh/wazuh/blob/f470ad7db717b18db7feeed568949643698f0f34/ruleset/rules/0840-win_event_channel.xml
+  sha256: 8676f2e41aa148d0e1990a3e37487236f0b4208ba61ace50ca473670fe700add
+  rule_count: 8
+  elements:
+  - element: group
+    attributes:
+      name: win_evt_channel,windows,
+    children:
+    - element: rule
+      attributes:
+        id: '92650'
+        level: '12'
+      children:
+      - element: if_sid
+        text: '61138'
+      - element: field
+        attributes:
+          name: win.eventdata.imagePath
+        text: ^%systemroot%\\\\\w+\.exe$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: New Windows Service Created to start from windows root path. Suspicious event as the binary may have
+          been dropped using Windows Admin Shares.
+      - element: mitre
+        children:
+        - element: id
+          text: T1021.002
+        - element: id
+          text: T1569.002
+    - element: rule
+      attributes:
+        id: '92651'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '60106'
+      - element: field
+        attributes:
+          name: win.eventdata.ipAddress
+          type: pcre2
+        text: (?:[0-9]{1,3}\.){3}[0-9]{1,3}
+      - element: field
+        attributes:
+          name: win.eventdata.ipAddress
+          type: pcre2
+          negate: 'yes'
+        text: 127\.0\.0\.1
+      - element: description
+        text: Successful Remote Logon by user:$(win.eventdata.targetDomainName)\$(win.eventdata.targetUserName)
+          from $(win.eventdata.ipAddress).
+      - element: mitre
+        children:
+        - element: id
+          text: T1078
+      - element: group
+        text: authentication_success,gdpr_IV_32.2,gpg13_7.1,gpg13_7.2,hipaa_164.312.b,nist_800_53_AC.7,nist_800_53_AU.14,pci_dss_10.2.5,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '92652'
+        level: '6'
+      children:
+      - element: if_sid
+        text: '92651'
+      - element: field
+        attributes:
+          name: win.eventdata.authenticationPackageName
+          type: pcre2
+        text: NTLM
+      - element: description
+        text: Successful Remote Logon Detected - User:$(win.eventdata.subjectDomainName)\$(win.eventdata.targetUserName)
+          - NTLM authentication, possible pass-the-hash attack.
+      - element: mitre
+        children:
+        - element: id
+          text: T1550.002
+        - element: id
+          text: T1078.002
+      - element: group
+        text: authentication_success,gdpr_IV_32.2,gpg13_7.1,gpg13_7.2,hipaa_164.312.b,nist_800_53_AC.7,nist_800_53_AU.14,pci_dss_10.2.5,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '92653'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '92651'
+      - element: field
+        attributes:
+          name: win.eventdata.logonType
+          type: pcre2
+        text: '10'
+      - element: description
+        text: 'User: $(win.eventdata.subjectDomainName)\$(win.eventdata.targetUserName) logged using Remote Desktop
+          Connection (RDP) from ip:$(win.eventdata.ipAddress).'
+      - element: mitre
+        children:
+        - element: id
+          text: T1021.001
+        - element: id
+          text: T1078.002
+    - element: rule
+      attributes:
+        id: '92654'
+        level: '6'
+      children:
+      - element: if_sid
+        text: '60018'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^5857$
+      - element: field
+        attributes:
+          name: win.operation_StartedOperational.providerName
+        text: ^CIMWin32$
+      - element: description
+        text: WMI query for System Information Discovery.
+      - element: mitre
+        children:
+        - element: id
+          text: T1082
+        - element: id
+          text: T1047
+    - element: rule
+      attributes:
+        id: '92655'
+        level: '15'
+      children:
+      - element: if_sid
+        text: '60011'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^808$
+      - element: description
+        text: 'Printer driver failed to load, possible remote code execution using PrinterNightmare exploit: CVE-2021-34527.'
+      - element: mitre
+        children:
+        - element: id
+          text: T1210
+        - element: id
+          text: T1547.012
+    - element: rule
+      attributes:
+        id: '92656'
+        level: '15'
+      children:
+      - element: if_sid
+        text: '60106'
+      - element: field
+        attributes:
+          name: win.eventdata.logonType
+          type: pcre2
+        text: ^10$
+      - element: field
+        attributes:
+          name: win.eventdata.ipAddress
+          type: pcre2
+        text: ::1|127\.0\.0\.1
+      - element: description
+        text: 'User: $(win.eventdata.subjectDomainName)\$(win.eventdata.targetUserName) logged using Remote Desktop
+          Connection (RDP) from loopback address, possible exploit over reverse tunneling using stolen credentials.'
+      - element: mitre
+        children:
+        - element: id
+          text: T1021.001
+        - element: id
+          text: T1078.002
+    - element: rule
+      attributes:
+        id: '92657'
+        level: '6'
+      children:
+      - element: if_sid
+        text: '92652'
+      - element: field
+        attributes:
+          name: win.eventdata.workstationName
+          type: pcre2
+        text: .+
+      - element: description
+        text: Successful Remote Logon Detected - User:$(win.eventdata.subjectDomainName)\$(win.eventdata.targetUserName)
+          - NTLM authentication, possible pass-the-hash attack - Possible RDP connection. Verify that $(win.eventdata.workstationName)
+          is allowed to perform RDP connections
+      - element: mitre
+        children:
+        - element: id
+          text: T1550.002
+        - element: id
+          text: T1078.002
+        - element: id
+          text: T1021.001
+      - element: group
+        text: authentication_success,pci_dss_10.2.5,gpg13_7.1,gpg13_7.2,gdpr_IV_32.2,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AC.7,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+  original_xml: |
+    <!--
+      Copyright (C) 2015, Wazuh Inc.
+    -->
+
+    <!--
+      General Windows Event channel detection rules: 92650 - 92700
+    -->
+
+    <group name="win_evt_channel,windows,">
+
+      <rule id="92650" level="12">
+        <if_sid>61138</if_sid>
+        <field name="win.eventdata.imagePath">^%systemroot%\\\\\w+\.exe$</field>
+        <options>no_full_log</options>
+        <description>New Windows Service Created to start from windows root path. Suspicious event as the binary may have been dropped using Windows Admin Shares.</description>
+        <mitre>
+          <id>T1021.002</id>
+          <id>T1569.002</id>
+        </mitre>
+      </rule>
+
+      <rule id="92651" level="0">
+        <if_sid>60106</if_sid>
+        <field name="win.eventdata.ipAddress" type="pcre2">(?:[0-9]{1,3}\.){3}[0-9]{1,3}</field>
+        <field name="win.eventdata.ipAddress" type="pcre2" negate="yes">127\.0\.0\.1</field>
+        <description>Successful Remote Logon by user:$(win.eventdata.targetDomainName)\$(win.eventdata.targetUserName) from $(win.eventdata.ipAddress).</description>
+        <mitre>
+          <id>T1078</id>
+        </mitre>
+        <group>authentication_success,gdpr_IV_32.2,gpg13_7.1,gpg13_7.2,hipaa_164.312.b,nist_800_53_AC.7,nist_800_53_AU.14,pci_dss_10.2.5,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="92652" level="6">
+        <if_sid>92651</if_sid>
+        <field name="win.eventdata.authenticationPackageName" type="pcre2">NTLM</field>
+        <description>Successful Remote Logon Detected - User:$(win.eventdata.subjectDomainName)\$(win.eventdata.targetUserName) - NTLM authentication, possible pass-the-hash attack.</description>
+        <mitre>
+          <id>T1550.002</id>
+          <id>T1078.002</id>
+        </mitre>
+        <group>authentication_success,gdpr_IV_32.2,gpg13_7.1,gpg13_7.2,hipaa_164.312.b,nist_800_53_AC.7,nist_800_53_AU.14,pci_dss_10.2.5,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="92653" level="3">
+        <if_sid>92651</if_sid>
+        <field name="win.eventdata.logonType" type="pcre2">10</field>
+        <description>User: $(win.eventdata.subjectDomainName)\$(win.eventdata.targetUserName) logged using Remote Desktop Connection (RDP) from ip:$(win.eventdata.ipAddress).</description>
+        <mitre>
+          <id>T1021.001</id>
+          <id>T1078.002</id>
+        </mitre>
+      </rule>
+
+      <rule id="92654" level="6">
+        <if_sid>60018</if_sid>
+        <field name="win.system.eventID">^5857$</field>
+        <field name="win.operation_StartedOperational.providerName">^CIMWin32$</field>
+        <description>WMI query for System Information Discovery.</description>
+        <mitre>
+          <id>T1082</id>
+          <id>T1047</id>
+        </mitre>
+      </rule>
+
+      <rule id="92655" level="15">
+        <if_sid>60011</if_sid>
+        <field name="win.system.eventID">^808$</field>
+        <description>Printer driver failed to load, possible remote code execution using PrinterNightmare exploit: CVE-2021-34527.</description>
+        <mitre>
+          <id>T1210</id>
+          <id>T1547.012</id>
+        </mitre>
+      </rule>
+
+      <rule id="92656" level="15">
+        <if_sid>60106</if_sid>
+        <field name="win.eventdata.logonType" type="pcre2">^10$</field>
+        <field name="win.eventdata.ipAddress" type="pcre2">::1|127\.0\.0\.1</field>
+        <description>User: $(win.eventdata.subjectDomainName)\$(win.eventdata.targetUserName) logged using Remote Desktop Connection (RDP) from loopback address, possible exploit over reverse tunneling using stolen credentials.</description>
+        <mitre>
+          <id>T1021.001</id>
+          <id>T1078.002</id>
+        </mitre>
+      </rule>
+
+      <rule id="92657" level="6">
+        <if_sid>92652</if_sid>
+        <field name="win.eventdata.workstationName" type="pcre2">.+</field>
+        <description>Successful Remote Logon Detected - User:$(win.eventdata.subjectDomainName)\$(win.eventdata.targetUserName) - NTLM authentication, possible pass-the-hash attack - Possible RDP connection. Verify that $(win.eventdata.workstationName) is allowed to perform RDP connections</description>
+        <mitre>
+          <id>T1550.002</id>
+          <id>T1078.002</id>
+          <id>T1021.001</id>
+        </mitre>
+        <group>authentication_success,pci_dss_10.2.5,gpg13_7.1,gpg13_7.2,gdpr_IV_32.2,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AC.7,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+    </group>

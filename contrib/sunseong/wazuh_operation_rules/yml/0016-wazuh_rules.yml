@@ -1,0 +1,766 @@
+schema: wazuh-original-rules-yaml/v1
+format_only_conversion: true
+native_runtime_format: Wazuh XML
+authoritative_field: sources[].original_xml
+upstream:
+  repository: https://github.com/wazuh/wazuh
+  tag: v4.14.8
+  commit: f470ad7db717b18db7feeed568949643698f0f34
+sources:
+- file: ruleset/rules/0016-wazuh_rules.xml
+  url: https://github.com/wazuh/wazuh/blob/f470ad7db717b18db7feeed568949643698f0f34/ruleset/rules/0016-wazuh_rules.xml
+  sha256: 2272e9fb64739bcc94a3ea5874254e3250e3dd762ae48d1bf3e7b596e4c6ee87
+  rule_count: 31
+  elements:
+  - element: group
+    attributes:
+      name: wazuh,
+    children:
+    - element: rule
+      attributes:
+        id: '200'
+        level: '0'
+      children:
+      - element: decoded_as
+        text: wazuh
+      - element: description
+        text: Grouping of wazuh rules.
+    - element: rule
+      attributes:
+        id: '201'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '200'
+      - element: match
+        text: '^wazuh: Agent buffer: '
+      - element: description
+        text: Agent event queue rule
+      - element: group
+        text: agent_flooding,
+    - element: rule
+      attributes:
+        id: '202'
+        level: '7'
+      children:
+      - element: if_sid
+        text: '201'
+      - element: field
+        attributes:
+          name: level
+        text: '%'
+      - element: description
+        text: Agent event queue is $(level) full.
+      - element: group
+        text: agent_flooding,pci_dss_10.6.1,gdpr_IV_35.7.d,
+    - element: rule
+      attributes:
+        id: '203'
+        level: '9'
+      children:
+      - element: if_sid
+        text: '201'
+      - element: field
+        attributes:
+          name: level
+        text: full
+      - element: description
+        text: Agent event queue is full. Events may be lost.
+      - element: group
+        text: agent_flooding,pci_dss_10.6.1,gdpr_IV_35.7.d,
+    - element: rule
+      attributes:
+        id: '204'
+        level: '12'
+      children:
+      - element: if_sid
+        text: '201'
+      - element: field
+        attributes:
+          name: level
+        text: flooded
+      - element: description
+        text: Agent event queue is flooded. Check the agent configuration.
+      - element: group
+        text: agent_flooding,pci_dss_10.6.1,gdpr_IV_35.7.d,
+    - element: rule
+      attributes:
+        id: '205'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '201'
+      - element: field
+        attributes:
+          name: level
+        text: normal
+      - element: description
+        text: Agent event queue is back to normal load.
+      - element: group
+        text: agent_flooding,
+    - element: rule
+      attributes:
+        id: '210'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '200'
+      - element: match
+        text: Upgrade procedure
+      - element: description
+        text: Remote upgrade alert
+      - element: group
+        text: upgrade,
+    - element: rule
+      attributes:
+        id: '211'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '200'
+      - element: match
+        text: Custom installation
+      - element: description
+        text: Remote installation alert
+      - element: group
+        text: upgrade,
+    - element: rule
+      attributes:
+        id: '212'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '210'
+      - element: status
+        text: started
+      - element: description
+        text: Remote upgrade started.
+      - element: group
+        text: upgrade,
+    - element: rule
+      attributes:
+        id: '213'
+        level: '7'
+      children:
+      - element: if_sid
+        text: '210'
+      - element: status
+        text: aborted
+      - element: description
+        text: 'Remote upgrade could not be launched. Error: $(error).'
+      - element: group
+        text: upgrade,upgrade_failure,
+    - element: rule
+      attributes:
+        id: '214'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '210'
+      - element: status
+        text: succeeded
+      - element: description
+        text: Remote upgrade finished successfully.
+      - element: group
+        text: upgrade,upgrade_success,
+    - element: rule
+      attributes:
+        id: '215'
+        level: '6'
+      children:
+      - element: if_sid
+        text: '210'
+      - element: status
+        text: failed
+      - element: description
+        text: Remote upgrade failed. Agent restored to previous version.
+      - element: group
+        text: upgrade,upgrade_failure,
+    - element: rule
+      attributes:
+        id: '216'
+        level: '7'
+      children:
+      - element: if_sid
+        text: '210'
+      - element: status
+        text: lost
+      - element: description
+        text: Remote upgrade failed. Agent disconnected.
+      - element: group
+        text: upgrade,upgrade_failure,
+    - element: rule
+      attributes:
+        id: '217'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '211'
+      - element: status
+        text: started
+      - element: description
+        text: Custom installation started.
+      - element: group
+        text: upgrade,
+    - element: rule
+      attributes:
+        id: '218'
+        level: '7'
+      children:
+      - element: if_sid
+        text: '211'
+      - element: status
+        text: aborted
+      - element: description
+        text: 'Custom installation could not be launched. Error: $(error).'
+      - element: group
+        text: upgrade,upgrade_failure,
+    - element: rule
+      attributes:
+        id: '220'
+        level: '7'
+      children:
+      - element: if_sid
+        text: '200'
+      - element: match
+        text: '^wazuh: Invalid remote configuration: '
+      - element: description
+        text: The agent could not restart due to a $(module) failure in the remote configuration
+      - element: group
+        text: agent_restarting,configuration_failure,
+    - element: rule
+      attributes:
+        id: '221'
+        level: '0'
+      children:
+      - element: category
+        text: ossec
+      - element: decoded_as
+        text: syscollector
+      - element: description
+        text: Syscollector event.
+    - element: rule
+      attributes:
+        id: '222'
+        level: '7'
+      children:
+      - element: if_sid
+        text: '200'
+      - element: match
+        text: '^wazuh: Could not unmerge shared file.'
+      - element: description
+        text: The agent could not restart due to a error while unmerging files.
+      - element: group
+        text: agent_restarting,configuration_failure,
+    - element: rule
+      attributes:
+        id: '230'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '200'
+      - element: match
+        text: '^wazuh: FIM DB: '
+      - element: location
+        text: syscheck$
+      - element: description
+        text: FIM DB rule
+      - element: group
+        text: syscheck,fim_db_state,
+    - element: rule
+      attributes:
+        id: '231'
+        level: '7'
+      children:
+      - element: if_sid
+        text: '230'
+      - element: field
+        attributes:
+          name: alert_type
+        text: 80_percentage
+      - element: field
+        attributes:
+          name: fim_db_table
+        text: file_entry
+      - element: description
+        text: The maximum limit of files monitored is close to being reached. At this moment there are $(file_count)
+          files and the limit is $(file_limit). If the limit is reached some events can be lost. You can modify
+          this setting in the centralized configuration or locally in the agent.
+      - element: group
+        text: syscheck,fim_db_state,gdpr_IV_35.7.d,
+    - element: rule
+      attributes:
+        id: '232'
+        level: '9'
+      children:
+      - element: if_sid
+        text: '230'
+      - element: field
+        attributes:
+          name: alert_type
+        text: 90_percentage
+      - element: field
+        attributes:
+          name: fim_db_table
+        text: file_entry
+      - element: description
+        text: The maximum limit of files monitored is close to being reached. At this moment there are $(file_count)
+          files and the limit is $(file_limit). If the limit is reached some events can be lost. You can modify
+          this setting in the centralized configuration or locally in the agent.
+      - element: group
+        text: syscheck,fim_db_state,gdpr_IV_35.7.d,
+    - element: rule
+      attributes:
+        id: '233'
+        level: '12'
+      children:
+      - element: if_sid
+        text: '230'
+      - element: field
+        attributes:
+          name: alert_type
+        text: full
+      - element: field
+        attributes:
+          name: fim_db_table
+        text: file_entry
+      - element: description
+        text: The maximum limit of files monitored has been reached. At this moment there are $(file_count) files
+          and the limit is $(file_limit). From this moment some events can be lost. You can modify this setting
+          in the centralized configuration or locally in the agent.
+      - element: group
+        text: syscheck,fim_db_state,gdpr_IV_35.7.d,
+    - element: rule
+      attributes:
+        id: '234'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '230'
+      - element: field
+        attributes:
+          name: alert_type
+        text: normal
+      - element: field
+        attributes:
+          name: fim_db_table
+        text: file_entry
+      - element: description
+        text: At this moment there are $(file_count) files monitored and the limit is $(file_limit).
+      - element: group
+        text: syscheck,fim_db_state,
+    - element: rule
+      attributes:
+        id: '235'
+        level: '7'
+      children:
+      - element: if_sid
+        text: '230'
+      - element: field
+        attributes:
+          name: alert_type
+        text: 80_percentage
+      - element: field
+        attributes:
+          name: fim_db_table
+        text: registry_key
+      - element: description
+        text: The maximum limit of registry keys monitored is close to being reached. At this moment there are $(keys_count)
+          registry values and the limit is $(registry_limit). If the limit is reached some events can be lost. You
+          can modify this setting in the centralized configuration or locally in the agent.
+      - element: group
+        text: syscheck,fim_db_state,gdpr_IV_35.7.d,
+    - element: rule
+      attributes:
+        id: '236'
+        level: '9'
+      children:
+      - element: if_sid
+        text: '230'
+      - element: field
+        attributes:
+          name: alert_type
+        text: 90_percentage
+      - element: field
+        attributes:
+          name: fim_db_table
+        text: registry_key
+      - element: description
+        text: The maximum limit of registry keys monitored is close to being reached. At this moment there are $(keys_count)
+          registry values and the limit is $(registry_limit). If the limit is reached some events can be lost. You
+          can modify this setting in the centralized configuration or locally in the agent.
+      - element: group
+        text: syscheck,fim_db_state,gdpr_IV_35.7.d,
+    - element: rule
+      attributes:
+        id: '237'
+        level: '12'
+      children:
+      - element: if_sid
+        text: '230'
+      - element: field
+        attributes:
+          name: alert_type
+        text: full
+      - element: field
+        attributes:
+          name: fim_db_table
+        text: registry_key
+      - element: description
+        text: The maximum limit of registry keys monitored has been reached. At this moment there are $(keys_count)
+          registry values and the limit is $(registry_limit). From this moment some events can be lost. You can
+          modify this setting in the centralized configuration or locally in the agent.
+      - element: group
+        text: syscheck,fim_db_state,gdpr_IV_35.7.d,
+    - element: rule
+      attributes:
+        id: '238'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '230'
+      - element: field
+        attributes:
+          name: alert_type
+        text: normal
+      - element: field
+        attributes:
+          name: fim_db_table
+        text: registry_key
+      - element: description
+        text: At this moment there are $(keys_count) registry keys monitored and the limit is $(registry_limit).
+      - element: group
+        text: syscheck,fim_db_state,
+    - element: rule
+      attributes:
+        id: '239'
+        level: '7'
+      children:
+      - element: if_sid
+        text: '230'
+      - element: field
+        attributes:
+          name: alert_type
+        text: 80_percentage
+      - element: field
+        attributes:
+          name: fim_db_table
+        text: registry_data
+      - element: description
+        text: The maximum limit of registry values monitored is close to being reached. At this moment there are
+          $(values_count) registry values and the limit is $(registry_limit). If the limit is reached some events
+          can be lost. You can modify this setting in the centralized configuration or locally in the agent.
+      - element: group
+        text: syscheck,fim_db_state,gdpr_IV_35.7.d,
+    - element: rule
+      attributes:
+        id: '240'
+        level: '9'
+      children:
+      - element: if_sid
+        text: '230'
+      - element: field
+        attributes:
+          name: alert_type
+        text: 90_percentage
+      - element: field
+        attributes:
+          name: fim_db_table
+        text: registry_data
+      - element: description
+        text: The maximum limit of registry values monitored is close to being reached. At this moment there are
+          $(values_count) registry values and the limit is $(registry_limit). If the limit is reached some events
+          can be lost. You can modify this setting in the centralized configuration or locally in the agent.
+      - element: group
+        text: syscheck,fim_db_state,gdpr_IV_35.7.d,
+    - element: rule
+      attributes:
+        id: '241'
+        level: '12'
+      children:
+      - element: if_sid
+        text: '230'
+      - element: field
+        attributes:
+          name: alert_type
+        text: full
+      - element: field
+        attributes:
+          name: fim_db_table
+        text: registry_data
+      - element: description
+        text: The maximum limit of registry values monitored has been reached. At this moment there are $(values_count)
+          registry values and the limit is $(registry_limit). From this moment some events can be lost. You can
+          modify this setting in the centralized configuration or locally in the agent.
+      - element: group
+        text: syscheck,fim_db_state,gdpr_IV_35.7.d,
+    - element: rule
+      attributes:
+        id: '242'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '230'
+      - element: field
+        attributes:
+          name: alert_type
+        text: normal
+      - element: field
+        attributes:
+          name: fim_db_table
+        text: registry_data
+      - element: description
+        text: At this moment there are $(values_count) registry values monitored and the limit is $(registry_limit).
+      - element: group
+        text: syscheck,fim_db_state,
+  original_xml: |
+    <!--
+      -  Wazuh rules
+      -  Created by Wazuh, Inc.
+      -  Copyright (C) 2015, Wazuh Inc.
+      -  This program is a free software; you can redistribute it and/or modify it under the terms of GPLv2.
+    -->
+
+    <group name="wazuh,">
+      <rule id="200" level="0">
+        <decoded_as>wazuh</decoded_as>
+        <description>Grouping of wazuh rules.</description>
+      </rule>
+
+      <!-- Agent buffer rules -->
+      <rule id="201" level="0">
+        <if_sid>200</if_sid>
+        <match>^wazuh: Agent buffer: </match>
+        <description>Agent event queue rule</description>
+        <group>agent_flooding,</group>
+      </rule>
+
+      <rule id="202" level="7">
+        <if_sid>201</if_sid>
+        <field name="level">%</field>
+        <description>Agent event queue is $(level) full.</description>
+        <group>agent_flooding,pci_dss_10.6.1,gdpr_IV_35.7.d,</group>
+      </rule>
+
+      <rule id="203" level="9">
+        <if_sid>201</if_sid>
+        <field name="level">full</field>
+        <description>Agent event queue is full. Events may be lost.</description>
+        <group>agent_flooding,pci_dss_10.6.1,gdpr_IV_35.7.d,</group>
+      </rule>
+
+      <rule id="204" level="12">
+        <if_sid>201</if_sid>
+        <field name="level">flooded</field>
+        <description>Agent event queue is flooded. Check the agent configuration.</description>
+        <group>agent_flooding,pci_dss_10.6.1,gdpr_IV_35.7.d,</group>
+      </rule>
+
+      <rule id="205" level="3">
+        <if_sid>201</if_sid>
+        <field name="level">normal</field>
+        <description>Agent event queue is back to normal load.</description>
+        <group>agent_flooding,</group>
+      </rule>
+
+
+      <!-- Remote upgrading rules -->
+      <!--
+        wazuh: Upgrade procedure on agent 001 (TestAgent): started. Current version: v3.0.0
+        wazuh: Upgrade procedure on agent 001 (TestAgent): aborted: Cannot execute installer
+        wazuh: Upgrade procedure on agent 001 (TestAgent): succeeded. New version: v3.1.0
+        wazuh: Upgrade procedure on agent 001 (TestAgent): failed: Restored to previous version
+        wazuh: Upgrade procedure on agent 001 (TestAgent): lost: Maximum attempts exceeded
+        wazuh: Custom installation on agent 001 (TestAgent): started.
+        wazuh: Custom installation on agent 001 (TestAgent): aborted: Could not verify signature
+      -->
+      <rule id="210" level="0">
+        <if_sid>200</if_sid>
+        <match>Upgrade procedure</match>
+        <description>Remote upgrade alert</description>
+        <group>upgrade,</group>
+      </rule>
+
+      <rule id="211" level="0">
+        <if_sid>200</if_sid>
+        <match>Custom installation</match>
+        <description>Remote installation alert</description>
+        <group>upgrade,</group>
+      </rule>
+
+      <rule id="212" level="3">
+        <if_sid>210</if_sid>
+        <status>started</status>
+        <description>Remote upgrade started.</description>
+        <group>upgrade,</group>
+      </rule>
+
+      <rule id="213" level="7">
+        <if_sid>210</if_sid>
+        <status>aborted</status>
+        <description>Remote upgrade could not be launched. Error: $(error).</description>
+        <group>upgrade,upgrade_failure,</group>
+      </rule>
+
+      <rule id="214" level="3">
+        <if_sid>210</if_sid>
+        <status>succeeded</status>
+        <description>Remote upgrade finished successfully.</description>
+        <group>upgrade,upgrade_success,</group>
+      </rule>
+
+      <rule id="215" level="6">
+        <if_sid>210</if_sid>
+        <status>failed</status>
+        <description>Remote upgrade failed. Agent restored to previous version.</description>
+        <group>upgrade,upgrade_failure,</group>
+      </rule>
+
+      <rule id="216" level="7">
+        <if_sid>210</if_sid>
+        <status>lost</status>
+        <description>Remote upgrade failed. Agent disconnected.</description>
+        <group>upgrade,upgrade_failure,</group>
+      </rule>
+
+      <rule id="217" level="3">
+        <if_sid>211</if_sid>
+        <status>started</status>
+        <description>Custom installation started.</description>
+        <group>upgrade,</group>
+      </rule>
+
+      <rule id="218" level="7">
+        <if_sid>211</if_sid>
+        <status>aborted</status>
+        <description>Custom installation could not be launched. Error: $(error).</description>
+        <group>upgrade,upgrade_failure,</group>
+      </rule>
+
+      <rule id="220" level="7">
+        <if_sid>200</if_sid>
+        <match>^wazuh: Invalid remote configuration: </match>
+        <description>The agent could not restart due to a $(module) failure in the remote configuration</description>
+        <group>agent_restarting,configuration_failure,</group>
+      </rule>
+
+      <!-- Ignore syscollector events -->
+      <rule id="221" level="0">
+        <category>ossec</category>
+        <decoded_as>syscollector</decoded_as>
+        <description>Syscollector event.</description>
+      </rule>
+
+      <rule id="222" level="7">
+        <if_sid>200</if_sid>
+        <match>^wazuh: Could not unmerge shared file.</match>
+        <description>The agent could not restart due to a error while unmerging files.</description>
+        <group>agent_restarting,configuration_failure,</group>
+      </rule>
+
+      <!-- FIM DB state rules -->
+      <rule id="230" level="0">
+        <if_sid>200</if_sid>
+        <match>^wazuh: FIM DB: </match>
+        <location>syscheck$</location>
+        <description>FIM DB rule</description>
+        <group>syscheck,fim_db_state,</group>
+      </rule>
+
+      <rule id="231" level="7">
+        <if_sid>230</if_sid>
+        <field name="alert_type">80_percentage</field>
+        <field name="fim_db_table">file_entry</field>
+        <description>The maximum limit of files monitored is close to being reached. At this moment there are $(file_count) files and the limit is $(file_limit). If the limit is reached some events can be lost. You can modify this setting in the centralized configuration or locally in the agent.</description>
+        <group>syscheck,fim_db_state,gdpr_IV_35.7.d,</group>
+      </rule>
+
+      <rule id="232" level="9">
+        <if_sid>230</if_sid>
+        <field name="alert_type">90_percentage</field>
+        <field name="fim_db_table">file_entry</field>
+        <description>The maximum limit of files monitored is close to being reached. At this moment there are $(file_count) files and the limit is $(file_limit). If the limit is reached some events can be lost. You can modify this setting in the centralized configuration or locally in the agent.</description>
+        <group>syscheck,fim_db_state,gdpr_IV_35.7.d,</group>
+      </rule>
+
+      <rule id="233" level="12">
+        <if_sid>230</if_sid>
+        <field name="alert_type">full</field>
+        <field name="fim_db_table">file_entry</field>
+        <description>The maximum limit of files monitored has been reached. At this moment there are $(file_count) files and the limit is $(file_limit). From this moment some events can be lost. You can modify this setting in the centralized configuration or locally in the agent.</description>
+        <group>syscheck,fim_db_state,gdpr_IV_35.7.d,</group>
+      </rule>
+
+      <rule id="234" level="3">
+        <if_sid>230</if_sid>
+        <field name="alert_type">normal</field>
+        <field name="fim_db_table">file_entry</field>
+        <description>At this moment there are $(file_count) files monitored and the limit is $(file_limit).</description>
+        <group>syscheck,fim_db_state,</group>
+      </rule>
+
+      <rule id="235" level="7">
+        <if_sid>230</if_sid>
+        <field name="alert_type">80_percentage</field>
+        <field name="fim_db_table">registry_key</field>
+        <description>The maximum limit of registry keys monitored is close to being reached. At this moment there are $(keys_count) registry values and the limit is $(registry_limit). If the limit is reached some events can be lost. You can modify this setting in the centralized configuration or locally in the agent.</description>
+        <group>syscheck,fim_db_state,gdpr_IV_35.7.d,</group>
+      </rule>
+
+      <rule id="236" level="9">
+        <if_sid>230</if_sid>
+        <field name="alert_type">90_percentage</field>
+        <field name="fim_db_table">registry_key</field>
+        <description>The maximum limit of registry keys monitored is close to being reached. At this moment there are $(keys_count) registry values and the limit is $(registry_limit). If the limit is reached some events can be lost. You can modify this setting in the centralized configuration or locally in the agent.</description>
+        <group>syscheck,fim_db_state,gdpr_IV_35.7.d,</group>
+      </rule>
+
+      <rule id="237" level="12">
+        <if_sid>230</if_sid>
+        <field name="alert_type">full</field>
+        <field name="fim_db_table">registry_key</field>
+        <description>The maximum limit of registry keys monitored has been reached. At this moment there are $(keys_count) registry values and the limit is $(registry_limit). From this moment some events can be lost. You can modify this setting in the centralized configuration or locally in the agent.</description>
+        <group>syscheck,fim_db_state,gdpr_IV_35.7.d,</group>
+      </rule>
+
+      <rule id="238" level="3">
+        <if_sid>230</if_sid>
+        <field name="alert_type">normal</field>
+        <field name="fim_db_table">registry_key</field>
+        <description>At this moment there are $(keys_count) registry keys monitored and the limit is $(registry_limit).</description>
+        <group>syscheck,fim_db_state,</group>
+      </rule>
+
+      <rule id="239" level="7">
+        <if_sid>230</if_sid>
+        <field name="alert_type">80_percentage</field>
+        <field name="fim_db_table">registry_data</field>
+        <description>The maximum limit of registry values monitored is close to being reached. At this moment there are $(values_count) registry values and the limit is $(registry_limit). If the limit is reached some events can be lost. You can modify this setting in the centralized configuration or locally in the agent.</description>
+        <group>syscheck,fim_db_state,gdpr_IV_35.7.d,</group>
+      </rule>
+
+      <rule id="240" level="9">
+        <if_sid>230</if_sid>
+        <field name="alert_type">90_percentage</field>
+        <field name="fim_db_table">registry_data</field>
+        <description>The maximum limit of registry values monitored is close to being reached. At this moment there are $(values_count) registry values and the limit is $(registry_limit). If the limit is reached some events can be lost. You can modify this setting in the centralized configuration or locally in the agent.</description>
+        <group>syscheck,fim_db_state,gdpr_IV_35.7.d,</group>
+      </rule>
+
+      <rule id="241" level="12">
+        <if_sid>230</if_sid>
+        <field name="alert_type">full</field>
+        <field name="fim_db_table">registry_data</field>
+        <description>The maximum limit of registry values monitored has been reached. At this moment there are $(values_count) registry values and the limit is $(registry_limit). From this moment some events can be lost. You can modify this setting in the centralized configuration or locally in the agent.</description>
+        <group>syscheck,fim_db_state,gdpr_IV_35.7.d,</group>
+      </rule>
+
+      <rule id="242" level="3">
+        <if_sid>230</if_sid>
+        <field name="alert_type">normal</field>
+        <field name="fim_db_table">registry_data</field>
+        <description>At this moment there are $(values_count) registry values monitored and the limit is $(registry_limit).</description>
+        <group>syscheck,fim_db_state,</group>
+      </rule>
+
+    </group>

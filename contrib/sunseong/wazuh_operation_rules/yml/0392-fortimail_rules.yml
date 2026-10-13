@@ -1,0 +1,1249 @@
+schema: wazuh-original-rules-yaml/v1
+format_only_conversion: true
+native_runtime_format: Wazuh XML
+authoritative_field: sources[].original_xml
+upstream:
+  repository: https://github.com/wazuh/wazuh
+  tag: v4.14.8
+  commit: f470ad7db717b18db7feeed568949643698f0f34
+sources:
+- file: ruleset/rules/0392-fortimail_rules.xml
+  url: https://github.com/wazuh/wazuh/blob/f470ad7db717b18db7feeed568949643698f0f34/ruleset/rules/0392-fortimail_rules.xml
+  sha256: f0a1fdadadb07cf1b71694ec20030e0f79fc0883db14e51e2503d38c01658137
+  rule_count: 82
+  elements:
+  - element: group
+    attributes:
+      name: fortimail,
+    children:
+    - element: rule
+      attributes:
+        id: '44640'
+        level: '0'
+      children:
+      - element: decoded_as
+        text: fortimail-like
+      - element: description
+        text: FortiMail Rules.
+    - element: rule
+      attributes:
+        id: '44641'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '44640'
+      - element: field
+        attributes:
+          name: pri
+        text: ^information$|^notice$
+      - element: description
+        text: 'FortiMail: Informational message.'
+    - element: rule
+      attributes:
+        id: '44642'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44640'
+      - element: field
+        attributes:
+          name: pri
+        text: ^warning$
+      - element: description
+        text: 'FortiMail: Warning message.'
+    - element: rule
+      attributes:
+        id: '44643'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44640'
+      - element: field
+        attributes:
+          name: pri
+        text: ^error$
+      - element: description
+        text: 'FortiMail: Error message.'
+    - element: rule
+      attributes:
+        id: '44644'
+        level: '7'
+      children:
+      - element: if_sid
+        text: '44640'
+      - element: field
+        attributes:
+          name: pri
+        text: ^critical$
+      - element: description
+        text: 'FortiMail: Critical message.'
+    - element: rule
+      attributes:
+        id: '44645'
+        level: '10'
+      children:
+      - element: if_sid
+        text: '44640'
+      - element: field
+        attributes:
+          name: pri
+        text: ^alert$
+      - element: description
+        text: 'FortiMail: Alert message.'
+    - element: rule
+      attributes:
+        id: '44646'
+        level: '13'
+      children:
+      - element: if_sid
+        text: '44640'
+      - element: field
+        attributes:
+          name: pri
+        text: ^emergency$
+      - element: description
+        text: 'FortiMail: Emergency message.'
+    - element: rule
+      attributes:
+        id: '44647'
+        level: '7'
+      children:
+      - element: if_sid
+        text: '44640'
+      - element: field
+        attributes:
+          name: resolved
+        text: ^forged$
+      - element: description
+        text: 'FortiMail: DNS Record does not match.'
+    - element: rule
+      attributes:
+        id: '44648'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44640'
+      - element: field
+        attributes:
+          name: resolved
+        text: ^fail$
+      - element: description
+        text: 'FortiMail: DNS lookup is not successful.'
+    - element: rule
+      attributes:
+        id: '44649'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44641'
+      - element: field
+        attributes:
+          name: msg
+        text: login successfully
+      - element: description
+        text: 'FortiMail: An administrator successfully logged in using the web-based manager or CLI.'
+    - element: rule
+      attributes:
+        id: '44650'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44641'
+      - element: field
+        attributes:
+          name: msg
+        text: logged in
+      - element: description
+        text: 'FortiMail: An administrator from a specified IP address logged into the WebMail.'
+    - element: rule
+      attributes:
+        id: '44651'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44641'
+      - element: field
+        attributes:
+          name: msg
+        text: login failed from
+      - element: description
+        text: 'FortiMail: An administrator failed to log in using the console, SSH, or telnet.'
+    - element: rule
+      attributes:
+        id: '44652'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44641'
+      - element: field
+        attributes:
+          name: msg
+        text: '^mailbox_get_header: failed$'
+      - element: description
+        text: 'FortiMail: The WebMail GUI cannot display the email message, or the quarantined message in the web-based
+          manager.'
+    - element: rule
+      attributes:
+        id: '44653'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44641'
+      - element: field
+        attributes:
+          name: msg
+        text: '^mailbox_get_num_parts: failed$'
+      - element: description
+        text: 'FortiMail: Specific information in a message cannot be retrieved.'
+    - element: rule
+      attributes:
+        id: '44654'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44641'
+      - element: field
+        attributes:
+          name: msg
+        text: ^Could not get message part$
+      - element: description
+        text: 'FortiMail: The message cannot be read from the mailbox.'
+    - element: rule
+      attributes:
+        id: '44655'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44641'
+      - element: field
+        attributes:
+          name: msg
+        text: ^Could not save attachment$
+      - element: description
+        text: 'FortiMail: An unknown failure occurred when trying to prepare the attachment for a user to download.'
+    - element: rule
+      attributes:
+        id: '44656'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44641'
+      - element: field
+        attributes:
+          name: msg
+        text: ^Login from LCD successfully$
+      - element: description
+        text: 'FortiMail: An administrator successfully logged in using the LCD.'
+    - element: rule
+      attributes:
+        id: '44657'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44641'
+      - element: field
+        attributes:
+          name: msg
+        text: ^Login from LCD failed$
+      - element: description
+        text: 'FortiMail: An administrator failed to log in using the LCD.'
+    - element: rule
+      attributes:
+        id: '44658'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44641'
+      - element: field
+        attributes:
+          name: msg
+        text: update settings \.+ changed
+      - element: description
+        text: 'FortiMail: An administrator changed a system update setting.'
+    - element: rule
+      attributes:
+        id: '44659'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44641'
+      - element: field
+        attributes:
+          name: msg
+        text: ip address changed
+      - element: description
+        text: 'FortiMail: An administrator changed an interface IP address using the CLI.'
+    - element: rule
+      attributes:
+        id: '44660'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44641'
+      - element: field
+        attributes:
+          name: msg
+        text: status changed|has been brought up|have been changed by
+      - element: description
+        text: 'FortiMail: An administrator changed the status of an interface.'
+    - element: rule
+      attributes:
+        id: '44661'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44641'
+      - element: field
+        attributes:
+          name: msg
+        text: DNS has been changed
+      - element: description
+        text: 'FortiMail: An administrator changed DNS settings using the CLI.'
+    - element: rule
+      attributes:
+        id: '44662'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44641'
+      - element: field
+        attributes:
+          name: msg
+        text: default gateway has been changed
+      - element: description
+        text: 'FortiMail: An administrator changed the default gateway IP address using the web-based manager.'
+    - element: rule
+      attributes:
+        id: '44663'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44641'
+      - element: field
+        attributes:
+          name: msg
+        text: Route entry|A route to|Routing entry
+      - element: description
+        text: 'FortiMail: An administrator changed a routing configuration.'
+    - element: rule
+      attributes:
+        id: '44664'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44641'
+      - element: field
+        attributes:
+          name: msg
+        text: System timezone|Daylight Saving|System time
+      - element: description
+        text: 'FortiMail: An administrator changed the system time settings.'
+    - element: rule
+      attributes:
+        id: '44665'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44641'
+      - element: field
+        attributes:
+          name: msg
+        text: NTP server settings have been changed
+      - element: description
+        text: 'FortiMail: An administrator changed NTP server settings using the CLI or web-based manager.'
+    - element: rule
+      attributes:
+        id: '44666'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44641'
+      - element: field
+        attributes:
+          name: msg
+        text: Console \w+ setting has been changed
+      - element: description
+        text: 'FortiMail: An administrator changed the console settings using the CLI.'
+    - element: rule
+      attributes:
+        id: '44667'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44641'
+      - element: field
+        attributes:
+          name: msg
+        text: timeout value has been changed|auth timeout has been changed
+      - element: description
+        text: 'FortiMail: An administrator changed a timeout value using the CLI.'
+    - element: rule
+      attributes:
+        id: '44668'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44641'
+      - element: field
+        attributes:
+          name: msg
+        text: System language has been changed
+      - element: description
+        text: 'FortiMail: An administrator changed the system language to another language using the CLI or web-based
+          manager.'
+    - element: rule
+      attributes:
+        id: '44669'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44641'
+      - element: field
+        attributes:
+          name: msg
+        text: LCD PIN
+      - element: description
+        text: 'FortiMail: An administrator changed the LCD PIN setting using the CLI or web-based manager.'
+    - element: rule
+      attributes:
+        id: '44670'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44641'
+      - element: field
+        attributes:
+          name: msg
+        text: Admin \w+ has been|admin \w+ password
+      - element: description
+        text: 'FortiMail: An administrator changed another administrator using the CLI or web-based manager.'
+    - element: rule
+      attributes:
+        id: '44671'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44641'
+      - element: field
+        attributes:
+          name: msg
+        text: HA settings have been changed
+      - element: description
+        text: 'FortiMail: An administrator changed HA settings using the CLI.'
+    - element: rule
+      attributes:
+        id: '44672'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44641'
+      - element: field
+        attributes:
+          name: msg
+        text: SNMP
+      - element: description
+        text: 'FortiMail: An administrator changed the SNMP Settings.'
+    - element: rule
+      attributes:
+        id: '44673'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44641'
+      - element: field
+        attributes:
+          name: msg
+        text: FortiMail disclaimer
+      - element: description
+        text: 'FortiMail: An administrator has changed a FortiMail disclaimer Settings.'
+    - element: rule
+      attributes:
+        id: '44674'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44641'
+      - element: field
+        attributes:
+          name: msg
+        text: Local domain|local domain
+      - element: description
+        text: 'FortiMail: An administrator has modified local domains using the CLI.'
+    - element: rule
+      attributes:
+        id: '44675'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44641'
+      - element: field
+        attributes:
+          name: msg
+        text: POP3
+      - element: description
+        text: 'FortiMail: An administrator has modified a POP3 setting using the CLI.'
+    - element: rule
+      attributes:
+        id: '44676'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44641'
+      - element: field
+        attributes:
+          name: msg
+        text: Relay server name
+      - element: description
+        text: 'FortiMail: An administrator has modified a relay server name using the CLI.'
+    - element: rule
+      attributes:
+        id: '44677'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44641'
+      - element: field
+        attributes:
+          name: msg
+        text: smtp auth|smtp over ssl|SMTP server port number
+      - element: description
+        text: 'FortiMail: An administrator has modified SMTP Settings.'
+    - element: rule
+      attributes:
+        id: '44678'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44641'
+      - element: field
+        attributes:
+          name: msg
+        text: email archiving|Archiving settings|Archiving policy|Archiving exempt
+      - element: description
+        text: 'FortiMail: An administrator has modified the email archiving Settings.'
+    - element: rule
+      attributes:
+        id: '44679'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44641'
+      - element: field
+        attributes:
+          name: msg
+        text: system quarantine|System quarantine
+      - element: description
+        text: 'FortiMail: An administrator has modified a system quarantine setting using the CLI.'
+    - element: rule
+      attributes:
+        id: '44680'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44641'
+      - element: field
+        attributes:
+          name: msg
+        text: Mail Server settings|Mail server access
+      - element: description
+        text: 'FortiMail: An administrator has changed mail server settings using the CLI or web-based manager.'
+    - element: rule
+      attributes:
+        id: '44681'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44641'
+      - element: field
+        attributes:
+          name: msg
+        text: Permission of mail
+      - element: description
+        text: 'FortiMail: An administrator set or deleted permission of mail using the CLI or web-based manager.'
+    - element: rule
+      attributes:
+        id: '44682'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44641'
+      - element: field
+        attributes:
+          name: msg
+        text: Permission of mail
+      - element: description
+        text: 'FortiMail: An administrator set or deleted permission of mail using the CLI or web-based manager.'
+    - element: rule
+      attributes:
+        id: '44683'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44641'
+      - element: field
+        attributes:
+          name: msg
+        text: Local user
+      - element: description
+        text: 'FortiMail: An administrator changed a local user using the CL.'
+    - element: rule
+      attributes:
+        id: '44684'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44641'
+      - element: field
+        attributes:
+          name: msg
+        text: User group
+      - element: description
+        text: 'FortiMail: An administrator changed a user group using the CLI or web-based manager.'
+    - element: rule
+      attributes:
+        id: '44685'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44641'
+      - element: field
+        attributes:
+          name: msg
+        text: mail user
+      - element: description
+        text: 'FortiMail: An administrator changed a mail user using the CLI.'
+    - element: rule
+      attributes:
+        id: '44686'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44641'
+      - element: field
+        attributes:
+          name: msg
+        text: Mail server user|Mail Server User
+      - element: description
+        text: 'FortiMail: An administrator changed a mail server user using the web-based manager.'
+    - element: rule
+      attributes:
+        id: '44687'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44641'
+      - element: field
+        attributes:
+          name: msg
+        text: IMAP
+      - element: description
+        text: 'FortiMail: An administrator has modified a IMAP setting using the CLI.'
+    - element: rule
+      attributes:
+        id: '44688'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44641'
+      - element: field
+        attributes:
+          name: msg
+        text: email banned word
+      - element: description
+        text: 'FortiMail: An administrator removed an email banned word using the CLI.'
+    - element: rule
+      attributes:
+        id: '44689'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44641'
+      - element: field
+        attributes:
+          name: msg
+        text: log setting|logsetting|Log setting|Log Policy
+      - element: description
+        text: 'FortiMail: An administrator changed a log setting using the CLI.'
+    - element: rule
+      attributes:
+        id: '44690'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44641'
+      - element: field
+        attributes:
+          name: msg
+        text: Alertemail setting
+      - element: description
+        text: 'FortiMail: An administrator changed an alert email setting using the CLI.'
+    - element: rule
+      attributes:
+        id: '44691'
+        level: '3'
+      children:
+      - element: field
+        attributes:
+          name: subtype
+        text: dns
+      - element: description
+        text: 'FortiMail: DNS query event.'
+    - element: rule
+      attributes:
+        id: '44692'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '44641'
+      - element: field
+        attributes:
+          name: subtype
+        text: ha
+      - element: description
+        text: 'FortiMail: System Event HA (high availability) log messages.'
+    - element: rule
+      attributes:
+        id: '44693'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44692'
+      - element: field
+        attributes:
+          name: msg
+        text: 'monitord: \.+ entering MASTER mode'
+      - element: description
+        text: 'FortiMail: The FortiMail unit is entering master mode.'
+    - element: rule
+      attributes:
+        id: '44694'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44692'
+      - element: field
+        attributes:
+          name: msg
+        text: 'configd: \.+ entering slave mode'
+      - element: description
+        text: 'FortiMail: The FortiMail unit is entering slave mode.'
+    - element: rule
+      attributes:
+        id: '44695'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44692'
+      - element: field
+        attributes:
+          name: msg
+        text: 'monitord: \.+ assuming MASTER role'
+      - element: description
+        text: 'FortiMail: The FortiMail unit is assuming the primary unit role because the retry limit was reached
+          for connecting to the original primary unit.'
+    - element: rule
+      attributes:
+        id: '44696'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44692'
+      - element: field
+        attributes:
+          name: msg
+        text: 'hahbd:'
+      - element: description
+        text: 'FortiMail: Heartbeat related activities.'
+    - element: rule
+      attributes:
+        id: '44697'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44692'
+      - element: field
+        attributes:
+          name: msg
+        text: 'hasyncd:'
+      - element: description
+        text: 'FortiMail: Synchronization related information.'
+    - element: rule
+      attributes:
+        id: '44698'
+        level: '0'
+      children:
+      - element: field
+        attributes:
+          name: subtype
+        text: system
+      - element: description
+        text: 'FortiMail: System Event System log messages.'
+    - element: rule
+      attributes:
+        id: '44699'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44698'
+      - element: field
+        attributes:
+          name: msg
+        text: System has been restarted
+      - element: description
+        text: 'FortiMail: An administrator restarted the system using the CLI or web-based manager.'
+    - element: rule
+      attributes:
+        id: '44700'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44698'
+      - element: field
+        attributes:
+          name: msg
+        text: System has been shutdown
+      - element: description
+        text: 'FortiMail: An administrator shut down the system using the CLI or web-based manager.'
+    - element: rule
+      attributes:
+        id: '44701'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44698'
+      - element: field
+        attributes:
+          name: msg
+        text: System has been reloaded
+      - element: description
+        text: 'FortiMail: An administrator reloaded the system using the CLI or web-based manager.'
+    - element: rule
+      attributes:
+        id: '44702'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44698'
+      - element: field
+        attributes:
+          name: msg
+        text: System has been reset to factory default
+      - element: description
+        text: 'FortiMail: An administrator reset the system to factory default using the CLI, web-based manager,
+          or LCD.'
+    - element: rule
+      attributes:
+        id: '44703'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44698'
+      - element: field
+        attributes:
+          name: msg
+        text: System firmware has been
+      - element: description
+        text: 'FortiMail: An administrator upgraded/downgraded system firmware using the CLI or web-based manager.'
+    - element: rule
+      attributes:
+        id: '44704'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44698'
+      - element: field
+        attributes:
+          name: msg
+        text: Upgrade system firmware failed
+      - element: description
+        text: 'FortiMail: An administrator upgraded system firmware unsuccessfully using the CLI, console, telnet,
+          or web-based manager.'
+    - element: rule
+      attributes:
+        id: '44705'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44698'
+      - element: field
+        attributes:
+          name: msg
+        text: System has been changed to \w+ mode
+      - element: description
+        text: 'FortiMail: An administrator or LCD user changed the mode to gateway, server, or transparent mode
+          using the CLI, web-based manager or LCD.'
+    - element: rule
+      attributes:
+        id: '44706'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44642'
+      - element: field
+        attributes:
+          name: subtype
+        text: update
+      - element: description
+        text: 'FortiMail: The FortiMail unit updated the following FortiGuard services.'
+    - element: rule
+      attributes:
+        id: '44707'
+        level: '3'
+      children:
+      - element: field
+        attributes:
+          name: subtype
+        text: imap
+      - element: description
+        text: 'FortiMail: IMAP-related events.'
+    - element: rule
+      attributes:
+        id: '44708'
+        level: '3'
+      children:
+      - element: field
+        attributes:
+          name: subtype
+        text: pop3
+      - element: description
+        text: 'FortiMail: POP3-related events.'
+    - element: rule
+      attributes:
+        id: '44709'
+        level: '3'
+      children:
+      - element: if_sid
+        text: 44641,44642,44643,44644,44645,44646
+      - element: field
+        attributes:
+          name: subtype
+        text: smtp
+      - element: description
+        text: 'FortiMail: SMTP-related events.'
+    - element: rule
+      attributes:
+        id: '44710'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44709'
+      - element: field
+        attributes:
+          name: msg
+        text: Starting flgrptd
+      - element: description
+        text: 'FortiMail: The reporting daemon is starting.'
+    - element: rule
+      attributes:
+        id: '44711'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44709'
+      - element: field
+        attributes:
+          name: msg
+        text: Successfully loaded virus db
+      - element: description
+        text: 'FortiMail: The antivirus database is successfully loaded.'
+    - element: rule
+      attributes:
+        id: '44712'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44709'
+      - element: field
+        attributes:
+          name: msg
+        text: FASR|FSAR
+      - element: description
+        text: 'FortiMail: FortiGuard Antispam Rule (FSAR) Operational Event.'
+    - element: rule
+      attributes:
+        id: '44713'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44709'
+      - element: field
+        attributes:
+          name: msg
+        text: aliases has been rebuilt
+      - element: description
+        text: 'FortiMail: Mail aliases have been rebuilt.'
+    - element: rule
+      attributes:
+        id: '44714'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44709'
+      - element: field
+        attributes:
+          name: msg
+        text: Restart the updated daemon to re-load default avengine
+      - element: description
+        text: 'FortiMail: Updated daemon is restarted to reload default antivirus engine and database.'
+    - element: rule
+      attributes:
+        id: '44715'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44709'
+      - element: field
+        attributes:
+          name: msg
+        text: Successfully loaded virus db
+      - element: description
+        text: 'FortiMail: The user successfully uploaded the antivirus database.'
+    - element: rule
+      attributes:
+        id: '44716'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44709'
+      - element: field
+        attributes:
+          name: msg
+        text: Bayesian Training
+      - element: description
+        text: 'FortiMail: The FortiMail unit is training a specific bayesian database.'
+    - element: rule
+      attributes:
+        id: '44717'
+        level: '3'
+      children:
+      - element: field
+        attributes:
+          name: subtype
+        text: webmail
+      - element: description
+        text: 'FortiMail: Event Webmail log messages.'
+    - element: rule
+      attributes:
+        id: '44718'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44641'
+      - element: field
+        attributes:
+          name: subtype
+        text: infected
+      - element: description
+        text: 'FortiMail: The file contains the specified virus.'
+    - element: rule
+      attributes:
+        id: '44719'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44641'
+      - element: field
+        attributes:
+          name: type
+        text: spam
+      - element: description
+        text: 'FortiMail: SPAM-related events.'
+    - element: rule
+      attributes:
+        id: '44720'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44641'
+      - element: field
+        attributes:
+          name: type
+        text: encrypt
+      - element: description
+        text: 'FortiMail: FortiMail encrypted or decrypted an email.'
+    - element: rule
+      attributes:
+        id: '44721'
+        level: '3'
+      children:
+      - element: if_sid
+        text: 44642,44643,44644,44645,44646
+      - element: field
+        attributes:
+          name: type
+        text: virus
+      - element: description
+        text: 'FortiMail: Virus related events.'
+  original_xml: "<!--\n  Copyright (C) 2015, Wazuh Inc.\n-->\n\n<!-- \n  Rules for:\n    FortiMail ID: 44640 - 44721\n\
+    \n  References:\n    For the creation of the parent rule I had in mind this article: https://kb.fortinet.com/kb/documentLink.do?externalID=FD44560\n\
+    \    For the creation of the child rules I had in mind this article: https://fortinetweb.s3.amazonaws.com/docs.fortinet.com/v2/attachments/f7868f9d-b70f-11ea-8b7d-00505692583a/FortiMail-6.4.0-Log_Reference.pdf\n\
+    \    Additional reference: https://docs.fortinet.com/document/fortimail/6.4.0/log-reference/434224/about-fortinet-logs\n\
+    \  \n  Severity Correlation:\n    0 Emergency   Level 13\n    1 Alert       Level 10\n    2 Critical    Level\
+    \ 7\n    3 Error \t  Level 5\n    4 Warning \t  Level 3\n    5 Notice \t  Level 0\n    6 Information Level 0\n\
+    -->\n\n<group name=\"fortimail,\">\n\n  <rule id=\"44640\" level=\"0\">\n    <decoded_as>fortimail-like</decoded_as>\n\
+    \    <description>FortiMail Rules.</description>\n  </rule>\n\n  <rule id=\"44641\" level=\"0\">\n    <if_sid>44640</if_sid>\n\
+    \    <field name=\"pri\">^information$|^notice$</field>\n    <description>FortiMail: Informational message.</description>\n\
+    \  </rule>\n\n  <rule id=\"44642\" level=\"3\">\n    <if_sid>44640</if_sid>\n    <field name=\"pri\">^warning$</field>\n\
+    \    <description>FortiMail: Warning message.</description>\n  </rule>\n\n  <rule id=\"44643\" level=\"5\">\n\
+    \    <if_sid>44640</if_sid>\n    <field name=\"pri\">^error$</field>\n    <description>FortiMail: Error message.</description>\n\
+    \  </rule>\n\n  <rule id=\"44644\" level=\"7\">\n    <if_sid>44640</if_sid>\n    <field name=\"pri\">^critical$</field>\n\
+    \    <description>FortiMail: Critical message.</description>\n  </rule>\n\n  <rule id=\"44645\" level=\"10\"\
+    >\n    <if_sid>44640</if_sid>\n    <field name=\"pri\">^alert$</field>\n    <description>FortiMail: Alert message.</description>\n\
+    \  </rule>\n\n  <rule id=\"44646\" level=\"13\">\n    <if_sid>44640</if_sid>\n    <field name=\"pri\">^emergency$</field>\n\
+    \    <description>FortiMail: Emergency message.</description>\n  </rule>\n\n  <rule id=\"44647\" level=\"7\"\
+    >\n    <if_sid>44640</if_sid>\n    <field name=\"resolved\">^forged$</field>\n    <description>FortiMail: DNS\
+    \ Record does not match.</description>\n  </rule>\n\n  <rule id=\"44648\" level=\"5\">\n    <if_sid>44640</if_sid>\n\
+    \    <field name=\"resolved\">^fail$</field>\n    <description>FortiMail: DNS lookup is not successful.</description>\n\
+    \  </rule>\n\n  <rule id=\"44649\" level=\"3\">\n    <if_sid>44641</if_sid>\n    <field name=\"msg\">login successfully</field>\n\
+    \    <description>FortiMail: An administrator successfully logged in using the web-based manager or CLI.</description>\n\
+    \  </rule>\n\n  <rule id=\"44650\" level=\"3\">\n    <if_sid>44641</if_sid>\n    <field name=\"msg\">logged\
+    \ in</field>\n    <description>FortiMail: An administrator from a specified IP address logged into the WebMail.</description>\n\
+    \  </rule>\n\n  <rule id=\"44651\" level=\"5\">\n    <if_sid>44641</if_sid>\n    <field name=\"msg\">login failed\
+    \ from</field>\n    <description>FortiMail: An administrator failed to log in using the console, SSH, or telnet.</description>\n\
+    \  </rule>\n\n  <rule id=\"44652\" level=\"3\">\n    <if_sid>44641</if_sid>\n    <field name=\"msg\">^mailbox_get_header:\
+    \ failed$</field>\n    <description>FortiMail: The WebMail GUI cannot display the email message, or the quarantined\
+    \ message in the web-based manager.</description>\n  </rule>\n\n  <rule id=\"44653\" level=\"3\">\n    <if_sid>44641</if_sid>\n\
+    \    <field name=\"msg\">^mailbox_get_num_parts: failed$</field>\n    <description>FortiMail: Specific information\
+    \ in a message cannot be retrieved.</description>\n  </rule>\n\n  <rule id=\"44654\" level=\"3\">\n    <if_sid>44641</if_sid>\n\
+    \    <field name=\"msg\">^Could not get message part$</field>\n    <description>FortiMail: The message cannot\
+    \ be read from the mailbox.</description>\n  </rule>\n\n  <rule id=\"44655\" level=\"3\">\n    <if_sid>44641</if_sid>\n\
+    \    <field name=\"msg\">^Could not save attachment$</field>\n    <description>FortiMail: An unknown failure\
+    \ occurred when trying to prepare the attachment for a user to download.</description>\n  </rule>\n\n  <rule\
+    \ id=\"44656\" level=\"3\">\n    <if_sid>44641</if_sid>\n    <field name=\"msg\">^Login from LCD successfully$</field>\n\
+    \    <description>FortiMail: An administrator successfully logged in using the LCD.</description>\n  </rule>\n\
+    \n  <rule id=\"44657\" level=\"3\">\n    <if_sid>44641</if_sid>\n    <field name=\"msg\">^Login from LCD failed$</field>\n\
+    \    <description>FortiMail: An administrator failed to log in using the LCD.</description>\n  </rule>\n\n \
+    \ <rule id=\"44658\" level=\"3\">\n    <if_sid>44641</if_sid>\n    <field name=\"msg\">update settings \\.+\
+    \ changed</field>\n    <description>FortiMail: An administrator changed a system update setting.</description>\n\
+    \  </rule>\n\n  <rule id=\"44659\" level=\"3\">\n    <if_sid>44641</if_sid>\n    <field name=\"msg\">ip address\
+    \ changed</field>\n    <description>FortiMail: An administrator changed an interface IP address using the CLI.</description>\n\
+    \  </rule>\n\n  <rule id=\"44660\" level=\"3\">\n    <if_sid>44641</if_sid>\n    <field name=\"msg\">status\
+    \ changed|has been brought up|have been changed by</field>\n    <description>FortiMail: An administrator changed\
+    \ the status of an interface.</description>\n  </rule>\n\n  <rule id=\"44661\" level=\"3\">\n    <if_sid>44641</if_sid>\n\
+    \    <field name=\"msg\">DNS has been changed</field>\n    <description>FortiMail: An administrator changed\
+    \ DNS settings using the CLI.</description>\n  </rule>\n\n  <rule id=\"44662\" level=\"3\">\n    <if_sid>44641</if_sid>\n\
+    \    <field name=\"msg\">default gateway has been changed</field>\n    <description>FortiMail: An administrator\
+    \ changed the default gateway IP address using the web-based manager.</description>\n  </rule>\n\n  <rule id=\"\
+    44663\" level=\"3\">\n    <if_sid>44641</if_sid>\n    <field name=\"msg\">Route entry|A route to|Routing entry</field>\n\
+    \    <description>FortiMail: An administrator changed a routing configuration.</description>\n  </rule>\n\n\
+    \  <rule id=\"44664\" level=\"3\">\n    <if_sid>44641</if_sid>\n    <field name=\"msg\">System timezone|Daylight\
+    \ Saving|System time</field>\n    <description>FortiMail: An administrator changed the system time settings.</description>\n\
+    \  </rule>\n\n  <rule id=\"44665\" level=\"3\">\n    <if_sid>44641</if_sid>\n    <field name=\"msg\">NTP server\
+    \ settings have been changed</field>\n    <description>FortiMail: An administrator changed NTP server settings\
+    \ using the CLI or web-based manager.</description>\n  </rule>\n\n  <rule id=\"44666\" level=\"3\">\n    <if_sid>44641</if_sid>\n\
+    \    <field name=\"msg\">Console \\w+ setting has been changed</field>\n    <description>FortiMail: An administrator\
+    \ changed the console settings using the CLI.</description>\n  </rule>\n\n  <rule id=\"44667\" level=\"3\">\n\
+    \    <if_sid>44641</if_sid>\n    <field name=\"msg\">timeout value has been changed|auth timeout has been changed</field>\n\
+    \    <description>FortiMail: An administrator changed a timeout value using the CLI.</description>\n  </rule>\n\
+    \n  <rule id=\"44668\" level=\"3\">\n    <if_sid>44641</if_sid>\n    <field name=\"msg\">System language has\
+    \ been changed</field>\n    <description>FortiMail: An administrator changed the system language to another\
+    \ language using the CLI or web-based manager.</description>\n  </rule>\n\n  <rule id=\"44669\" level=\"3\"\
+    >\n    <if_sid>44641</if_sid>\n    <field name=\"msg\">LCD PIN</field>\n    <description>FortiMail: An administrator\
+    \ changed the LCD PIN setting using the CLI or web-based manager.</description>\n  </rule>\n\n  <rule id=\"\
+    44670\" level=\"3\">\n    <if_sid>44641</if_sid>\n    <field name=\"msg\">Admin \\w+ has been|admin \\w+ password</field>\n\
+    \    <description>FortiMail: An administrator changed another administrator using the CLI or web-based manager.</description>\n\
+    \  </rule>\n\n  <rule id=\"44671\" level=\"3\">\n    <if_sid>44641</if_sid>\n    <field name=\"msg\">HA settings\
+    \ have been changed</field>\n    <description>FortiMail: An administrator changed HA settings using the CLI.</description>\n\
+    \  </rule>\n\n  <rule id=\"44672\" level=\"3\">\n    <if_sid>44641</if_sid>\n    <field name=\"msg\">SNMP</field>\n\
+    \    <description>FortiMail: An administrator changed the SNMP Settings.</description>\n  </rule>\n\n  <rule\
+    \ id=\"44673\" level=\"3\">\n    <if_sid>44641</if_sid>\n    <field name=\"msg\">FortiMail disclaimer</field>\n\
+    \    <description>FortiMail: An administrator has changed a FortiMail disclaimer Settings.</description>\n \
+    \ </rule>\n\n  <rule id=\"44674\" level=\"3\">\n    <if_sid>44641</if_sid>\n    <field name=\"msg\">Local domain|local\
+    \ domain</field>\n    <description>FortiMail: An administrator has modified local domains using the CLI.</description>\n\
+    \  </rule>\n\n  <rule id=\"44675\" level=\"3\">\n    <if_sid>44641</if_sid>\n    <field name=\"msg\">POP3</field>\n\
+    \    <description>FortiMail: An administrator has modified a POP3 setting using the CLI.</description>\n  </rule>\n\
+    \n  <rule id=\"44676\" level=\"3\">\n    <if_sid>44641</if_sid>\n    <field name=\"msg\">Relay server name</field>\n\
+    \    <description>FortiMail: An administrator has modified a relay server name using the CLI.</description>\n\
+    \  </rule>\n\n  <rule id=\"44677\" level=\"3\">\n    <if_sid>44641</if_sid>\n    <field name=\"msg\">smtp auth|smtp\
+    \ over ssl|SMTP server port number</field>\n    <description>FortiMail: An administrator has modified SMTP Settings.</description>\n\
+    \  </rule>\n\n  <rule id=\"44678\" level=\"3\">\n    <if_sid>44641</if_sid>\n    <field name=\"msg\">email archiving|Archiving\
+    \ settings|Archiving policy|Archiving exempt</field>\n    <description>FortiMail: An administrator has modified\
+    \ the email archiving Settings.</description>\n  </rule>\n\n  <rule id=\"44679\" level=\"3\">\n    <if_sid>44641</if_sid>\n\
+    \    <field name=\"msg\">system quarantine|System quarantine</field>\n    <description>FortiMail: An administrator\
+    \ has modified a system quarantine setting using the CLI.</description>\n  </rule>\n\n  <rule id=\"44680\" level=\"\
+    3\">\n    <if_sid>44641</if_sid>\n    <field name=\"msg\">Mail Server settings|Mail server access</field>\n\
+    \    <description>FortiMail: An administrator has changed mail server settings using the CLI or web-based manager.</description>\n\
+    \  </rule>\n\n  <rule id=\"44681\" level=\"3\">\n    <if_sid>44641</if_sid>\n    <field name=\"msg\">Permission\
+    \ of mail</field>\n    <description>FortiMail: An administrator set or deleted permission of mail using the\
+    \ CLI or web-based manager.</description>\n  </rule>\n\n  <rule id=\"44682\" level=\"3\">\n    <if_sid>44641</if_sid>\n\
+    \    <field name=\"msg\">Permission of mail</field>\n    <description>FortiMail: An administrator set or deleted\
+    \ permission of mail using the CLI or web-based manager.</description>\n  </rule>\n\n  <rule id=\"44683\" level=\"\
+    3\">\n    <if_sid>44641</if_sid>\n    <field name=\"msg\">Local user</field>\n    <description>FortiMail: An\
+    \ administrator changed a local user using the CL.</description>\n  </rule>\n\n  <rule id=\"44684\" level=\"\
+    3\">\n    <if_sid>44641</if_sid>\n    <field name=\"msg\">User group</field>\n    <description>FortiMail: An\
+    \ administrator changed a user group using the CLI or web-based manager.</description>\n  </rule>\n\n  <rule\
+    \ id=\"44685\" level=\"3\">\n    <if_sid>44641</if_sid>\n    <field name=\"msg\">mail user</field>\n    <description>FortiMail:\
+    \ An administrator changed a mail user using the CLI.</description>\n  </rule>\n\n  <rule id=\"44686\" level=\"\
+    3\">\n    <if_sid>44641</if_sid>\n    <field name=\"msg\">Mail server user|Mail Server User</field>\n    <description>FortiMail:\
+    \ An administrator changed a mail server user using the web-based manager.</description>\n  </rule>\n\n  <rule\
+    \ id=\"44687\" level=\"3\">\n    <if_sid>44641</if_sid>\n    <field name=\"msg\">IMAP</field>\n    <description>FortiMail:\
+    \ An administrator has modified a IMAP setting using the CLI.</description>\n  </rule>\n\n  <rule id=\"44688\"\
+    \ level=\"3\">\n    <if_sid>44641</if_sid>\n    <field name=\"msg\">email banned word</field>\n    <description>FortiMail:\
+    \ An administrator removed an email banned word using the CLI.</description>\n  </rule>\n\n  <rule id=\"44689\"\
+    \ level=\"3\">\n    <if_sid>44641</if_sid>\n    <field name=\"msg\">log setting|logsetting|Log setting|Log Policy</field>\n\
+    \    <description>FortiMail: An administrator changed a log setting using the CLI.</description>\n  </rule>\n\
+    \n  <rule id=\"44690\" level=\"3\">\n    <if_sid>44641</if_sid>\n    <field name=\"msg\">Alertemail setting</field>\n\
+    \    <description>FortiMail: An administrator changed an alert email setting using the CLI.</description>\n\
+    \  </rule>\n\n  <rule id=\"44691\" level=\"3\">\n    <field name=\"subtype\">dns</field>\n    <description>FortiMail:\
+    \ DNS query event.</description>\n  </rule>\n\n  <rule id=\"44692\" level=\"0\">\n    <if_sid>44641</if_sid>\n\
+    \    <field name=\"subtype\">ha</field>\n    <description>FortiMail: System Event HA (high availability) log\
+    \ messages.</description>\n  </rule>\n\n  <rule id=\"44693\" level=\"3\">\n    <if_sid>44692</if_sid>\n    <field\
+    \ name=\"msg\">monitord: \\.+ entering MASTER mode</field>\n    <description>FortiMail: The FortiMail unit is\
+    \ entering master mode.</description>\n  </rule>\n\n  <rule id=\"44694\" level=\"3\">\n    <if_sid>44692</if_sid>\n\
+    \    <field name=\"msg\">configd: \\.+ entering slave mode</field>\n    <description>FortiMail: The FortiMail\
+    \ unit is entering slave mode.</description>\n  </rule>\n\n  <rule id=\"44695\" level=\"3\">\n    <if_sid>44692</if_sid>\n\
+    \    <field name=\"msg\">monitord: \\.+ assuming MASTER role</field>\n    <description>FortiMail: The FortiMail\
+    \ unit is assuming the primary unit role because the retry limit was reached for connecting to the original\
+    \ primary unit.</description>\n  </rule>\n\n  <rule id=\"44696\" level=\"3\">\n    <if_sid>44692</if_sid>\n\
+    \    <field name=\"msg\">hahbd:</field>\n    <description>FortiMail: Heartbeat related activities.</description>\n\
+    \  </rule>\n\n  <rule id=\"44697\" level=\"3\">\n    <if_sid>44692</if_sid>\n    <field name=\"msg\">hasyncd:</field>\n\
+    \    <description>FortiMail: Synchronization related information.</description>\n  </rule>\n\n  <rule id=\"\
+    44698\" level=\"0\">\n    <field name=\"subtype\">system</field>\n    <description>FortiMail: System Event System\
+    \ log messages.</description>\n  </rule>\n\n  <rule id=\"44699\" level=\"5\">\n    <if_sid>44698</if_sid>\n\
+    \    <field name=\"msg\">System has been restarted</field>\n    <description>FortiMail: An administrator restarted\
+    \ the system using the CLI or web-based manager.</description>\n  </rule>\n\n  <rule id=\"44700\" level=\"5\"\
+    >\n    <if_sid>44698</if_sid>\n    <field name=\"msg\">System has been shutdown</field>\n    <description>FortiMail:\
+    \ An administrator shut down the system using the CLI or web-based manager.</description>\n  </rule>\n\n  <rule\
+    \ id=\"44701\" level=\"5\">\n    <if_sid>44698</if_sid>\n    <field name=\"msg\">System has been reloaded</field>\n\
+    \    <description>FortiMail: An administrator reloaded the system using the CLI or web-based manager.</description>\n\
+    \  </rule>\n\n  <rule id=\"44702\" level=\"5\">\n    <if_sid>44698</if_sid>\n    <field name=\"msg\">System\
+    \ has been reset to factory default</field>\n    <description>FortiMail: An administrator reset the system to\
+    \ factory default using the CLI, web-based manager, or LCD.</description>\n  </rule>\n\n  <rule id=\"44703\"\
+    \ level=\"5\">\n    <if_sid>44698</if_sid>\n    <field name=\"msg\">System firmware has been</field>\n    <description>FortiMail:\
+    \ An administrator upgraded/downgraded system firmware using the CLI or web-based manager.</description>\n \
+    \ </rule>\n\n  <rule id=\"44704\" level=\"5\">\n    <if_sid>44698</if_sid>\n    <field name=\"msg\">Upgrade\
+    \ system firmware failed</field>\n    <description>FortiMail: An administrator upgraded system firmware unsuccessfully\
+    \ using the CLI, console, telnet, or web-based manager.</description>\n  </rule>\n\n  <rule id=\"44705\" level=\"\
+    5\">\n    <if_sid>44698</if_sid>\n    <field name=\"msg\">System has been changed to \\w+ mode</field>\n   \
+    \ <description>FortiMail: An administrator or LCD user changed the mode to gateway, server, or transparent mode\
+    \ using the CLI, web-based manager or LCD.</description>\n  </rule>\n\n  <rule id=\"44706\" level=\"3\">\n \
+    \   <if_sid>44642</if_sid>\n    <field name=\"subtype\">update</field>\n    <description>FortiMail: The FortiMail\
+    \ unit updated the following FortiGuard services.</description>\n  </rule>\n\n  <rule id=\"44707\" level=\"\
+    3\">\n    <field name=\"subtype\">imap</field>\n    <description>FortiMail: IMAP-related events.</description>\n\
+    \  </rule>\n\n  <rule id=\"44708\" level=\"3\">\n    <field name=\"subtype\">pop3</field>\n    <description>FortiMail:\
+    \ POP3-related events.</description>\n  </rule>\n\n  <rule id=\"44709\" level=\"3\">\n    <if_sid>44641,44642,44643,44644,44645,44646</if_sid>\n\
+    \    <field name=\"subtype\">smtp</field>\n    <description>FortiMail: SMTP-related events.</description>\n\
+    \  </rule>\n\n  <rule id=\"44710\" level=\"3\">\n    <if_sid>44709</if_sid>\n    <field name=\"msg\">Starting\
+    \ flgrptd</field>\n    <description>FortiMail: The reporting daemon is starting.</description>\n  </rule>\n\n\
+    \  <rule id=\"44711\" level=\"3\">\n    <if_sid>44709</if_sid>\n    <field name=\"msg\">Successfully loaded\
+    \ virus db</field>\n    <description>FortiMail: The antivirus database is successfully loaded.</description>\n\
+    \  </rule>\n\n  <rule id=\"44712\" level=\"3\">\n    <if_sid>44709</if_sid>\n    <field name=\"msg\">FASR|FSAR</field>\n\
+    \    <description>FortiMail: FortiGuard Antispam Rule (FSAR) Operational Event.</description>\n  </rule>\n\n\
+    \  <rule id=\"44713\" level=\"3\">\n    <if_sid>44709</if_sid>\n    <field name=\"msg\">aliases has been rebuilt</field>\n\
+    \    <description>FortiMail: Mail aliases have been rebuilt.</description>\n  </rule>\n\n  <rule id=\"44714\"\
+    \ level=\"3\">\n    <if_sid>44709</if_sid>\n    <field name=\"msg\">Restart the updated daemon to re-load default\
+    \ avengine</field>\n    <description>FortiMail: Updated daemon is restarted to reload default antivirus engine\
+    \ and database.</description>\n  </rule>\n\n  <rule id=\"44715\" level=\"3\">\n    <if_sid>44709</if_sid>\n\
+    \    <field name=\"msg\">Successfully loaded virus db</field>\n    <description>FortiMail: The user successfully\
+    \ uploaded the antivirus database.</description>\n  </rule>\n\n  <rule id=\"44716\" level=\"3\">\n    <if_sid>44709</if_sid>\n\
+    \    <field name=\"msg\">Bayesian Training</field>\n    <description>FortiMail: The FortiMail unit is training\
+    \ a specific bayesian database.</description>\n  </rule>\n\n  <rule id=\"44717\" level=\"3\">\n    <field name=\"\
+    subtype\">webmail</field>\n    <description>FortiMail: Event Webmail log messages.</description>\n  </rule>\n\
+    \n  <rule id=\"44718\" level=\"3\">\n    <if_sid>44641</if_sid>\n    <field name=\"subtype\">infected</field>\n\
+    \    <description>FortiMail: The file contains the specified virus.</description>\n  </rule>\n\n  <rule id=\"\
+    44719\" level=\"3\">\n    <if_sid>44641</if_sid>\n    <field name=\"type\">spam</field>\n    <description>FortiMail:\
+    \ SPAM-related events.</description>\n  </rule>\n\n  <rule id=\"44720\" level=\"3\">\n    <if_sid>44641</if_sid>\n\
+    \    <field name=\"type\">encrypt</field>\n    <description>FortiMail: FortiMail encrypted or decrypted an email.</description>\n\
+    \  </rule>\n\n  <rule id=\"44721\" level=\"3\">\n    <if_sid>44642,44643,44644,44645,44646</if_sid>\n    <field\
+    \ name=\"type\">virus</field>\n    <description>FortiMail: Virus related events.</description>\n  </rule>\n\n\
+    </group>\n"

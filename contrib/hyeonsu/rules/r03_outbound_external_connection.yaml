@@ -1,0 +1,29 @@
+# R03 서버에서 외부로 연결
+# docs/06_탐지규칙_Sigma_대조.yaml 을 규칙별로 나눈 파일이다. 필드 이름과 추가 필드의 뜻은 그 파일 머리말에 있다.
+
+title: R03 서버에서 외부로 연결
+id: 04ae37ef-1f53-47b1-9075-80acf51ade02
+name: r03_outbound_external_connection
+status: experimental
+description: 서버의 프로세스가 외부 IP로 네트워크 연결을 하면 탐지한다. 단독으로 판정하지 않고 위험점수 합산의 재료로 쓴다.
+references:
+    - docs/06_탐지_위험점수.md
+author: security-log-cross-analysis 프로젝트 팀
+date: 2026-10-03
+tags:
+    - attack.command-and-control
+    - attack.t1071
+logsource:
+    category: network_connection
+    product: linux
+detection:
+    selection:
+        dst_zone: 'external' # 보강 컬럼: 목적지 IP가 조직 밖인지
+    condition: selection
+falsepositives:
+    - 업데이트·외부 API 호출 같은 정상적인 외부 연결 (이 데이터의 정상 세션에서는 0건)
+level: medium
+project_rule_id: R03
+project_hits: 4
+sigma_match_level: 대응 룰 없음
+sigma_difference: Sigma에는 외부로 나가는 연결 전체를 잡는 일반 룰이 없다. 정상 연결이 너무 많아 단독 룰로 쓰지 않기 때문이다.

@@ -1,0 +1,865 @@
+schema: wazuh-original-rules-yaml/v1
+format_only_conversion: true
+native_runtime_format: Wazuh XML
+authoritative_field: sources[].original_xml
+upstream:
+  repository: https://github.com/wazuh/wazuh
+  tag: v4.14.8
+  commit: f470ad7db717b18db7feeed568949643698f0f34
+sources:
+- file: ruleset/rules/0310-openbsd_rules.xml
+  url: https://github.com/wazuh/wazuh/blob/f470ad7db717b18db7feeed568949643698f0f34/ruleset/rules/0310-openbsd_rules.xml
+  sha256: 1e74b7093ce66160d90b0b253305670082a1934d29392f5d607f41588f5c2da9
+  rule_count: 44
+  elements:
+  - element: group
+    attributes:
+      name: local,syslog,openbsd,
+    children:
+    - element: rule
+      attributes:
+        id: '51500'
+        level: '0'
+        noalert: '1'
+      children:
+      - element: decoded_as
+        text: bsd_kernel
+      - element: description
+        text: Grouping of bsd_kernel alerts
+    - element: rule
+      attributes:
+        id: '51501'
+        level: '1'
+      children:
+      - element: if_sid
+        text: '51500'
+      - element: match
+        text: 'ichiic0: abort failed, status 0x40'
+      - element: description
+        text: A timeout occurred waiting for a transfer.
+    - element: rule
+      attributes:
+        id: '51502'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '51500'
+      - element: match
+        text: Check Condition (error 0x70) on opcode 0x0
+      - element: description
+        text: Check media in optical drive.
+    - element: rule
+      attributes:
+        id: '51503'
+        level: '1'
+      children:
+      - element: if_sid
+        text: '51500'
+      - element: match
+        text: BBB bulk-in clear stall failed
+      - element: description
+        text: A disk has timed out.
+    - element: rule
+      attributes:
+        id: '51504'
+        level: '1'
+      children:
+      - element: if_sid
+        text: '51500'
+      - element: match
+        text: arp info overwritten for
+      - element: description
+        text: arp info has been overwritten for a host
+    - element: rule
+      attributes:
+        id: '51505'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '51500'
+      - element: match
+        text: was not properly unmounted
+      - element: description
+        text: A filesystem was not properly unmounted, likely system crash
+      - element: group
+        text: pci_dss_10.2.7,gpg13_4.3,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.14,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '51506'
+        level: '1'
+      children:
+      - element: if_sid
+        text: '51500'
+      - element: match
+        text: UKC> quit
+      - element: description
+        text: UKC was used, possibly modifying a kernel at boot time.
+      - element: group
+        text: pci_dss_10.2.7,gpg13_4.12,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.14,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '51507'
+        level: '1'
+      children:
+      - element: if_sid
+        text: '51500'
+      - element: match
+        text: Michael MIC failure
+      - element: description
+        text: 'Michael MIC failure: Checksum failure in the tkip protocol.'
+    - element: rule
+      attributes:
+        id: '51508'
+        level: '2'
+      children:
+      - element: if_sid
+        text: '51500'
+      - element: match
+        text: soft error (corrected)
+      - element: description
+        text: 'A soft error has been corrected on a hard drive, '
+      - element: description
+        text: this is a possible early sign of failure.
+    - element: rule
+      attributes:
+        id: '51509'
+        level: '1'
+      children:
+      - element: if_sid
+        text: '51500'
+      - element: regex
+        text: 'acpithinkpad\d:'
+      - element: match
+        text: unknown event
+      - element: description
+        text: Unknown acpithinkpad event
+    - element: rule
+      attributes:
+        id: '51510'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '51500'
+      - element: match
+        text: Critical temperature, shutting down
+      - element: description
+        text: System shutdown due to temperature
+      - element: group
+        text: pci_dss_10.2.7,gpg13_4.1,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.14,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '51511'
+        level: '1'
+      children:
+      - element: if_sid
+        text: '51500'
+      - element: match
+        text: _AL0[0] _PR0 failed
+      - element: description
+        text: Unknown ACPI event (bug 6299 in OpenBSD bug tracking system).
+      - element: group
+        text: pci_dss_10.2.7,pci_dss_6.2,gpg13_4.3,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_SI.2,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '51512'
+        level: '1'
+      children:
+      - element: if_sid
+        text: '51500'
+      - element: match
+        text: 'ehci_freex: xfer=0xffff8000003ef800 not busy, 0x4f4e5155'
+      - element: description
+        text: USB diagnostic message.
+    - element: rule
+      attributes:
+        id: '51513'
+        level: '1'
+      children:
+      - element: if_sid
+        text: '51500'
+      - element: match
+        text: 'ichiic0: abort failed, status 0x0'
+      - element: description
+        text: Possible APM or ACPI event.
+    - element: rule
+      attributes:
+        id: '51514'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '51500'
+      - element: match
+        text: Filesystem is not clean - run fsck
+      - element: description
+        text: Unclean filesystem, run fsck.
+      - element: group
+        text: gpg13_4.3,
+    - element: rule
+      attributes:
+        id: '51515'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '51500'
+      - element: match
+        text: atascsi_passthru_done, timeout
+      - element: description
+        text: Timeout in atascsi_passthru_done.
+    - element: rule
+      attributes:
+        id: '51516'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '51500'
+      - element: regex
+        text: RTC BIOS diagnostic error 80\pclock_battery\p
+      - element: description
+        text: Clock battery error 80
+      - element: group
+        text: gpg13_4.3,
+    - element: rule
+      attributes:
+        id: '51518'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '51500'
+      - element: match
+        text: i/o error on block
+      - element: description
+        text: I/O error on a storage device
+      - element: group
+        text: gpg13_4.3,
+    - element: rule
+      attributes:
+        id: '51519'
+        level: '1'
+      children:
+      - element: if_sid
+        text: '51500'
+      - element: match
+        text: 'kbc: cmd word write error'
+      - element: description
+        text: kbc error.
+      - element: group
+        text: gpg13_4.3,
+    - element: rule
+      attributes:
+        id: '51520'
+        level: '1'
+      children:
+      - element: if_sid
+        text: '51500'
+      - element: match
+        text: BBB reset failed, IOERROR
+      - element: description
+        text: USB reset failed, IOERROR.
+      - element: group
+        text: gpg13_4.3,
+    - element: rule
+      attributes:
+        id: '51521'
+        level: '0'
+        noalert: '1'
+      children:
+      - element: decoded_as
+        text: groupdel
+      - element: description
+        text: Grouping for groupdel rules.
+      - element: group
+        text: groupdel,pci_dss_8.1.2,pci_dss_10.2.5,gpg13_7.10,gdpr_IV_32.2,hipaa_164.312.a.2.I,hipaa_164.312.a.2.II,hipaa_164.312.b,nist_800_53_AC.2,nist_800_53_IA.4,nist_800_53_AU.14,nist_800_53_AC.7,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '51522'
+        level: '2'
+      children:
+      - element: if_sid
+        text: '51521'
+      - element: match
+        text: group deleted
+      - element: description
+        text: Group deleted.
+      - element: group
+        text: groupdel,pci_dss_8.1.2,pci_dss_10.2.5,gpg13_7.10,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.a.2.I,hipaa_164.312.a.2.II,hipaa_164.312.b,nist_800_53_AC.2,nist_800_53_IA.4,nist_800_53_AU.14,nist_800_53_AC.7,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '51523'
+        level: '0'
+      children:
+      - element: program_name
+        text: savecore
+      - element: match
+        text: no core dump
+      - element: description
+        text: No core dumps.
+    - element: rule
+      attributes:
+        id: '51524'
+        level: '4'
+      children:
+      - element: program_name
+        text: reboot
+      - element: match
+        text: rebooted by
+      - element: description
+        text: System was rebooted.
+    - element: rule
+      attributes:
+        id: '51525'
+        level: '0'
+      children:
+      - element: program_name
+        text: ^ftp-proxy
+      - element: match
+        text: proxy cannot connect to server
+      - element: description
+        text: ftp-proxy cannot connect to a server.
+    - element: rule
+      attributes:
+        id: '51526'
+        level: '0'
+      children:
+      - element: decoded_as
+        text: bsd_kernel
+      - element: match
+        text: uncorrectable data error reading fsbn
+      - element: description
+        text: Hard drive is dying.
+      - element: group
+        text: pci_dss_10.2.7,gpg13_4.3,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.14,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '51527'
+        level: '0'
+      children:
+      - element: decoded_as
+        text: bsd_kernel
+      - element: match
+        text: ^carp
+      - element: action
+        text: state transition
+      - element: status
+        text: MASTER -> BACKUP
+      - element: description
+        text: CARP master to backup.
+    - element: rule
+      attributes:
+        id: '51528'
+        level: '0'
+      children:
+      - element: decoded_as
+        text: bsd_kernel
+      - element: match
+        text: duplicate IP6 address
+      - element: description
+        text: Duplicate IPv6 address.
+      - element: group
+        text: pci_dss_10.6.1,gpg13_4.12,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '51529'
+        level: '0'
+      children:
+      - element: decoded_as
+        text: bsd_kernel
+      - element: match
+        text: failed loadfirmware of file
+      - element: description
+        text: Could not load a firmware.
+      - element: group
+        text: gpg13_4.3,gdpr_IV_35.7.d,
+    - element: rule
+      attributes:
+        id: '51530'
+        level: '0'
+      children:
+      - element: program_name
+        text: ^hotplugd
+      - element: match
+        text: Permission denied$
+      - element: description
+        text: hotplugd could not open a file.
+      - element: group
+        text: pci_dss_10.2.4,gpg13_4.6,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AC.7,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '51531'
+        level: '3'
+      children:
+      - element: decoded_as
+        text: open-userdel
+      - element: match
+        text: 'user removed: name='
+      - element: description
+        text: User account deleted.
+      - element: mitre
+        children:
+        - element: id
+          text: T1531
+      - element: group
+        text: account_changed,pci_dss_10.2.5,pci_dss_8.1.2,gpg13_7.10,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.b,hipaa_164.312.a.2.I,hipaa_164.312.a.2.II,nist_800_53_AU.14,nist_800_53_AC.7,nist_800_53_AC.2,nist_800_53_IA.4,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '51532'
+        level: '0'
+      children:
+      - element: decoded_as
+        text: ntpd
+      - element: match
+        text: 'bad peer from '
+      - element: description
+        text: Bad ntp peer.
+    - element: rule
+      attributes:
+        id: '51533'
+        level: '1'
+      children:
+      - element: program_name
+        text: ^dhclient$
+      - element: if_sid
+        text: '1002'
+      - element: match
+        text: 'receive_packet failed on '
+      - element: description
+        text: dhclient receive_packet failed.
+    - element: rule
+      attributes:
+        id: '51534'
+        level: '1'
+      children:
+      - element: if_sid
+        text: '51533'
+      - element: match
+        text: Input/output error$
+      - element: description
+        text: dhclient receive_packet failed due to I/O error.
+    - element: rule
+      attributes:
+        id: '51535'
+        level: '1'
+      children:
+      - element: program_name
+        text: ^dhclient$
+      - element: if_sid
+        text: '1002'
+      - element: match
+        text: 'SIOCDIFADDR failed '
+      - element: description
+        text: SIOCDIFADDR failed
+    - element: rule
+      attributes:
+        id: '51536'
+        level: '1'
+      children:
+      - element: if_sid
+        text: '51535'
+      - element: match
+        text: ' Device not configured$'
+      - element: description
+        text: 'dhclient: device not configured.'
+  - element: group
+    attributes:
+      name: local,syslog,openbsd,doas,
+    children:
+    - element: rule
+      attributes:
+        id: '51550'
+        level: '0'
+      children:
+      - element: decoded_as
+        text: doas
+      - element: description
+        text: doas grouping
+    - element: rule
+      attributes:
+        id: '51551'
+        level: '1'
+      children:
+      - element: if_sid
+        text: '51550'
+      - element: match
+        text: cannot stat
+      - element: description
+        text: doas cannot stat a file.
+    - element: rule
+      attributes:
+        id: '51552'
+        level: '2'
+      children:
+      - element: if_sid
+        text: '51551'
+      - element: match
+        text: ': Permission denied$'
+      - element: description
+        text: doas cannot stat a file due to permissions.
+      - element: group
+        text: gdpr_IV_35.7.d,gdpr_IV_32.2,
+    - element: rule
+      attributes:
+        id: '51553'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '51550'
+      - element: match
+        text: path not secure$
+      - element: description
+        text: A critical path for doas does not have secure permissions.
+      - element: group
+        text: gdpr_IV_35.7.d,gdpr_IV_32.2,
+    - element: rule
+      attributes:
+        id: '51554'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '51550'
+      - element: match
+        text: 'failed command for '
+      - element: description
+        text: Failed doas command.
+    - element: rule
+      attributes:
+        id: '51555'
+        level: '1'
+      children:
+      - element: if_sid
+        text: '51550'
+      - element: match
+        text: ran command
+      - element: description
+        text: A command was run using doas.
+    - element: rule
+      attributes:
+        id: '51556'
+        level: '2'
+      children:
+      - element: if_sid
+        text: '51555'
+      - element: match
+        text: ' as root '
+      - element: description
+        text: A doas command was run as root.
+      - element: group
+        text: gdpr_IV_32.2,
+    - element: rule
+      attributes:
+        id: '51557'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '51550'
+      - element: match
+        text: failed auth for
+      - element: description
+        text: doas authentication failed.
+      - element: group
+        text: gdpr_IV_35.7.d,gdpr_IV_32.2,
+  original_xml: |
+    <!--
+      -  Openbsd rules
+      -  Author: Dan Parriott (ddpbsd@gmail.com).
+      -  Updated by Wazuh, Inc.
+      -  Copyright (C) 2015, Wazuh Inc.
+      -  Copyright (C) 2009 Trend Micro Inc.
+      -  This program is a free software; you can redistribute it and/or modify it under the terms of GPLv2.
+    -->
+
+    <group name="local,syslog,openbsd,">
+
+      <rule id="51500" level="0" noalert="1">
+        <decoded_as>bsd_kernel</decoded_as>
+        <description>Grouping of bsd_kernel alerts</description>
+      </rule>
+
+      <rule id="51501" level="1">
+        <if_sid>51500</if_sid>
+        <match>ichiic0: abort failed, status 0x40</match>
+        <description>A timeout occurred waiting for a transfer.</description>
+      </rule>
+
+      <rule id="51502" level="0">
+        <if_sid>51500</if_sid>
+        <match>Check Condition (error 0x70) on opcode 0x0</match>
+        <description>Check media in optical drive.</description>
+      </rule>
+
+      <rule id="51503" level="1">
+        <if_sid>51500</if_sid>
+        <match>BBB bulk-in clear stall failed</match>
+        <description>A disk has timed out.</description>
+      </rule>
+
+      <rule id="51504" level="1">
+        <if_sid>51500</if_sid>
+        <match>arp info overwritten for</match>
+        <description>arp info has been overwritten for a host</description>
+      </rule>
+
+      <rule id="51505" level="5">
+        <if_sid>51500</if_sid>
+        <match>was not properly unmounted</match>
+        <description>A filesystem was not properly unmounted, likely system crash</description>
+        <group>pci_dss_10.2.7,gpg13_4.3,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.14,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="51506" level="1">
+        <if_sid>51500</if_sid>
+        <match>UKC> quit</match>
+        <description>UKC was used, possibly modifying a kernel at boot time.</description>
+        <group>pci_dss_10.2.7,gpg13_4.12,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.14,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="51507" level="1">
+        <if_sid>51500</if_sid>
+        <match>Michael MIC failure</match>
+        <description>Michael MIC failure: Checksum failure in the tkip protocol.</description>
+      </rule>
+
+      <rule id="51508" level="2">
+        <if_sid>51500</if_sid>
+        <match>soft error (corrected)</match>
+        <description>A soft error has been corrected on a hard drive, </description>
+        <description>this is a possible early sign of failure.</description>
+      </rule>
+
+      <rule id="51509" level="1">
+        <if_sid>51500</if_sid>
+        <regex>acpithinkpad\d:</regex>
+        <match>unknown event</match>
+        <description>Unknown acpithinkpad event</description>
+      </rule>
+
+      <rule id="51510" level="5">
+        <if_sid>51500</if_sid>
+        <match>Critical temperature, shutting down</match>
+        <description>System shutdown due to temperature</description>
+        <group>pci_dss_10.2.7,gpg13_4.1,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.14,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="51511" level="1">
+        <if_sid>51500</if_sid>
+        <match>_AL0[0] _PR0 failed</match>
+        <description>Unknown ACPI event (bug 6299 in OpenBSD bug tracking system).</description>
+        <group>pci_dss_10.2.7,pci_dss_6.2,gpg13_4.3,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_SI.2,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="51512" level="1">
+        <if_sid>51500</if_sid>
+        <match>ehci_freex: xfer=0xffff8000003ef800 not busy, 0x4f4e5155</match>
+        <description>USB diagnostic message.</description>
+      </rule>
+
+      <rule id="51513" level="1">
+        <if_sid>51500</if_sid>
+        <match>ichiic0: abort failed, status 0x0</match>
+        <description>Possible APM or ACPI event.</description>
+      </rule>
+
+      <rule id="51514" level="3">
+        <if_sid>51500</if_sid>
+        <match>Filesystem is not clean - run fsck</match>
+        <description>Unclean filesystem, run fsck.</description>
+        <group>gpg13_4.3,</group>
+      </rule>
+
+      <rule id="51515" level="0">
+        <if_sid>51500</if_sid>
+        <match>atascsi_passthru_done, timeout</match>
+        <description>Timeout in atascsi_passthru_done.</description>
+      </rule>
+
+      <rule id="51516" level="0">
+        <if_sid>51500</if_sid>
+        <regex>RTC BIOS diagnostic error 80\pclock_battery\p</regex>
+        <description>Clock battery error 80</description>
+        <group>gpg13_4.3,</group>
+      </rule>
+
+      <rule id="51518" level="3">
+        <if_sid>51500</if_sid>
+        <match>i/o error on block</match>
+        <description>I/O error on a storage device</description>
+        <group>gpg13_4.3,</group>
+      </rule>
+
+      <rule id="51519" level="1">
+        <if_sid>51500</if_sid>
+        <match>kbc: cmd word write error</match>
+        <description>kbc error.</description>
+        <group>gpg13_4.3,</group>
+      </rule>
+
+      <rule id="51520" level="1">
+        <if_sid>51500</if_sid>
+        <match>BBB reset failed, IOERROR</match>
+        <description>USB reset failed, IOERROR.</description>
+        <group>gpg13_4.3,</group>
+      </rule>
+
+      <rule id="51521" level="0" noalert="1">
+        <decoded_as>groupdel</decoded_as>
+        <description>Grouping for groupdel rules.</description>
+        <group>groupdel,pci_dss_8.1.2,pci_dss_10.2.5,gpg13_7.10,gdpr_IV_32.2,hipaa_164.312.a.2.I,hipaa_164.312.a.2.II,hipaa_164.312.b,nist_800_53_AC.2,nist_800_53_IA.4,nist_800_53_AU.14,nist_800_53_AC.7,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="51522" level="2">
+        <if_sid>51521</if_sid>
+        <match>group deleted</match>
+        <description>Group deleted.</description>
+        <group>groupdel,pci_dss_8.1.2,pci_dss_10.2.5,gpg13_7.10,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.a.2.I,hipaa_164.312.a.2.II,hipaa_164.312.b,nist_800_53_AC.2,nist_800_53_IA.4,nist_800_53_AU.14,nist_800_53_AC.7,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="51523" level="0">
+        <program_name>savecore</program_name>
+        <match>no core dump</match>
+        <description>No core dumps.</description>
+      </rule>
+
+      <rule id="51524" level="4">
+        <program_name>reboot</program_name>
+        <match>rebooted by</match>
+        <description>System was rebooted.</description>
+      </rule>
+
+      <rule id="51525" level="0">
+        <program_name>^ftp-proxy</program_name>
+        <match>proxy cannot connect to server</match>
+        <description>ftp-proxy cannot connect to a server.</description>
+      </rule>
+
+      <rule id="51526" level="0">
+        <decoded_as>bsd_kernel</decoded_as>
+        <match>uncorrectable data error reading fsbn</match>
+        <description>Hard drive is dying.</description>
+        <group>pci_dss_10.2.7,gpg13_4.3,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.14,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="51527" level="0">
+        <decoded_as>bsd_kernel</decoded_as>
+        <match>^carp</match>
+        <action>state transition</action>
+        <status>MASTER -> BACKUP</status>
+        <description>CARP master to backup.</description>
+      </rule>
+
+      <rule id="51528" level="0">
+        <decoded_as>bsd_kernel</decoded_as>
+        <match>duplicate IP6 address</match>
+        <description>Duplicate IPv6 address.</description>
+        <group>pci_dss_10.6.1,gpg13_4.12,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="51529" level="0">
+        <decoded_as>bsd_kernel</decoded_as>
+        <match>failed loadfirmware of file</match>
+        <description>Could not load a firmware.</description>
+        <group>gpg13_4.3,gdpr_IV_35.7.d,</group>
+      </rule>
+
+      <rule id="51530" level="0">
+        <program_name>^hotplugd</program_name>
+        <match>Permission denied$</match>
+        <description>hotplugd could not open a file.</description>
+        <group>pci_dss_10.2.4,gpg13_4.6,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AC.7,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="51531" level="3">
+        <decoded_as>open-userdel</decoded_as>
+        <match>user removed: name=</match>
+        <description>User account deleted.</description>
+        <mitre>
+          <id>T1531</id>
+        </mitre>
+        <group>account_changed,pci_dss_10.2.5,pci_dss_8.1.2,gpg13_7.10,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.b,hipaa_164.312.a.2.I,hipaa_164.312.a.2.II,nist_800_53_AU.14,nist_800_53_AC.7,nist_800_53_AC.2,nist_800_53_IA.4,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="51532" level="0">
+        <decoded_as>ntpd</decoded_as>
+        <match>bad peer from </match>
+        <description>Bad ntp peer.</description>
+      </rule>
+
+      <rule id="51533" level="1">
+        <program_name>^dhclient$</program_name>
+        <if_sid>1002</if_sid>
+        <match>receive_packet failed on </match>
+        <description>dhclient receive_packet failed.</description>
+      </rule>
+
+      <rule id="51534" level="1">
+        <if_sid>51533</if_sid>
+        <match>Input/output error$</match>
+        <description>dhclient receive_packet failed due to I/O error.</description>
+      </rule>
+
+      <rule id="51535" level="1">
+        <program_name>^dhclient$</program_name>
+        <if_sid>1002</if_sid>
+        <match>SIOCDIFADDR failed </match>
+        <description>SIOCDIFADDR failed</description>
+      </rule>
+
+      <rule id="51536" level="1">
+        <if_sid>51535</if_sid>
+        <match> Device not configured$</match>
+        <description>dhclient: device not configured.</description>
+      </rule>
+
+    </group>
+
+    <group name="local,syslog,openbsd,doas,">
+
+      <rule id="51550" level="0">
+        <decoded_as>doas</decoded_as>
+        <description>doas grouping</description>
+      </rule>
+
+      <rule id="51551" level="1">
+        <if_sid>51550</if_sid>
+        <match>cannot stat</match>
+        <description>doas cannot stat a file.</description>
+      </rule>
+
+      <rule id="51552" level="2">
+        <if_sid>51551</if_sid>
+        <match>: Permission denied$</match>
+        <description>doas cannot stat a file due to permissions.</description>
+        <group>gdpr_IV_35.7.d,gdpr_IV_32.2,</group>
+      </rule>
+
+      <rule id="51553" level="5">
+        <if_sid>51550</if_sid>
+        <match>path not secure$</match>
+        <description>A critical path for doas does not have secure permissions.</description>
+        <group>gdpr_IV_35.7.d,gdpr_IV_32.2,</group>
+      </rule>
+
+      <rule id="51554" level="5">
+        <if_sid>51550</if_sid>
+        <match>failed command for </match>
+        <description>Failed doas command.</description>
+      </rule>
+
+      <rule id="51555" level="1">
+        <if_sid>51550</if_sid>
+        <match>ran command</match>
+        <description>A command was run using doas.</description>
+      </rule>
+
+      <rule id="51556" level="2">
+        <if_sid>51555</if_sid>
+        <match> as root </match>
+        <description>A doas command was run as root.</description>
+        <group>gdpr_IV_32.2,</group>
+      </rule>
+
+      <rule id="51557" level="5">
+        <if_sid>51550</if_sid>
+        <match>failed auth for</match>
+        <description>doas authentication failed.</description>
+        <group>gdpr_IV_35.7.d,gdpr_IV_32.2,</group>
+      </rule>
+
+    </group> <!-- SYSLOG,LOCAL -->

@@ -1,0 +1,1830 @@
+schema: wazuh-original-rules-yaml/v1
+format_only_conversion: true
+native_runtime_format: Wazuh XML
+authoritative_field: sources[].original_xml
+upstream:
+  repository: https://github.com/wazuh/wazuh
+  tag: v4.14.8
+  commit: f470ad7db717b18db7feeed568949643698f0f34
+sources:
+- file: ruleset/rules/0390-fortiddos_rules.xml
+  url: https://github.com/wazuh/wazuh/blob/f470ad7db717b18db7feeed568949643698f0f34/ruleset/rules/0390-fortiddos_rules.xml
+  sha256: 1204eed2cb99485354868969900d19730b37de44b895f182da8c730bdf50520e
+  rule_count: 104
+  elements:
+  - element: group
+    attributes:
+      name: fortinet,
+    children:
+    - element: rule
+      attributes:
+        id: '44400'
+        level: '0'
+      children:
+      - element: decoded_as
+        text: fortiddos-like
+      - element: description
+        text: FortiNet Rules.
+  - element: group
+    attributes:
+      name: fortiddos,
+    children:
+    - element: rule
+      attributes:
+        id: '44401'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '44400'
+      - element: field
+        attributes:
+          name: devid
+        text: ^FI\S+|^FDD\S+
+      - element: description
+        text: FortiDDOS Rules.
+    - element: rule
+      attributes:
+        id: '44402'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '44401'
+      - element: field
+        attributes:
+          name: evecode
+        text: ^1$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Group of layer 3 events.
+    - element: rule
+      attributes:
+        id: '44403'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '44401'
+      - element: field
+        attributes:
+          name: evecode
+        text: ^2$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Group of layer 4 events.
+    - element: rule
+      attributes:
+        id: '44404'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '44401'
+      - element: field
+        attributes:
+          name: evecode
+        text: ^4$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Group of layer 7 events.
+    - element: rule
+      attributes:
+        id: '44405'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44402'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^0$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Effective rate limit for the protocol has been reached.
+    - element: rule
+      attributes:
+        id: '44406'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44402'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^1$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Effective rate limit for the fragment threshold has been reached.
+    - element: rule
+      attributes:
+        id: '44407'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44402'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^4$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: 'Drops due to predefined IP header rules: Invalid header length (less than 5 words) total length less
+          than 20 bytes End of Header before the data offset (while parsing options) length field in the LSRR or
+          SSRR IP option is other than (3+(n*4)) where n is a value greater than or equal to 1 Pointer in the LSRR
+          or SSRR IP option is other than (n*4) where n is a value greater than or equal to 1.'
+    - element: rule
+      attributes:
+        id: '44408'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44402'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^6$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: An issue with hash collisions in the source tracking (ST) table.
+    - element: rule
+      attributes:
+        id: '44409'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44402'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^7$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: An issue with the source tracking (ST) table internal logic or memory.
+    - element: rule
+      attributes:
+        id: '44410'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44402'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^8$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Effective rate limit for the most-active-source threshold has been reached. Source IP address is reported.
+    - element: rule
+      attributes:
+        id: '44411'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44402'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^10$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: An issue with hash collisions in the destination tracking (DT) table.
+    - element: rule
+      attributes:
+        id: '44412'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44402'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^11$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: An issue with the destination tracking (DT) table internal logic or memory.
+    - element: rule
+      attributes:
+        id: '44413'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44402'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^14$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Invalid IP header checksum.
+    - element: rule
+      attributes:
+        id: '44414'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44402'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^15$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Identical source and protected IP addresses (LAND attack).
+    - element: rule
+      attributes:
+        id: '44415'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44402'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^16$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Source/destination address is the local host (loopback address spoofing).
+    - element: rule
+      attributes:
+        id: '44416'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44402'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^17$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: 'Drops due to predefined Layer 3 rules: IP version other than IPv4 or IPv6; EOP (End of Packet) before
+          20 bytes of IPv4 data; EOP comes before the length specified by Total Length; Reserved Flag set; More
+          Frag and Don''t Frag Flags set; Added Anomaly for DSCP and ECN.'
+    - element: rule
+      attributes:
+        id: '44417'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44402'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^50$|^54$|^55$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: 'Layer 3: Denied by an SPP ACL rule.'
+    - element: rule
+      attributes:
+        id: '44418'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44402'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^59$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Denied by the global geolocation ACL.
+    - element: rule
+      attributes:
+        id: '44419'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44402'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^60$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Denied by the global ACL.
+    - element: rule
+      attributes:
+        id: '44420'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44402'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^61$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Denied by the global IP Reputation ACL.
+    - element: rule
+      attributes:
+        id: '44421'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44402'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^62$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Denied by the global local address antispoofing ACL.
+    - element: rule
+      attributes:
+        id: '44422'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44403'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^0$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Effective rate limit for the syn threshold has been reached.
+    - element: rule
+      attributes:
+        id: '44423'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44403'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^6$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: A foreign packet is a TCP packet that does not belong to any known connections.  Tracked when the
+          SPP setting foreign-packet is enabled.
+    - element: rule
+      attributes:
+        id: '44424'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44403'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^7$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Sequence number of a packet was outside the acceptable window.  Tracked when the SPP setting seq-validation
+          is enabled.
+    - element: rule
+      attributes:
+        id: '44425'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44403'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^10$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: An issue with hash collisions in TCP State Machine table.
+    - element: rule
+      attributes:
+        id: '44426'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44403'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^11$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: An issue with TCP State Machine table internal logic or memory.
+    - element: rule
+      attributes:
+        id: '44427'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44403'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^12$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: State of the TCP packet received was not consistent with the expected state. Tracked when the SPP
+          setting state-transition-anomalies-validation is enabled.
+    - element: rule
+      attributes:
+        id: '44428'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44403'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^15$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Effective rate limit for the new-connections threshold has been reached. A spike in new connections
+          from IP addresses formerly determined to be legitimate might be a sign of a zombie attack.
+    - element: rule
+      attributes:
+        id: '44429'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44403'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^17$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Effective rate limit for the TCP port has been reached.
+    - element: rule
+      attributes:
+        id: '44430'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44403'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^18$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Effective rate limit for the UDP port has been reached.
+    - element: rule
+      attributes:
+        id: '44431'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44403'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^19$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Effective rate limit for the type/code has been reached.
+    - element: rule
+      attributes:
+        id: '44432'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44403'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^20$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Slow Connection Aggressive Aging.
+    - element: rule
+      attributes:
+        id: '44433'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44403'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^22$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Slow connection attack detected and “Source blocking for slow connections” enabled. Source IP address
+          is reported.
+    - element: rule
+      attributes:
+        id: '44434'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44403'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^24$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Invalid TCP checksum.
+    - element: rule
+      attributes:
+        id: '44435'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44403'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^25$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Invalid UDP checksum.
+    - element: rule
+      attributes:
+        id: '44436'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44403'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^26$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Invalid ICMP checksum.
+    - element: rule
+      attributes:
+        id: '44437'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44403'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^27$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Invalid TCP flag combination. If the urgent flag is set, then the urgent pointer must be non-zero.
+          SYN, FIN or RST is set for fragmented packets.
+    - element: rule
+      attributes:
+        id: '44438'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44403'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^28$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: 'Drops due to predefined Layer 4 header rules: Data offset is less than 5 for a TCP packet; EOP (End
+          of packet) is detected before the 20 bytes of TCP header; EOP before the data offset indicated data offset;
+          Length field in TCP window scale option is a value other than 3; Length field in TCP window scale option
+          is a value other than 3; Missing UDP payload; Missing ICMP payload ; TCP Option Anamoly based on Option
+          Type.'
+    - element: rule
+      attributes:
+        id: '44439'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44403'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^52$|^53$|^54$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: 'Layer 4: Denied by an SPP ACL rule.'
+    - element: rule
+      attributes:
+        id: '44440'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44403'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^56$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Effective rate limit for the syn-per-src threshold has been reached. Source IP address is reported.
+    - element: rule
+      attributes:
+        id: '44441'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44403'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^58$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Effective rate limit for the concurrent-connections-per-source threshold has been reached. Source
+          IP address is reported.
+    - element: rule
+      attributes:
+        id: '44442'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44403'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^82$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: DNS Query flood from Source.
+    - element: rule
+      attributes:
+        id: '44443'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44403'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^83$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: DNS Packet Track Flood from Source.
+    - element: rule
+      attributes:
+        id: '44444'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44403'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^86$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Invalid ICMP Type/Code.
+    - element: rule
+      attributes:
+        id: '44445'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44403'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^87$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: HTTP Method flood from source.
+    - element: rule
+      attributes:
+        id: '44446'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^0$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Effective rate limit for a particular HTTP method threshold has been reached.
+    - element: rule
+      attributes:
+        id: '44447'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^1$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Packets dropped due to the unknown-opcode-anomaly rule (Global Settings > Settings page).
+    - element: rule
+      attributes:
+        id: '44448'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^2$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Packets dropped due to the invalid-opcode-anomaly rule (Global Settings > Settings page).
+    - element: rule
+      attributes:
+        id: '44449'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^3$|^7$|^9$|^11$|^13$|^37$|^38$|^39$|^40$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: 'Layer 7: Denied by an SPP ACL rule.'
+    - element: rule
+      attributes:
+        id: '44450'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^4$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Effective rate limit for a particular URL threshold has been reached.
+    - element: rule
+      attributes:
+        id: '44451'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^5$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Invalid HTTP Method anomaly.
+    - element: rule
+      attributes:
+        id: '44452'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^6$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Effective rate limit for a particular Host header threshold has been reached.
+    - element: rule
+      attributes:
+        id: '44453'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^8$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Effective rate limit for a particular Referer header threshold has been reached.
+    - element: rule
+      attributes:
+        id: '44454'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^10$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Effective rate limit for a particular Cookie header threshold has been reached.
+    - element: rule
+      attributes:
+        id: '44455'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^12$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Effective rate limit for a particular User-Agent threshold has been reached.
+    - element: rule
+      attributes:
+        id: '44456'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^42$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Invalid value in the OpCode field.
+    - element: rule
+      attributes:
+        id: '44457'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^43$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Invalid combination in the flags field.
+    - element: rule
+      attributes:
+        id: '44458'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^44$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: DNS Header Anomaly.
+    - element: rule
+      attributes:
+        id: '44459'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^45$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: (QR) bit set to 1.
+    - element: rule
+      attributes:
+        id: '44460'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^46$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: recursion allowed (RA) bit set.
+    - element: rule
+      attributes:
+        id: '44461'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^47$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: DNS query with count 0.
+    - element: rule
+      attributes:
+        id: '44462'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^48$|^53$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Question count not 1.
+    - element: rule
+      attributes:
+        id: '44463'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^49$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: recursion desired (RD) bit set.
+    - element: rule
+      attributes:
+        id: '44464'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^50$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: DNS response with QCLASS.
+    - element: rule
+      attributes:
+        id: '44465'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^51$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: DNS response with a resource specifying a TYPE ID.
+    - element: rule
+      attributes:
+        id: '44466'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^52$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: (QR) bit set to 0.
+    - element: rule
+      attributes:
+        id: '44467'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^54$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: TCP/UDP query or response message that exceeds the maximum header length.
+    - element: rule
+      attributes:
+        id: '44468'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^55$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: DNS name that exceeds 255 characters.
+    - element: rule
+      attributes:
+        id: '44469'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^56$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Query or response with a label that exceeds the maximum length (63).
+    - element: rule
+      attributes:
+        id: '44470'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^57$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: DNS message with a pointer that points beyond the end of data.
+    - element: rule
+      attributes:
+        id: '44471'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^58$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: An asynchronous Transfer Full Range (AXFR) request (QTYPE=252).
+    - element: rule
+      attributes:
+        id: '44472'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^59$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: A query/response in which the question/resource address class is not IN.
+    - element: rule
+      attributes:
+        id: '44473'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^60$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: 'DNS Exploit Anomaly: Empty UDP message.'
+    - element: rule
+      attributes:
+        id: '44474'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^61$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: 'DNS Exploit Anomaly: Message ends prematurely.'
+    - element: rule
+      attributes:
+        id: '44475'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^62$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: A query/response with less than two bytes of data specified in the two-byte prefix field.
+    - element: rule
+      attributes:
+        id: '44476'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^63$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: DNS request with request type set to ALL (QTYPE=255).
+    - element: rule
+      attributes:
+        id: '44477'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^64$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: A query/response with TYPE or CLASS reserved values.
+    - element: rule
+      attributes:
+        id: '44478'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^65$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: A query/response with excess data.
+    - element: rule
+      attributes:
+        id: '44479'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^66$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: TTL value is greater than 7 days.
+    - element: rule
+      attributes:
+        id: '44480'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^67$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: A query/response with a null DNS name.
+    - element: rule
+      attributes:
+        id: '44481'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^68$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: UDP Drops due to a response with no matching query.
+    - element: rule
+      attributes:
+        id: '44482'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^69$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: TCP Drops due to a response with no matching query.
+    - element: rule
+      attributes:
+        id: '44483'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^70$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: DNS DQRM Horizontal Link Limit Crossed.
+    - element: rule
+      attributes:
+        id: '44484'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^71$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: An issue with DQRM table internal logic or memory.
+    - element: rule
+      attributes:
+        id: '44485'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^72$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: UDP drops due to response sent to port 53.
+    - element: rule
+      attributes:
+        id: '44486'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^73$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: TCP drops due to response sent to port 53.
+    - element: rule
+      attributes:
+        id: '44487'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^74$|^75$|^76$|^77$|^78$|^79$|^80$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: UDP drops due to LQ check during flood.
+    - element: rule
+      attributes:
+        id: '44488'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^81$|^82$|^83$|^84$|^85$|^86$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: UDP drops due to TTL check during flood.
+    - element: rule
+      attributes:
+        id: '44489'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^87$|^88$|^89$|^90$|^91$|^92$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: UDP drops due to TC=1 antispoofing check during flood.
+    - element: rule
+      attributes:
+        id: '44490'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^93$|^94$|^95$|^96$|^97$|^98$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: UDP drops due to Retransmission antispoofing check during flood.
+    - element: rule
+      attributes:
+        id: '44491'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^99$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: UDP drops because the response was served from the cache during a flood.
+    - element: rule
+      attributes:
+        id: '44492'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^100$|^101$|^102$|^103$|^104$|^105$|^106$|^107$|^108$|^109$|^110$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: UDP drops because the response was not served from the cache during a flood.
+    - element: rule
+      attributes:
+        id: '44493'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^201$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Drops due to HTTP Range Header rule (Global Settings > Settings page).
+    - element: rule
+      attributes:
+        id: '44494'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^111$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Effective rate limit for the dns-query threshold has been reached.
+    - element: rule
+      attributes:
+        id: '44495'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^112$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Effective rate limit for the dns-question-count threshold has been reached.
+    - element: rule
+      attributes:
+        id: '44496'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^113$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Effective rate limit for the dns-fragment threshold has been reached.
+    - element: rule
+      attributes:
+        id: '44497'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^114$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Effective rate limit for the dns-zone-xfer threshold has been reached.
+    - element: rule
+      attributes:
+        id: '44498'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^115$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Effective rate limit for the dns-mx threshold has been reached.
+    - element: rule
+      attributes:
+        id: '44499'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^116$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Effective rate limit for the dns-all threshold has been reached.
+    - element: rule
+      attributes:
+        id: '44500'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^117$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: UDP Drops due to DQRM duplicate query check.
+    - element: rule
+      attributes:
+        id: '44501'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^118$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: TCP Drops due to DQRM duplicate query check.
+    - element: rule
+      attributes:
+        id: '44502'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^119$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: DNS Query ACL drops due to Query restricted to specific subnets.
+    - element: rule
+      attributes:
+        id: '44503'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '44404'
+      - element: field
+        attributes:
+          name: evesubcode
+        text: ^120$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: DNS Query ACL Drops due to Blacklisted domains/ipv4 address.
+  original_xml: "<!--\n  Copyright (C) 2015, Wazuh Inc.\n-->\n\n<!-- \n  Rules for:\n    FortiDDOS ID: 44401 - 44599\n\
+    \    \n  Reference:\n    https://help.fortinet.com/fddos/4-3-0/FortiDDoS/log_ref.htm\n-->\n\n<group name=\"\
+    fortinet,\">\n\n  <rule id=\"44400\" level=\"0\">\n    <decoded_as>fortiddos-like</decoded_as>\n    <description>FortiNet\
+    \ Rules.</description>\n  </rule>\n\n</group>\n\n<group name=\"fortiddos,\">\n\n  <rule id=\"44401\" level=\"\
+    0\">\n    <if_sid>44400</if_sid>\n    <field name=\"devid\">^FI\\S+|^FDD\\S+</field>\n    <description>FortiDDOS\
+    \ Rules.</description>\n  </rule>\n\n  <rule id=\"44402\" level=\"0\">\n    <if_sid>44401</if_sid>\n    <field\
+    \ name=\"evecode\">^1$</field>\n    <options>no_full_log</options>\n    <description>Group of layer 3 events.</description>\n\
+    \  </rule>\n\n  <rule id=\"44403\" level=\"0\">\n    <if_sid>44401</if_sid>\n    <field name=\"evecode\">^2$</field>\n\
+    \    <options>no_full_log</options>\n    <description>Group of layer 4 events.</description>\n  </rule>\n\n\
+    \  <rule id=\"44404\" level=\"0\">\n    <if_sid>44401</if_sid>\n    <field name=\"evecode\">^4$</field>\n  \
+    \  <options>no_full_log</options>\n    <description>Group of layer 7 events.</description>\n  </rule>\n\n  <rule\
+    \ id=\"44405\" level=\"5\">\n    <if_sid>44402</if_sid>\n    <field name=\"evesubcode\">^0$</field>\n    <options>no_full_log</options>\n\
+    \    <description>Effective rate limit for the protocol has been reached.</description>\n  </rule>\n\n  <rule\
+    \ id=\"44406\" level=\"5\">\n    <if_sid>44402</if_sid>\n    <field name=\"evesubcode\">^1$</field>\n    <options>no_full_log</options>\n\
+    \    <description>Effective rate limit for the fragment threshold has been reached.</description>\n  </rule>\n\
+    \n  <rule id=\"44407\" level=\"5\">\n    <if_sid>44402</if_sid>\n    <field name=\"evesubcode\">^4$</field>\n\
+    \    <options>no_full_log</options>\n    <description>Drops due to predefined IP header rules: Invalid header\
+    \ length (less than 5 words) total length less than 20 bytes End of Header before the data offset (while parsing\
+    \ options) length field in the LSRR or SSRR IP option is other than (3+(n*4)) where n is a value greater than\
+    \ or equal to 1 Pointer in the LSRR or SSRR IP option is other than (n*4) where n is a value greater than or\
+    \ equal to 1.</description>\n  </rule>\n\n  <rule id=\"44408\" level=\"5\">\n    <if_sid>44402</if_sid>\n  \
+    \  <field name=\"evesubcode\">^6$</field>\n    <options>no_full_log</options>\n    <description>An issue with\
+    \ hash collisions in the source tracking (ST) table.</description>\n  </rule>\n\n  <rule id=\"44409\" level=\"\
+    5\">\n    <if_sid>44402</if_sid>\n    <field name=\"evesubcode\">^7$</field>\n    <options>no_full_log</options>\n\
+    \    <description>An issue with the source tracking (ST) table internal logic or memory.</description>\n  </rule>\n\
+    \n  <rule id=\"44410\" level=\"5\">\n    <if_sid>44402</if_sid>\n    <field name=\"evesubcode\">^8$</field>\n\
+    \    <options>no_full_log</options>\n    <description>Effective rate limit for the most-active-source threshold\
+    \ has been reached. Source IP address is reported.</description>\n  </rule>\n\n  <rule id=\"44411\" level=\"\
+    5\">\n    <if_sid>44402</if_sid>\n    <field name=\"evesubcode\">^10$</field>\n    <options>no_full_log</options>\n\
+    \    <description>An issue with hash collisions in the destination tracking (DT) table.</description>\n  </rule>\n\
+    \n  <rule id=\"44412\" level=\"5\">\n    <if_sid>44402</if_sid>\n    <field name=\"evesubcode\">^11$</field>\n\
+    \    <options>no_full_log</options>\n    <description>An issue with the destination tracking (DT) table internal\
+    \ logic or memory.</description>\n  </rule>\n\n  <rule id=\"44413\" level=\"5\">\n    <if_sid>44402</if_sid>\n\
+    \    <field name=\"evesubcode\">^14$</field>\n    <options>no_full_log</options>\n    <description>Invalid IP\
+    \ header checksum.</description>\n  </rule>\n\n  <rule id=\"44414\" level=\"5\">\n    <if_sid>44402</if_sid>\n\
+    \    <field name=\"evesubcode\">^15$</field>\n    <options>no_full_log</options>\n    <description>Identical\
+    \ source and protected IP addresses (LAND attack).</description>\n  </rule>\n\n  <rule id=\"44415\" level=\"\
+    5\">\n    <if_sid>44402</if_sid>\n    <field name=\"evesubcode\">^16$</field>\n    <options>no_full_log</options>\n\
+    \    <description>Source/destination address is the local host (loopback address spoofing).</description>\n\
+    \  </rule>\n\n  <rule id=\"44416\" level=\"5\">\n    <if_sid>44402</if_sid>\n    <field name=\"evesubcode\"\
+    >^17$</field>\n    <options>no_full_log</options>\n    <description>Drops due to predefined Layer 3 rules: IP\
+    \ version other than IPv4 or IPv6; EOP (End of Packet) before 20 bytes of IPv4 data; EOP comes before the length\
+    \ specified by Total Length; Reserved Flag set; More Frag and Don't Frag Flags set; Added Anomaly for DSCP and\
+    \ ECN.</description>\n  </rule>\n\n  <rule id=\"44417\" level=\"5\">\n    <if_sid>44402</if_sid>\n    <field\
+    \ name=\"evesubcode\">^50$|^54$|^55$</field>\n    <options>no_full_log</options>\n    <description>Layer 3:\
+    \ Denied by an SPP ACL rule.</description>\n  </rule>\n\n  <rule id=\"44418\" level=\"5\">\n    <if_sid>44402</if_sid>\n\
+    \    <field name=\"evesubcode\">^59$</field>\n    <options>no_full_log</options>\n    <description>Denied by\
+    \ the global geolocation ACL.</description>\n  </rule>\n\n  <rule id=\"44419\" level=\"5\">\n    <if_sid>44402</if_sid>\n\
+    \    <field name=\"evesubcode\">^60$</field>\n    <options>no_full_log</options>\n    <description>Denied by\
+    \ the global ACL.</description>\n  </rule>\n\n  <rule id=\"44420\" level=\"5\">\n    <if_sid>44402</if_sid>\n\
+    \    <field name=\"evesubcode\">^61$</field>\n    <options>no_full_log</options>\n    <description>Denied by\
+    \ the global IP Reputation ACL.</description>\n  </rule>\n\n  <rule id=\"44421\" level=\"5\">\n    <if_sid>44402</if_sid>\n\
+    \    <field name=\"evesubcode\">^62$</field>\n    <options>no_full_log</options>\n    <description>Denied by\
+    \ the global local address antispoofing ACL.</description>\n  </rule>\n\n  <rule id=\"44422\" level=\"5\">\n\
+    \    <if_sid>44403</if_sid>\n    <field name=\"evesubcode\">^0$</field>\n    <options>no_full_log</options>\n\
+    \    <description>Effective rate limit for the syn threshold has been reached.</description>\n  </rule>\n\n\
+    \  <rule id=\"44423\" level=\"5\">\n    <if_sid>44403</if_sid>\n    <field name=\"evesubcode\">^6$</field>\n\
+    \    <options>no_full_log</options>\n    <description>A foreign packet is a TCP packet that does not belong\
+    \ to any known connections.  Tracked when the SPP setting foreign-packet is enabled.</description>\n  </rule>\n\
+    \n  <rule id=\"44424\" level=\"5\">\n    <if_sid>44403</if_sid>\n    <field name=\"evesubcode\">^7$</field>\n\
+    \    <options>no_full_log</options>\n    <description>Sequence number of a packet was outside the acceptable\
+    \ window.  Tracked when the SPP setting seq-validation is enabled.</description>\n  </rule>\n\n  <rule id=\"\
+    44425\" level=\"5\">\n    <if_sid>44403</if_sid>\n    <field name=\"evesubcode\">^10$</field>\n    <options>no_full_log</options>\n\
+    \    <description>An issue with hash collisions in TCP State Machine table.</description>\n  </rule>\n\n  <rule\
+    \ id=\"44426\" level=\"5\">\n    <if_sid>44403</if_sid>\n    <field name=\"evesubcode\">^11$</field>\n    <options>no_full_log</options>\n\
+    \    <description>An issue with TCP State Machine table internal logic or memory.</description>\n  </rule>\n\
+    \n  <rule id=\"44427\" level=\"5\">\n    <if_sid>44403</if_sid>\n    <field name=\"evesubcode\">^12$</field>\n\
+    \    <options>no_full_log</options>\n    <description>State of the TCP packet received was not consistent with\
+    \ the expected state. Tracked when the SPP setting state-transition-anomalies-validation is enabled.</description>\n\
+    \  </rule>\n\n  <rule id=\"44428\" level=\"5\">\n    <if_sid>44403</if_sid>\n    <field name=\"evesubcode\"\
+    >^15$</field>\n    <options>no_full_log</options>\n    <description>Effective rate limit for the new-connections\
+    \ threshold has been reached. A spike in new connections from IP addresses formerly determined to be legitimate\
+    \ might be a sign of a zombie attack.</description>\n  </rule>\n\n  <rule id=\"44429\" level=\"5\">\n    <if_sid>44403</if_sid>\n\
+    \    <field name=\"evesubcode\">^17$</field>\n    <options>no_full_log</options>\n    <description>Effective\
+    \ rate limit for the TCP port has been reached.</description>\n  </rule>\n\n  <rule id=\"44430\" level=\"5\"\
+    >\n    <if_sid>44403</if_sid>\n    <field name=\"evesubcode\">^18$</field>\n    <options>no_full_log</options>\n\
+    \    <description>Effective rate limit for the UDP port has been reached.</description>\n  </rule>\n\n  <rule\
+    \ id=\"44431\" level=\"5\">\n    <if_sid>44403</if_sid>\n    <field name=\"evesubcode\">^19$</field>\n    <options>no_full_log</options>\n\
+    \    <description>Effective rate limit for the type/code has been reached.</description>\n  </rule>\n\n  <rule\
+    \ id=\"44432\" level=\"5\">\n    <if_sid>44403</if_sid>\n    <field name=\"evesubcode\">^20$</field>\n    <options>no_full_log</options>\n\
+    \    <description>Slow Connection Aggressive Aging.</description>\n  </rule>\n\n  <rule id=\"44433\" level=\"\
+    5\">\n    <if_sid>44403</if_sid>\n    <field name=\"evesubcode\">^22$</field>\n    <options>no_full_log</options>\n\
+    \    <description>Slow connection attack detected and “Source blocking for slow connections” enabled. Source\
+    \ IP address is reported.</description>\n  </rule>\n\n  <rule id=\"44434\" level=\"5\">\n    <if_sid>44403</if_sid>\n\
+    \    <field name=\"evesubcode\">^24$</field>\n    <options>no_full_log</options>\n    <description>Invalid TCP\
+    \ checksum.</description>\n  </rule>\n\n  <rule id=\"44435\" level=\"5\">\n    <if_sid>44403</if_sid>\n    <field\
+    \ name=\"evesubcode\">^25$</field>\n    <options>no_full_log</options>\n    <description>Invalid UDP checksum.</description>\n\
+    \  </rule>\n\n  <rule id=\"44436\" level=\"5\">\n    <if_sid>44403</if_sid>\n    <field name=\"evesubcode\"\
+    >^26$</field>\n    <options>no_full_log</options>\n    <description>Invalid ICMP checksum.</description>\n \
+    \ </rule>\n\n  <rule id=\"44437\" level=\"5\">\n    <if_sid>44403</if_sid>\n    <field name=\"evesubcode\">^27$</field>\n\
+    \    <options>no_full_log</options>\n    <description>Invalid TCP flag combination. If the urgent flag is set,\
+    \ then the urgent pointer must be non-zero. SYN, FIN or RST is set for fragmented packets.</description>\n \
+    \ </rule>\n\n  <rule id=\"44438\" level=\"5\">\n    <if_sid>44403</if_sid>\n    <field name=\"evesubcode\">^28$</field>\n\
+    \    <options>no_full_log</options>\n    <description>Drops due to predefined Layer 4 header rules: Data offset\
+    \ is less than 5 for a TCP packet; EOP (End of packet) is detected before the 20 bytes of TCP header; EOP before\
+    \ the data offset indicated data offset; Length field in TCP window scale option is a value other than 3; Length\
+    \ field in TCP window scale option is a value other than 3; Missing UDP payload; Missing ICMP payload ; TCP\
+    \ Option Anamoly based on Option Type.</description>\n  </rule>\n\n  <rule id=\"44439\" level=\"5\">\n    <if_sid>44403</if_sid>\n\
+    \    <field name=\"evesubcode\">^52$|^53$|^54$</field>\n    <options>no_full_log</options>\n    <description>Layer\
+    \ 4: Denied by an SPP ACL rule.</description>\n  </rule>\n\n  <rule id=\"44440\" level=\"5\">\n    <if_sid>44403</if_sid>\n\
+    \    <field name=\"evesubcode\">^56$</field>\n    <options>no_full_log</options>\n    <description>Effective\
+    \ rate limit for the syn-per-src threshold has been reached. Source IP address is reported.</description>\n\
+    \  </rule>\n\n  <rule id=\"44441\" level=\"5\">\n    <if_sid>44403</if_sid>\n    <field name=\"evesubcode\"\
+    >^58$</field>\n    <options>no_full_log</options>\n    <description>Effective rate limit for the concurrent-connections-per-source\
+    \ threshold has been reached. Source IP address is reported.</description>\n  </rule>\n\n  <rule id=\"44442\"\
+    \ level=\"5\">\n    <if_sid>44403</if_sid>\n    <field name=\"evesubcode\">^82$</field>\n    <options>no_full_log</options>\n\
+    \    <description>DNS Query flood from Source.</description>\n  </rule>\n\n  <rule id=\"44443\" level=\"5\"\
+    >\n    <if_sid>44403</if_sid>\n    <field name=\"evesubcode\">^83$</field>\n    <options>no_full_log</options>\n\
+    \    <description>DNS Packet Track Flood from Source.</description>\n  </rule>\n\n  <rule id=\"44444\" level=\"\
+    5\">\n    <if_sid>44403</if_sid>\n    <field name=\"evesubcode\">^86$</field>\n    <options>no_full_log</options>\n\
+    \    <description>Invalid ICMP Type/Code.</description>\n  </rule>\n\n  <rule id=\"44445\" level=\"5\">\n  \
+    \  <if_sid>44403</if_sid>\n    <field name=\"evesubcode\">^87$</field>\n    <options>no_full_log</options>\n\
+    \    <description>HTTP Method flood from source.</description>\n  </rule>\n\n  <rule id=\"44446\" level=\"5\"\
+    >\n    <if_sid>44404</if_sid>\n    <field name=\"evesubcode\">^0$</field>\n    <options>no_full_log</options>\n\
+    \    <description>Effective rate limit for a particular HTTP method threshold has been reached.</description>\n\
+    \  </rule>\n\n  <rule id=\"44447\" level=\"5\">\n    <if_sid>44404</if_sid>\n    <field name=\"evesubcode\"\
+    >^1$</field>\n    <options>no_full_log</options>\n    <description>Packets dropped due to the unknown-opcode-anomaly\
+    \ rule (Global Settings > Settings page).</description>\n  </rule>\n\n  <rule id=\"44448\" level=\"5\">\n  \
+    \  <if_sid>44404</if_sid>\n    <field name=\"evesubcode\">^2$</field>\n    <options>no_full_log</options>\n\
+    \    <description>Packets dropped due to the invalid-opcode-anomaly rule (Global Settings > Settings page).</description>\n\
+    \  </rule>\n\n  <rule id=\"44449\" level=\"5\">\n    <if_sid>44404</if_sid>\n    <field name=\"evesubcode\"\
+    >^3$|^7$|^9$|^11$|^13$|^37$|^38$|^39$|^40$</field>\n    <options>no_full_log</options>\n    <description>Layer\
+    \ 7: Denied by an SPP ACL rule.</description>\n  </rule>\n\n  <rule id=\"44450\" level=\"5\">\n    <if_sid>44404</if_sid>\n\
+    \    <field name=\"evesubcode\">^4$</field>\n    <options>no_full_log</options>\n    <description>Effective\
+    \ rate limit for a particular URL threshold has been reached.</description>\n  </rule>\n\n  <rule id=\"44451\"\
+    \ level=\"5\">\n    <if_sid>44404</if_sid>\n    <field name=\"evesubcode\">^5$</field>\n    <options>no_full_log</options>\n\
+    \    <description>Invalid HTTP Method anomaly.</description>\n  </rule>\n\n  <rule id=\"44452\" level=\"5\"\
+    >\n    <if_sid>44404</if_sid>\n    <field name=\"evesubcode\">^6$</field>\n    <options>no_full_log</options>\n\
+    \    <description>Effective rate limit for a particular Host header threshold has been reached.</description>\n\
+    \  </rule>\n\n  <rule id=\"44453\" level=\"5\">\n    <if_sid>44404</if_sid>\n    <field name=\"evesubcode\"\
+    >^8$</field>\n    <options>no_full_log</options>\n    <description>Effective rate limit for a particular Referer\
+    \ header threshold has been reached.</description>\n  </rule>\n\n  <rule id=\"44454\" level=\"5\">\n    <if_sid>44404</if_sid>\n\
+    \    <field name=\"evesubcode\">^10$</field>\n    <options>no_full_log</options>\n    <description>Effective\
+    \ rate limit for a particular Cookie header threshold has been reached.</description>\n  </rule>\n\n  <rule\
+    \ id=\"44455\" level=\"5\">\n    <if_sid>44404</if_sid>\n    <field name=\"evesubcode\">^12$</field>\n    <options>no_full_log</options>\n\
+    \    <description>Effective rate limit for a particular User-Agent threshold has been reached.</description>\n\
+    \  </rule>\n\n  <rule id=\"44456\" level=\"5\">\n    <if_sid>44404</if_sid>\n    <field name=\"evesubcode\"\
+    >^42$</field>\n    <options>no_full_log</options>\n    <description>Invalid value in the OpCode field.</description>\n\
+    \  </rule>\n\n  <rule id=\"44457\" level=\"5\">\n    <if_sid>44404</if_sid>\n    <field name=\"evesubcode\"\
+    >^43$</field>\n    <options>no_full_log</options>\n    <description>Invalid combination in the flags field.</description>\n\
+    \  </rule>\n\n  <rule id=\"44458\" level=\"5\">\n    <if_sid>44404</if_sid>\n    <field name=\"evesubcode\"\
+    >^44$</field>\n    <options>no_full_log</options>\n    <description>DNS Header Anomaly.</description>\n  </rule>\n\
+    \n  <rule id=\"44459\" level=\"5\">\n    <if_sid>44404</if_sid>\n    <field name=\"evesubcode\">^45$</field>\n\
+    \    <options>no_full_log</options>\n    <description>(QR) bit set to 1.</description>\n  </rule>\n\n  <rule\
+    \ id=\"44460\" level=\"5\">\n    <if_sid>44404</if_sid>\n    <field name=\"evesubcode\">^46$</field>\n    <options>no_full_log</options>\n\
+    \    <description>recursion allowed (RA) bit set.</description>\n  </rule>\n\n  <rule id=\"44461\" level=\"\
+    5\">\n    <if_sid>44404</if_sid>\n    <field name=\"evesubcode\">^47$</field>\n    <options>no_full_log</options>\n\
+    \    <description>DNS query with count 0.</description>\n  </rule>\n\n  <rule id=\"44462\" level=\"5\">\n  \
+    \  <if_sid>44404</if_sid>\n    <field name=\"evesubcode\">^48$|^53$</field>\n    <options>no_full_log</options>\n\
+    \    <description>Question count not 1.</description>\n  </rule>\n\n  <rule id=\"44463\" level=\"5\">\n    <if_sid>44404</if_sid>\n\
+    \    <field name=\"evesubcode\">^49$</field>\n    <options>no_full_log</options>\n    <description>recursion\
+    \ desired (RD) bit set.</description>\n  </rule>\n\n  <rule id=\"44464\" level=\"5\">\n    <if_sid>44404</if_sid>\n\
+    \    <field name=\"evesubcode\">^50$</field>\n    <options>no_full_log</options>\n    <description>DNS response\
+    \ with QCLASS.</description>\n  </rule>\n\n  <rule id=\"44465\" level=\"5\">\n    <if_sid>44404</if_sid>\n \
+    \   <field name=\"evesubcode\">^51$</field>\n    <options>no_full_log</options>\n    <description>DNS response\
+    \ with a resource specifying a TYPE ID.</description>\n  </rule>\n\n  <rule id=\"44466\" level=\"5\">\n    <if_sid>44404</if_sid>\n\
+    \    <field name=\"evesubcode\">^52$</field>\n    <options>no_full_log</options>\n    <description>(QR) bit\
+    \ set to 0.</description>\n  </rule>\n\n  <rule id=\"44467\" level=\"5\">\n    <if_sid>44404</if_sid>\n    <field\
+    \ name=\"evesubcode\">^54$</field>\n    <options>no_full_log</options>\n    <description>TCP/UDP query or response\
+    \ message that exceeds the maximum header length.</description>\n  </rule>\n\n  <rule id=\"44468\" level=\"\
+    5\">\n    <if_sid>44404</if_sid>\n    <field name=\"evesubcode\">^55$</field>\n    <options>no_full_log</options>\n\
+    \    <description>DNS name that exceeds 255 characters.</description>\n  </rule>\n\n  <rule id=\"44469\" level=\"\
+    5\">\n    <if_sid>44404</if_sid>\n    <field name=\"evesubcode\">^56$</field>\n    <options>no_full_log</options>\n\
+    \    <description>Query or response with a label that exceeds the maximum length (63).</description>\n  </rule>\n\
+    \n  <rule id=\"44470\" level=\"5\">\n    <if_sid>44404</if_sid>\n    <field name=\"evesubcode\">^57$</field>\n\
+    \    <options>no_full_log</options>\n    <description>DNS message with a pointer that points beyond the end\
+    \ of data.</description>\n  </rule>\n\n  <rule id=\"44471\" level=\"5\">\n    <if_sid>44404</if_sid>\n    <field\
+    \ name=\"evesubcode\">^58$</field>\n    <options>no_full_log</options>\n    <description>An asynchronous Transfer\
+    \ Full Range (AXFR) request (QTYPE=252).</description>\n  </rule>\n\n  <rule id=\"44472\" level=\"5\">\n   \
+    \ <if_sid>44404</if_sid>\n    <field name=\"evesubcode\">^59$</field>\n    <options>no_full_log</options>\n\
+    \    <description>A query/response in which the question/resource address class is not IN.</description>\n \
+    \ </rule>\n\n  <rule id=\"44473\" level=\"5\">\n    <if_sid>44404</if_sid>\n    <field name=\"evesubcode\">^60$</field>\n\
+    \    <options>no_full_log</options>\n    <description>DNS Exploit Anomaly: Empty UDP message.</description>\n\
+    \  </rule>\n\n  <rule id=\"44474\" level=\"5\">\n    <if_sid>44404</if_sid>\n    <field name=\"evesubcode\"\
+    >^61$</field>\n    <options>no_full_log</options>\n    <description>DNS Exploit Anomaly: Message ends prematurely.</description>\n\
+    \  </rule>\n\n  <rule id=\"44475\" level=\"5\">\n    <if_sid>44404</if_sid>\n    <field name=\"evesubcode\"\
+    >^62$</field>\n    <options>no_full_log</options>\n    <description>A query/response with less than two bytes\
+    \ of data specified in the two-byte prefix field.</description>\n  </rule>\n\n  <rule id=\"44476\" level=\"\
+    5\">\n    <if_sid>44404</if_sid>\n    <field name=\"evesubcode\">^63$</field>\n    <options>no_full_log</options>\n\
+    \    <description>DNS request with request type set to ALL (QTYPE=255).</description>\n  </rule>\n\n  <rule\
+    \ id=\"44477\" level=\"5\">\n    <if_sid>44404</if_sid>\n    <field name=\"evesubcode\">^64$</field>\n    <options>no_full_log</options>\n\
+    \    <description>A query/response with TYPE or CLASS reserved values.</description>\n  </rule>\n\n  <rule id=\"\
+    44478\" level=\"5\">\n    <if_sid>44404</if_sid>\n    <field name=\"evesubcode\">^65$</field>\n    <options>no_full_log</options>\n\
+    \    <description>A query/response with excess data.</description>\n  </rule>\n\n  <rule id=\"44479\" level=\"\
+    5\">\n    <if_sid>44404</if_sid>\n    <field name=\"evesubcode\">^66$</field>\n    <options>no_full_log</options>\n\
+    \    <description>TTL value is greater than 7 days.</description>\n  </rule>\n\n  <rule id=\"44480\" level=\"\
+    5\">\n    <if_sid>44404</if_sid>\n    <field name=\"evesubcode\">^67$</field>\n    <options>no_full_log</options>\n\
+    \    <description>A query/response with a null DNS name.</description>\n  </rule>\n\n  <rule id=\"44481\" level=\"\
+    5\">\n    <if_sid>44404</if_sid>\n    <field name=\"evesubcode\">^68$</field>\n    <options>no_full_log</options>\n\
+    \    <description>UDP Drops due to a response with no matching query.</description>\n  </rule>\n\n  <rule id=\"\
+    44482\" level=\"5\">\n    <if_sid>44404</if_sid>\n    <field name=\"evesubcode\">^69$</field>\n    <options>no_full_log</options>\n\
+    \    <description>TCP Drops due to a response with no matching query.</description>\n  </rule>\n\n  <rule id=\"\
+    44483\" level=\"5\">\n    <if_sid>44404</if_sid>\n    <field name=\"evesubcode\">^70$</field>\n    <options>no_full_log</options>\n\
+    \    <description>DNS DQRM Horizontal Link Limit Crossed.</description>\n  </rule>\n\n  <rule id=\"44484\" level=\"\
+    5\">\n    <if_sid>44404</if_sid>\n    <field name=\"evesubcode\">^71$</field>\n    <options>no_full_log</options>\n\
+    \    <description>An issue with DQRM table internal logic or memory.</description>\n  </rule>\n\n  <rule id=\"\
+    44485\" level=\"5\">\n    <if_sid>44404</if_sid>\n    <field name=\"evesubcode\">^72$</field>\n    <options>no_full_log</options>\n\
+    \    <description>UDP drops due to response sent to port 53.</description>\n  </rule>\n\n  <rule id=\"44486\"\
+    \ level=\"5\">\n    <if_sid>44404</if_sid>\n    <field name=\"evesubcode\">^73$</field>\n    <options>no_full_log</options>\n\
+    \    <description>TCP drops due to response sent to port 53.</description>\n  </rule>\n\n  <rule id=\"44487\"\
+    \ level=\"5\">\n    <if_sid>44404</if_sid>\n    <field name=\"evesubcode\">^74$|^75$|^76$|^77$|^78$|^79$|^80$</field>\n\
+    \    <options>no_full_log</options>\n    <description>UDP drops due to LQ check during flood.</description>\n\
+    \  </rule>\n\n  <rule id=\"44488\" level=\"5\">\n    <if_sid>44404</if_sid>\n    <field name=\"evesubcode\"\
+    >^81$|^82$|^83$|^84$|^85$|^86$</field>\n    <options>no_full_log</options>\n    <description>UDP drops due to\
+    \ TTL check during flood.</description>\n  </rule>\n\n  <rule id=\"44489\" level=\"5\">\n    <if_sid>44404</if_sid>\n\
+    \    <field name=\"evesubcode\">^87$|^88$|^89$|^90$|^91$|^92$</field>\n    <options>no_full_log</options>\n\
+    \    <description>UDP drops due to TC=1 antispoofing check during flood.</description>\n  </rule>\n\n  <rule\
+    \ id=\"44490\" level=\"5\">\n    <if_sid>44404</if_sid>\n    <field name=\"evesubcode\">^93$|^94$|^95$|^96$|^97$|^98$</field>\n\
+    \    <options>no_full_log</options>\n    <description>UDP drops due to Retransmission antispoofing check during\
+    \ flood.</description>\n  </rule>\n\n  <rule id=\"44491\" level=\"5\">\n    <if_sid>44404</if_sid>\n    <field\
+    \ name=\"evesubcode\">^99$</field>\n    <options>no_full_log</options>\n    <description>UDP drops because the\
+    \ response was served from the cache during a flood.</description>\n  </rule>\n\n  <rule id=\"44492\" level=\"\
+    5\">\n    <if_sid>44404</if_sid>\n    <field name=\"evesubcode\">^100$|^101$|^102$|^103$|^104$|^105$|^106$|^107$|^108$|^109$|^110$</field>\n\
+    \    <options>no_full_log</options>\n    <description>UDP drops because the response was not served from the\
+    \ cache during a flood.</description>\n  </rule>\n\n  <rule id=\"44493\" level=\"5\">\n    <if_sid>44404</if_sid>\n\
+    \    <field name=\"evesubcode\">^201$</field>\n    <options>no_full_log</options>\n    <description>Drops due\
+    \ to HTTP Range Header rule (Global Settings > Settings page).</description>\n  </rule>\n\n  <rule id=\"44494\"\
+    \ level=\"5\">\n    <if_sid>44404</if_sid>\n    <field name=\"evesubcode\">^111$</field>\n    <options>no_full_log</options>\n\
+    \    <description>Effective rate limit for the dns-query threshold has been reached.</description>\n  </rule>\n\
+    \n  <rule id=\"44495\" level=\"5\">\n    <if_sid>44404</if_sid>\n    <field name=\"evesubcode\">^112$</field>\n\
+    \    <options>no_full_log</options>\n    <description>Effective rate limit for the dns-question-count threshold\
+    \ has been reached.</description>\n  </rule>\n\n  <rule id=\"44496\" level=\"5\">\n    <if_sid>44404</if_sid>\n\
+    \    <field name=\"evesubcode\">^113$</field>\n    <options>no_full_log</options>\n    <description>Effective\
+    \ rate limit for the dns-fragment threshold has been reached.</description>\n  </rule>\n\n  <rule id=\"44497\"\
+    \ level=\"5\">\n    <if_sid>44404</if_sid>\n    <field name=\"evesubcode\">^114$</field>\n    <options>no_full_log</options>\n\
+    \    <description>Effective rate limit for the dns-zone-xfer threshold has been reached.</description>\n  </rule>\n\
+    \n  <rule id=\"44498\" level=\"5\">\n    <if_sid>44404</if_sid>\n    <field name=\"evesubcode\">^115$</field>\n\
+    \    <options>no_full_log</options>\n    <description>Effective rate limit for the dns-mx threshold has been\
+    \ reached.</description>\n  </rule>\n\n  <rule id=\"44499\" level=\"5\">\n    <if_sid>44404</if_sid>\n    <field\
+    \ name=\"evesubcode\">^116$</field>\n    <options>no_full_log</options>\n    <description>Effective rate limit\
+    \ for the dns-all threshold has been reached.</description>\n  </rule>\n\n  <rule id=\"44500\" level=\"5\">\n\
+    \    <if_sid>44404</if_sid>\n    <field name=\"evesubcode\">^117$</field>\n    <options>no_full_log</options>\n\
+    \    <description>UDP Drops due to DQRM duplicate query check.</description>\n  </rule>\n\n  <rule id=\"44501\"\
+    \ level=\"5\">\n    <if_sid>44404</if_sid>\n    <field name=\"evesubcode\">^118$</field>\n    <options>no_full_log</options>\n\
+    \    <description>TCP Drops due to DQRM duplicate query check.</description>\n  </rule>\n\n  <rule id=\"44502\"\
+    \ level=\"5\">\n    <if_sid>44404</if_sid>\n    <field name=\"evesubcode\">^119$</field>\n    <options>no_full_log</options>\n\
+    \    <description>DNS Query ACL drops due to Query restricted to specific subnets.</description>\n  </rule>\n\
+    \n  <rule id=\"44503\" level=\"5\">\n    <if_sid>44404</if_sid>\n    <field name=\"evesubcode\">^120$</field>\n\
+    \    <options>no_full_log</options>\n    <description>DNS Query ACL Drops due to Blacklisted domains/ipv4 address.</description>\n\
+    \  </rule>\n\n</group>\n"

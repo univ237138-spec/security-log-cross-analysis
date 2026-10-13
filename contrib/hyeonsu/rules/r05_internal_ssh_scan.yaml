@@ -1,0 +1,70 @@
+# R05 내부 SSH 스캔
+# docs/06_탐지규칙_Sigma_대조.yaml 을 규칙별로 나눈 파일이다. 필드 이름과 추가 필드의 뜻은 그 파일 머리말에 있다.
+# 이 파일에는 문서가 2개 있다: 기본 이벤트 룰과 그것을 세는 correlation 룰.
+
+title: R05 기본 이벤트 - sshd가 아닌 프로세스의 내부 서버 22번 포트 연결
+id: a2578869-4dd6-41e6-a3e1-1a309529e07f
+name: r05_base_internal_ssh_connection
+status: experimental
+description: R05가 세는 기본 이벤트다. sshd가 아닌 프로세스가 내부 서버의 22번 포트로 연결한 기록이며, 단독으로는 경보가 아니다.
+references:
+    - docs/06_탐지_위험점수.md
+author: security-log-cross-analysis 프로젝트 팀
+date: 2026-10-03
+tags:
+    - attack.discovery
+    - attack.lateral-movement
+    - attack.t1021.004
+    - attack.t1046
+logsource:
+    category: network_connection
+    product: linux
+detection:
+    selection:
+        dst_zone: 'server' # 보강 컬럼: 목적지가 내부 서버
+        dpt: 22
+    filter_main_sshd:
+        Image|endswith: '/sshd'
+    condition: selection and not 1 of filter_main_*
+falsepositives:
+    - 관리 스크립트의 내부 SSH 접속
+level: informational
+project_rule_id: R05
+---
+title: R05 내부 SSH 스캔
+id: b6617656-6146-40b2-be46-6614e4003556
+name: r05_internal_ssh_scan
+related:
+    - id: 3761e026-f259-44e6-8826-719ed8079408 # Linux Network Service Scanning - Auditd (Sigma 등급 low)
+      type: similar
+status: experimental
+description: 한 서버에서 sshd가 아닌 프로세스가 5분 안에 서로 다른 내부 서버 3대 이상의 22번 포트로 연결하면 탐지한다.
+references:
+    - docs/06_탐지_위험점수.md
+    - https://github.com/SigmaHQ/sigma/blob/8a4813404ea3074890e0cda9272d4d1a8b2941d6/rules/linux/auditd/syscall/lnx_auditd_network_service_scanning.yml
+author: security-log-cross-analysis 프로젝트 팀
+date: 2026-10-03
+tags:
+    - attack.discovery
+    - attack.lateral-movement
+    - attack.t1021.004
+    - attack.t1046
+correlation:
+    type: value_count
+    rules:
+        - r05_base_internal_ssh_connection
+    group-by:
+        - host # 보강 컬럼: 연결을 시작한 서버
+    timespan: 5m
+    condition:
+        field: dst
+        gte: 3
+falsepositives:
+    - 알려진 사례 없음 (이 데이터의 정상 세션에서는 0건)
+level: high
+project_rule_id: R05
+project_hits: 1
+sigma_match_level: 개념만 같음
+sigma_difference: Sigma는 auditd 로그에서 스캔 도구 이름(nmap, nc, telnet)으로 탐지한다. 이 프로젝트는 Sysmon 연결 기록에서 5분 안에 서로 다른 내부 서버 3대 이상의 22번 포트로 연결했는지 센다.
+sigma_original_hits: 0
+sigma_original_note: 스캔에 nmap이나 nc가 아니라 bash를 썼다.

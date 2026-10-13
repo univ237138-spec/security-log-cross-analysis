@@ -1,0 +1,1101 @@
+schema: wazuh-original-rules-yaml/v1
+format_only_conversion: true
+native_runtime_format: Wazuh XML
+authoritative_field: sources[].original_xml
+upstream:
+  repository: https://github.com/wazuh/wazuh
+  tag: v4.14.8
+  commit: f470ad7db717b18db7feeed568949643698f0f34
+sources:
+- file: ruleset/rules/0595-win-sysmon_rules.xml
+  url: https://github.com/wazuh/wazuh/blob/f470ad7db717b18db7feeed568949643698f0f34/ruleset/rules/0595-win-sysmon_rules.xml
+  sha256: 29f3cd9499cb1e6a732e5d5755cad87df3e3b6fe2442a990c5e591360202dfc5
+  rule_count: 56
+  elements:
+  - element: var
+    attributes:
+      name: MS_FREQ
+    text: '8'
+  - element: group
+    attributes:
+      name: windows,sysmon,
+    children:
+    - element: rule
+      attributes:
+        id: '61600'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '60004'
+      - element: field
+        attributes:
+          name: win.system.severityValue
+        text: ^INFORMATION$
+      - element: description
+        text: Windows Sysmon informational event
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '61601'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '60004'
+      - element: field
+        attributes:
+          name: win.system.severityValue
+        text: ^WARNING$
+      - element: description
+        text: Windows Sysmon warning event
+      - element: options
+        text: no_full_log
+      - element: group
+        text: gpg13_4.12,
+    - element: rule
+      attributes:
+        id: '61602'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '60004'
+      - element: field
+        attributes:
+          name: win.system.severityValue
+        text: ^ERROR$
+      - element: description
+        text: Windows Sysmon error event
+      - element: options
+        text: no_full_log
+      - element: group
+        text: system_error,gpg13_4.3,gdpr_IV_35.7.d,
+    - element: rule
+      attributes:
+        id: '61603'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '61600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^1$
+      - element: description
+        text: 'Sysmon - Event 1: Process creation $(win.eventdata.description)'
+      - element: options
+        text: no_full_log
+      - element: group
+        text: sysmon_event1,
+    - element: rule
+      attributes:
+        id: '61604'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '61600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^2$
+      - element: description
+        text: 'Sysmon - Event 2: $(win.eventdata.image) changed file $(win.eventdata.targetFilename) creation time '
+      - element: options
+        text: no_full_log
+      - element: group
+        text: sysmon_event2,
+    - element: rule
+      attributes:
+        id: '61605'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '61600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^3$
+      - element: description
+        text: 'Sysmon - Event 3: Network connection to $(win.eventdata.destinationIp):$(win.eventdata.destinationPort)
+          by $(win.eventdata.image)'
+      - element: options
+        text: no_full_log
+      - element: group
+        text: sysmon_event3,
+    - element: rule
+      attributes:
+        id: '61606'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '61600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4$
+      - element: description
+        text: 'Sysmon - Event 4: Sysmon service state changed to "$(win.eventdata.state)"'
+      - element: options
+        text: no_full_log
+      - element: group
+        text: sysmon_event4,
+    - element: rule
+      attributes:
+        id: '61607'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '61600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^5$
+      - element: description
+        text: 'Sysmon - Event 5: Process terminated $(win.eventdata.image)'
+      - element: options
+        text: no_full_log
+      - element: group
+        text: sysmon_event5,
+    - element: rule
+      attributes:
+        id: '61608'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '61600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^6$
+      - element: description
+        text: 'Sysmon - Event 6: Driver loaded $(win.eventdata.imageLoaded)'
+      - element: options
+        text: no_full_log
+      - element: group
+        text: sysmon_event6,
+    - element: rule
+      attributes:
+        id: '61609'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '61600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^7$
+      - element: description
+        text: 'Sysmon - Event 7: Image $(win.eventdata.imageLoaded) loaded by $(win.eventdata.image)'
+      - element: options
+        text: no_full_log
+      - element: group
+        text: sysmon_event7,
+    - element: rule
+      attributes:
+        id: '61610'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '61600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^8$
+      - element: description
+        text: 'Sysmon - Event 8: CreateRemoteThread by $(win.eventdata.sourceImage) on $(win.eventdata.targetImage),
+          possible process injection'
+      - element: options
+        text: no_full_log
+      - element: group
+        text: sysmon_event8,
+    - element: rule
+      attributes:
+        id: '61611'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '61600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^9$
+      - element: description
+        text: 'Sysmon - Event 9: RawAccessRead by $(win.eventdata.image)'
+      - element: options
+        text: no_full_log
+      - element: group
+        text: sysmon_event9,
+    - element: rule
+      attributes:
+        id: '61612'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '61600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^10$
+      - element: description
+        text: 'Sysmon - Event 10: $(win.eventdata.targetImage) process accessed by $(win.eventdata.sourceImage)'
+      - element: options
+        text: no_full_log
+      - element: group
+        text: sysmon_event_10,
+    - element: rule
+      attributes:
+        id: '61613'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '61600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^11$
+      - element: description
+        text: 'Sysmon - Event 11: FileCreate by $(win.eventdata.image)'
+      - element: options
+        text: no_full_log
+      - element: group
+        text: sysmon_event_11,
+    - element: rule
+      attributes:
+        id: '61614'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '61600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^12$
+      - element: description
+        text: 'Sysmon - Event 12: RegistryEvent $(win.eventdata.eventType) on $(win.eventdata.targetObject) by $(win.eventdata.image)'
+      - element: options
+        text: no_full_log
+      - element: group
+        text: sysmon_event_12,
+    - element: rule
+      attributes:
+        id: '61615'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '61600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^13$
+      - element: description
+        text: 'Sysmon - Event 13: RegistryEvent $(win.eventdata.eventType) on $(win.eventdata.targetObject) by $(win.eventdata.image)'
+      - element: options
+        text: no_full_log
+      - element: group
+        text: sysmon_event_13,
+    - element: rule
+      attributes:
+        id: '61616'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '61600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^14$
+      - element: description
+        text: 'Sysmon - Event 14: RegistryEvent (Key and Value Rename) by $(win.eventdata.image)'
+      - element: options
+        text: no_full_log
+      - element: group
+        text: sysmon_event_14,
+    - element: rule
+      attributes:
+        id: '61617'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '61600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^15$
+      - element: description
+        text: 'Sysmon - Event 15: $(win.eventdata.targetFilename) FileCreateStreamHash by process $(win.eventdata.image)'
+      - element: options
+        text: no_full_log
+      - element: group
+        text: sysmon_event_15,
+    - element: rule
+      attributes:
+        id: '61644'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '61600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^16$
+      - element: description
+        text: 'Sysmon - Event 16: Sysmon configuration changed using file $(win.eventdata.configuration)'
+      - element: group
+        text: sysmon_event_16,
+    - element: rule
+      attributes:
+        id: '61645'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '61600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^17$
+      - element: description
+        text: 'Sysmon - Event 17: Pipe created'
+      - element: options
+        text: no_full_log
+      - element: group
+        text: sysmon_event_17,
+    - element: rule
+      attributes:
+        id: '61646'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '61600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^18$
+      - element: description
+        text: 'Sysmon - Event 18: Pipe connected'
+      - element: options
+        text: no_full_log
+      - element: group
+        text: sysmon_event_18,
+    - element: rule
+      attributes:
+        id: '61647'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '61600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^19$
+      - element: description
+        text: 'Sysmon - Event 19: WmiEventFilter activity'
+      - element: options
+        text: no_full_log
+      - element: group
+        text: sysmon_event_19,
+    - element: rule
+      attributes:
+        id: '61648'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '61600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^20$
+      - element: description
+        text: 'Sysmon - Event 20: WmiEventConsumer activity'
+      - element: options
+        text: no_full_log
+      - element: group
+        text: sysmon_event_20,
+    - element: rule
+      attributes:
+        id: '61649'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '61600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^21$
+      - element: description
+        text: 'Sysmon - Event 21: WmiEventConsumerToFilter activity'
+      - element: options
+        text: no_full_log
+      - element: group
+        text: sysmon_event_21,
+    - element: rule
+      attributes:
+        id: '61650'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '61600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^22$
+      - element: description
+        text: 'Sysmon - Event 22: DNS Query event'
+      - element: options
+        text: no_full_log
+      - element: group
+        text: sysmon_event_22,
+    - element: rule
+      attributes:
+        id: '61651'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '61600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^23$
+      - element: description
+        text: 'Sysmon - Event 23: File deleted and archived'
+      - element: options
+        text: no_full_log
+      - element: group
+        text: sysmon_event_23,
+    - element: rule
+      attributes:
+        id: '61652'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '61600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^24$
+      - element: description
+        text: 'Sysmon - Event 24: Clipboard change'
+      - element: options
+        text: no_full_log
+      - element: group
+        text: sysmon_event_24,
+    - element: rule
+      attributes:
+        id: '61653'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '61600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^25$
+      - element: description
+        text: 'Sysmon - Event 25: Process tampering - Image change'
+      - element: options
+        text: no_full_log
+      - element: group
+        text: sysmon_event_25,
+    - element: rule
+      attributes:
+        id: '61654'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '61600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^26$
+      - element: description
+        text: 'Sysmon - Event 26: File deleted'
+      - element: options
+        text: no_full_log
+      - element: group
+        text: sysmon_event_26,
+    - element: rule
+      attributes:
+        id: '61655'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '61600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^255$
+      - element: description
+        text: 'Sysmon - Event 255: Sysmon error'
+      - element: options
+        text: no_full_log
+      - element: group
+        text: sysmon_event_255,
+  - element: group
+    attributes:
+      name: windows,sysmon,sysmon_process-anomalies,
+    children:
+    - element: rule
+      attributes:
+        id: '61618'
+        level: '12'
+      children:
+      - element: if_group
+        text: sysmon_event1
+      - element: field
+        attributes:
+          name: win.eventdata.image
+        text: svchost.exe
+      - element: description
+        text: Sysmon - Suspicious Process - svchost.exe
+      - element: mitre
+        children:
+        - element: id
+          text: T1055
+      - element: group
+        text: pci_dss_10.6.1,pci_dss_11.4,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,tsc_CC7.2,tsc_CC7.3,tsc_CC6.1,tsc_CC6.8,
+    - element: rule
+      attributes:
+        id: '61619'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '61618'
+      - element: field
+        attributes:
+          name: win.eventdata.parentImage
+        text: \\services.exe
+      - element: description
+        text: Sysmon - Legitimate Parent Image - svchost.exe
+    - element: rule
+      attributes:
+        id: '61620'
+        level: '12'
+      children:
+      - element: if_group
+        text: sysmon_event1
+      - element: field
+        attributes:
+          name: win.eventdata.image
+        text: lsm.exe
+      - element: description
+        text: Sysmon - Suspicious Process - lsm.exe
+      - element: mitre
+        children:
+        - element: id
+          text: T1055
+      - element: group
+        text: pci_dss_10.6.1,pci_dss_11.4,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,tsc_CC7.2,tsc_CC7.3,tsc_CC6.1,tsc_CC6.8,
+    - element: rule
+      attributes:
+        id: '61621'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '61620'
+      - element: field
+        attributes:
+          name: win.eventdata.parentImage
+        text: wininit.exe
+      - element: description
+        text: Sysmon - Legitimate Parent Image - lsm.exe
+    - element: rule
+      attributes:
+        id: '61622'
+        level: '12'
+      children:
+      - element: if_group
+        text: sysmon_event1
+      - element: field
+        attributes:
+          name: win.eventdata.parentImage
+        text: lsm.exe
+      - element: description
+        text: Sysmon - Suspicious Process - lsm.exe is a Parent Image
+      - element: mitre
+        children:
+        - element: id
+          text: T1055
+      - element: group
+        text: pci_dss_10.6.1,pci_dss_11.4,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,tsc_CC7.2,tsc_CC7.3,tsc_CC6.1,tsc_CC6.8,
+    - element: rule
+      attributes:
+        id: '61623'
+        level: '12'
+      children:
+      - element: if_group
+        text: sysmon_event1
+      - element: field
+        attributes:
+          name: win.eventdata.image
+        text: csrss.exe
+      - element: description
+        text: Sysmon - Suspicious Process - csrss.exe
+      - element: mitre
+        children:
+        - element: id
+          text: T1055
+      - element: group
+        text: pci_dss_10.6.1,pci_dss_11.4,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,tsc_CC7.2,tsc_CC7.3,tsc_CC6.1,tsc_CC6.8,
+    - element: rule
+      attributes:
+        id: '61624'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '61623'
+      - element: field
+        attributes:
+          name: win.eventdata.parentImage
+        text: smss.exe
+      - element: description
+        text: Sysmon - Legitimate Parent Image - csrss.exe
+    - element: rule
+      attributes:
+        id: '61625'
+        level: '12'
+      children:
+      - element: if_group
+        text: sysmon_event1
+      - element: field
+        attributes:
+          name: win.eventdata.image
+        text: lsass.exe
+      - element: description
+        text: Sysmon - Suspicious Process - lsass
+      - element: mitre
+        children:
+        - element: id
+          text: T1055
+      - element: group
+        text: pci_dss_10.6.1,pci_dss_11.4,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,tsc_CC7.2,tsc_CC7.3,tsc_CC6.1,tsc_CC6.8,
+    - element: rule
+      attributes:
+        id: '61626'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '61625'
+      - element: field
+        attributes:
+          name: win.eventdata.parentImage
+        text: wininit.exe
+      - element: description
+        text: Sysmon - Legitimate Parent Image - lsass.exe
+    - element: rule
+      attributes:
+        id: '61627'
+        level: '12'
+      children:
+      - element: if_group
+        text: sysmon_event1
+      - element: field
+        attributes:
+          name: win.eventdata.parentImage
+        text: lsass.exe
+      - element: description
+        text: Sysmon - Suspicious Process - lsass.exe is a Parent Image
+      - element: mitre
+        children:
+        - element: id
+          text: T1055
+      - element: group
+        text: pci_dss_10.6.1,pci_dss_11.4,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,tsc_CC7.2,tsc_CC7.3,tsc_CC6.1,tsc_CC6.8,
+    - element: rule
+      attributes:
+        id: '61628'
+        level: '12'
+      children:
+      - element: if_group
+        text: sysmon_event1
+      - element: field
+        attributes:
+          name: win.eventdata.image
+        text: winlogon.exe
+      - element: description
+        text: Sysmon - Suspicious Process - winlogon.exe
+      - element: mitre
+        children:
+        - element: id
+          text: T1055
+      - element: group
+        text: pci_dss_10.6.1,pci_dss_11.4,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,tsc_CC7.2,tsc_CC7.3,tsc_CC6.1,tsc_CC6.8,
+    - element: rule
+      attributes:
+        id: '61629'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '61628'
+      - element: field
+        attributes:
+          name: win.eventdata.parentImage
+        text: smss.exe
+      - element: description
+        text: Sysmon - Legitimate Parent Image - winlogon.exe
+    - element: rule
+      attributes:
+        id: '61630'
+        level: '12'
+      children:
+      - element: if_group
+        text: sysmon_event1
+      - element: field
+        attributes:
+          name: win.eventdata.image
+        text: wininit.exe
+      - element: description
+        text: Sysmon - Suspicious Process - wininit
+      - element: mitre
+        children:
+        - element: id
+          text: T1055
+      - element: group
+        text: pci_dss_10.6.1,pci_dss_11.4,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,tsc_CC7.2,tsc_CC7.3,tsc_CC6.1,tsc_CC6.8,
+    - element: rule
+      attributes:
+        id: '61631'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '61630'
+      - element: field
+        attributes:
+          name: win.eventdata.parentImage
+        text: smss.exe
+      - element: description
+        text: Sysmon - Legitimate Parent Image - wininit.exe
+    - element: rule
+      attributes:
+        id: '61632'
+        level: '12'
+      children:
+      - element: if_group
+        text: sysmon_event1
+      - element: field
+        attributes:
+          name: win.eventdata.image
+        text: smss.exe
+      - element: description
+        text: Sysmon - Suspicious Process - smss.exe
+      - element: mitre
+        children:
+        - element: id
+          text: T1055
+      - element: group
+        text: pci_dss_10.6.1,pci_dss_11.4,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,tsc_CC7.2,tsc_CC7.3,tsc_CC6.1,tsc_CC6.8,
+    - element: rule
+      attributes:
+        id: '61633'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '61632'
+      - element: field
+        attributes:
+          name: win.eventdata.parentImage
+        text: system
+      - element: description
+        text: Sysmon - Legitimate Parent Image - smss.exe
+    - element: rule
+      attributes:
+        id: '61634'
+        level: '12'
+      children:
+      - element: if_group
+        text: sysmon_event1
+      - element: field
+        attributes:
+          name: win.eventdata.image
+        text: taskhost.exe
+      - element: description
+        text: Sysmon - Suspicious Process - taskhost.exe
+      - element: mitre
+        children:
+        - element: id
+          text: T1055
+      - element: group
+        text: pci_dss_10.6.1,pci_dss_11.4,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,tsc_CC7.2,tsc_CC7.3,tsc_CC6.1,tsc_CC6.8,
+    - element: rule
+      attributes:
+        id: '61635'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '61634'
+      - element: field
+        attributes:
+          name: win.eventdata.parentImage
+        text: services.exe|svchost.exe
+      - element: description
+        text: Sysmon - Legitimate Parent Image - taskhost.exe
+    - element: rule
+      attributes:
+        id: '61636'
+        level: '12'
+      children:
+      - element: if_group
+        text: sysmon_event1
+      - element: field
+        attributes:
+          name: win.eventdata.image
+        text: /services.exe
+      - element: description
+        text: Sysmon - Suspicious Process - services.exe
+      - element: mitre
+        children:
+        - element: id
+          text: T1055
+      - element: group
+        text: pci_dss_10.6.1,pci_dss_11.4,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,tsc_CC7.2,tsc_CC7.3,tsc_CC6.1,tsc_CC6.8,
+    - element: rule
+      attributes:
+        id: '61637'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '61636'
+      - element: field
+        attributes:
+          name: win.eventdata.parentImage
+        text: wininit.exe
+      - element: description
+        text: Sysmon - Legitimate Parent Image - services.exe
+    - element: rule
+      attributes:
+        id: '61638'
+        level: '12'
+      children:
+      - element: if_group
+        text: sysmon_event1
+      - element: field
+        attributes:
+          name: win.eventdata.image
+        text: dllhost.exe
+      - element: description
+        text: Sysmon - Suspicious Process - dllhost.exe
+      - element: mitre
+        children:
+        - element: id
+          text: T1055
+      - element: group
+        text: pci_dss_10.6.1,pci_dss_11.4,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,tsc_CC7.2,tsc_CC7.3,tsc_CC6.1,tsc_CC6.8,
+    - element: rule
+      attributes:
+        id: '61639'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '61638'
+      - element: field
+        attributes:
+          name: win.eventdata.parentImage
+        text: svchost.exe|services.exe
+      - element: description
+        text: Sysmon - Legitimate Parent Image - dllhost.exe
+    - element: rule
+      attributes:
+        id: '61640'
+        level: '12'
+      children:
+      - element: if_group
+        text: sysmon_event1
+      - element: field
+        attributes:
+          name: win.eventdata.image
+        text: \\explorer.exe
+      - element: description
+        text: Sysmon - Suspicious Process - explorer.exe
+      - element: mitre
+        children:
+        - element: id
+          text: T1055
+      - element: group
+        text: pci_dss_10.6.1,pci_dss_11.4,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,tsc_CC7.2,tsc_CC7.3,tsc_CC6.1,tsc_CC6.8,
+    - element: rule
+      attributes:
+        id: '61641'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '61640'
+      - element: field
+        attributes:
+          name: win.eventdata.parentImage
+        text: userinit.exe
+      - element: description
+        text: Sysmon - Legitimate Parent Image - explorer.exe
+  - element: group
+    attributes:
+      name: windows,sysmon,
+    children:
+    - element: rule
+      attributes:
+        id: '61642'
+        level: '10'
+        frequency: $MS_FREQ
+        timeframe: '120'
+      children:
+      - element: if_matched_sid
+        text: '61601'
+      - element: description
+        text: 'Multiple Sysmon warning events '
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '61643'
+        level: '10'
+        frequency: $MS_FREQ
+        timeframe: '240'
+      children:
+      - element: if_matched_sid
+        text: '61602'
+      - element: description
+        text: Multiple Sysmon error events
+      - element: options
+        text: no_full_log
+  original_xml: "<!--\n  -  Windows Event Channel ruleset for the Sysmon channel \n  -  Created by Wazuh, Inc.\n\
+    \  -  Copyright (C) 2015, Wazuh Inc.\n  -  This program is a free software; you can redistribute it and/or modify\
+    \ it under the terms of GPLv2.\n-->\n\n<!--\n  -  ID range: 61600 - 62099\n-->\n\n<var name=\"MS_FREQ\">8</var>\n\
+    \n<group name=\"windows,sysmon,\">\n  <rule id=\"61600\" level=\"0\">\n    <if_sid>60004</if_sid>\n    <field\
+    \ name=\"win.system.severityValue\">^INFORMATION$</field>\n    <description>Windows Sysmon informational event</description>\n\
+    \    <options>no_full_log</options>\n  </rule>\n\n  <rule id=\"61601\" level=\"0\">\n    <if_sid>60004</if_sid>\n\
+    \    <field name=\"win.system.severityValue\">^WARNING$</field>\n    <description>Windows Sysmon warning event</description>\n\
+    \    <options>no_full_log</options>\n    <group>gpg13_4.12,</group>\n  </rule>\n\n  <rule id=\"61602\" level=\"\
+    5\">\n    <if_sid>60004</if_sid>\n    <field name=\"win.system.severityValue\">^ERROR$</field>\n    <description>Windows\
+    \ Sysmon error event</description>\n    <options>no_full_log</options>\n    <group>system_error,gpg13_4.3,gdpr_IV_35.7.d,</group>\n\
+    \  </rule>\n\n  <rule id=\"61603\" level=\"0\">\n    <if_sid>61600</if_sid>\n    <field name=\"win.system.eventID\"\
+    >^1$</field>\n    <description>Sysmon - Event 1: Process creation $(win.eventdata.description)</description>\n\
+    \    <options>no_full_log</options>\n    <group>sysmon_event1,</group>\n  </rule>\n\n  <rule id=\"61604\" level=\"\
+    0\">\n    <if_sid>61600</if_sid>\n    <field name=\"win.system.eventID\">^2$</field>\n    <description>Sysmon\
+    \ - Event 2: $(win.eventdata.image) changed file $(win.eventdata.targetFilename) creation time </description>\n\
+    \    <options>no_full_log</options>\n    <group>sysmon_event2,</group>\n  </rule>\n\n  <rule id=\"61605\" level=\"\
+    0\">\n    <if_sid>61600</if_sid>\n    <field name=\"win.system.eventID\">^3$</field>\n    <description>Sysmon\
+    \ - Event 3: Network connection to $(win.eventdata.destinationIp):$(win.eventdata.destinationPort) by $(win.eventdata.image)</description>\n\
+    \    <options>no_full_log</options>\n    <group>sysmon_event3,</group>\n  </rule>\n\n  <rule id=\"61606\" level=\"\
+    0\">\n    <if_sid>61600</if_sid>\n    <field name=\"win.system.eventID\">^4$</field>\n    <description>Sysmon\
+    \ - Event 4: Sysmon service state changed to \"$(win.eventdata.state)\"</description>\n    <options>no_full_log</options>\n\
+    \    <group>sysmon_event4,</group>\n  </rule>\n\n  <rule id=\"61607\" level=\"0\">\n    <if_sid>61600</if_sid>\n\
+    \    <field name=\"win.system.eventID\">^5$</field>\n    <description>Sysmon - Event 5: Process terminated $(win.eventdata.image)</description>\n\
+    \    <options>no_full_log</options>\n    <group>sysmon_event5,</group>\n  </rule>\n\n  <rule id=\"61608\" level=\"\
+    0\">\n    <if_sid>61600</if_sid>\n    <field name=\"win.system.eventID\">^6$</field>\n    <description>Sysmon\
+    \ - Event 6: Driver loaded $(win.eventdata.imageLoaded)</description>\n    <options>no_full_log</options>\n\
+    \    <group>sysmon_event6,</group>\n  </rule>\n\n  <rule id=\"61609\" level=\"0\">\n    <if_sid>61600</if_sid>\n\
+    \    <field name=\"win.system.eventID\">^7$</field>\n    <description>Sysmon - Event 7: Image $(win.eventdata.imageLoaded)\
+    \ loaded by $(win.eventdata.image)</description>\n    <options>no_full_log</options>\n    <group>sysmon_event7,</group>\n\
+    \  </rule>\n\n  <rule id=\"61610\" level=\"0\">\n    <if_sid>61600</if_sid>\n    <field name=\"win.system.eventID\"\
+    >^8$</field>\n    <description>Sysmon - Event 8: CreateRemoteThread by $(win.eventdata.sourceImage) on $(win.eventdata.targetImage),\
+    \ possible process injection</description>\n    <options>no_full_log</options>\n    <group>sysmon_event8,</group>\n\
+    \  </rule>\n\n  <rule id=\"61611\" level=\"0\">\n    <if_sid>61600</if_sid>\n    <field name=\"win.system.eventID\"\
+    >^9$</field>\n    <description>Sysmon - Event 9: RawAccessRead by $(win.eventdata.image)</description>\n   \
+    \ <options>no_full_log</options>\n    <group>sysmon_event9,</group>\n  </rule>\n\n  <rule id=\"61612\" level=\"\
+    0\">\n    <if_sid>61600</if_sid>\n    <field name=\"win.system.eventID\">^10$</field>\n    <description>Sysmon\
+    \ - Event 10: $(win.eventdata.targetImage) process accessed by $(win.eventdata.sourceImage)</description>\n\
+    \    <options>no_full_log</options>\n    <group>sysmon_event_10,</group>\n  </rule>\n\n  <rule id=\"61613\"\
+    \ level=\"0\">\n    <if_sid>61600</if_sid>\n    <field name=\"win.system.eventID\">^11$</field>\n    <description>Sysmon\
+    \ - Event 11: FileCreate by $(win.eventdata.image)</description>\n    <options>no_full_log</options>\n    <group>sysmon_event_11,</group>\n\
+    \  </rule>\n\n  <rule id=\"61614\" level=\"0\">\n    <if_sid>61600</if_sid>\n    <field name=\"win.system.eventID\"\
+    >^12$</field>\n    <description>Sysmon - Event 12: RegistryEvent $(win.eventdata.eventType) on $(win.eventdata.targetObject)\
+    \ by $(win.eventdata.image)</description>\n    <options>no_full_log</options>\n    <group>sysmon_event_12,</group>\n\
+    \  </rule>\n\n  <rule id=\"61615\" level=\"0\">\n    <if_sid>61600</if_sid>\n    <field name=\"win.system.eventID\"\
+    >^13$</field>\n    <description>Sysmon - Event 13: RegistryEvent $(win.eventdata.eventType) on $(win.eventdata.targetObject)\
+    \ by $(win.eventdata.image)</description>\n    <options>no_full_log</options>\n    <group>sysmon_event_13,</group>\n\
+    \  </rule>\n\n  <rule id=\"61616\" level=\"0\">\n    <if_sid>61600</if_sid>\n    <field name=\"win.system.eventID\"\
+    >^14$</field>\n    <description>Sysmon - Event 14: RegistryEvent (Key and Value Rename) by $(win.eventdata.image)</description>\n\
+    \    <options>no_full_log</options>\n    <group>sysmon_event_14,</group>\n  </rule>\n\n  <rule id=\"61617\"\
+    \ level=\"0\">\n    <if_sid>61600</if_sid>\n    <field name=\"win.system.eventID\">^15$</field>\n    <description>Sysmon\
+    \ - Event 15: $(win.eventdata.targetFilename) FileCreateStreamHash by process $(win.eventdata.image)</description>\n\
+    \    <options>no_full_log</options>\n    <group>sysmon_event_15,</group>\n  </rule>\n\n  <rule id=\"61644\"\
+    \ level=\"0\">\n    <if_sid>61600</if_sid>\n    <field name=\"win.system.eventID\">^16$</field>\n    <description>Sysmon\
+    \ - Event 16: Sysmon configuration changed using file $(win.eventdata.configuration)</description>\n    <group>sysmon_event_16,</group>\n\
+    \  </rule>\n\n  <rule id=\"61645\" level=\"0\">\n    <if_sid>61600</if_sid>\n    <field name=\"win.system.eventID\"\
+    >^17$</field>\n    <description>Sysmon - Event 17: Pipe created</description>\n    <options>no_full_log</options>\n\
+    \    <group>sysmon_event_17,</group>\n  </rule>\n\n  <rule id=\"61646\" level=\"0\">\n    <if_sid>61600</if_sid>\n\
+    \    <field name=\"win.system.eventID\">^18$</field>\n    <description>Sysmon - Event 18: Pipe connected</description>\n\
+    \    <options>no_full_log</options>\n    <group>sysmon_event_18,</group>\n  </rule>\n\n  <rule id=\"61647\"\
+    \ level=\"0\">\n    <if_sid>61600</if_sid>\n    <field name=\"win.system.eventID\">^19$</field>\n    <description>Sysmon\
+    \ - Event 19: WmiEventFilter activity</description>\n    <options>no_full_log</options>\n    <group>sysmon_event_19,</group>\n\
+    \  </rule>\n\n  <rule id=\"61648\" level=\"0\">\n    <if_sid>61600</if_sid>\n    <field name=\"win.system.eventID\"\
+    >^20$</field>\n    <description>Sysmon - Event 20: WmiEventConsumer activity</description>\n    <options>no_full_log</options>\n\
+    \    <group>sysmon_event_20,</group>\n  </rule>\n\n  <rule id=\"61649\" level=\"0\">\n    <if_sid>61600</if_sid>\n\
+    \    <field name=\"win.system.eventID\">^21$</field>\n    <description>Sysmon - Event 21: WmiEventConsumerToFilter\
+    \ activity</description>\n    <options>no_full_log</options>\n    <group>sysmon_event_21,</group>\n  </rule>\n\
+    \n  <rule id=\"61650\" level=\"0\">\n    <if_sid>61600</if_sid>\n    <field name=\"win.system.eventID\">^22$</field>\n\
+    \    <description>Sysmon - Event 22: DNS Query event</description>\n    <options>no_full_log</options>\n   \
+    \ <group>sysmon_event_22,</group>\n  </rule>\n\n  <rule id=\"61651\" level=\"0\">\n    <if_sid>61600</if_sid>\n\
+    \    <field name=\"win.system.eventID\">^23$</field>\n    <description>Sysmon - Event 23: File deleted and archived</description>\n\
+    \    <options>no_full_log</options>\n    <group>sysmon_event_23,</group>\n  </rule>\n\n  <rule id=\"61652\"\
+    \ level=\"0\">\n    <if_sid>61600</if_sid>\n    <field name=\"win.system.eventID\">^24$</field>\n    <description>Sysmon\
+    \ - Event 24: Clipboard change</description>\n    <options>no_full_log</options>\n    <group>sysmon_event_24,</group>\n\
+    \  </rule>\n\n  <rule id=\"61653\" level=\"0\">\n    <if_sid>61600</if_sid>\n    <field name=\"win.system.eventID\"\
+    >^25$</field>\n    <description>Sysmon - Event 25: Process tampering - Image change</description>\n    <options>no_full_log</options>\n\
+    \    <group>sysmon_event_25,</group>\n  </rule>\n\n  <rule id=\"61654\" level=\"0\">\n    <if_sid>61600</if_sid>\n\
+    \    <field name=\"win.system.eventID\">^26$</field>\n    <description>Sysmon - Event 26: File deleted</description>\n\
+    \    <options>no_full_log</options>\n    <group>sysmon_event_26,</group>\n  </rule>\n\n  <rule id=\"61655\"\
+    \ level=\"0\">\n    <if_sid>61600</if_sid>\n    <field name=\"win.system.eventID\">^255$</field>\n    <description>Sysmon\
+    \ - Event 255: Sysmon error</description>\n    <options>no_full_log</options>\n    <group>sysmon_event_255,</group>\n\
+    \  </rule>\n\n</group>\n\n<group name=\"windows,sysmon,sysmon_process-anomalies,\">\n  <rule id=\"61618\" level=\"\
+    12\">\n    <if_group>sysmon_event1</if_group>\n    <field name=\"win.eventdata.image\">svchost.exe</field>\n\
+    \    <description>Sysmon - Suspicious Process - svchost.exe</description>\n    <mitre>\n      <id>T1055</id>\n\
+    \    </mitre>\n    <group>pci_dss_10.6.1,pci_dss_11.4,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,tsc_CC7.2,tsc_CC7.3,tsc_CC6.1,tsc_CC6.8,</group>\n\
+    \  </rule>\n\n  <rule id=\"61619\" level=\"0\">\n    <if_sid>61618</if_sid>\n    <field name=\"win.eventdata.parentImage\"\
+    >\\\\services.exe</field>\n    <description>Sysmon - Legitimate Parent Image - svchost.exe</description>\n \
+    \ </rule>\n\n  <rule id=\"61620\" level=\"12\">\n    <if_group>sysmon_event1</if_group>\n    <field name=\"\
+    win.eventdata.image\">lsm.exe</field>\n    <description>Sysmon - Suspicious Process - lsm.exe</description>\n\
+    \    <mitre>\n      <id>T1055</id>\n    </mitre>\n    <group>pci_dss_10.6.1,pci_dss_11.4,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,tsc_CC7.2,tsc_CC7.3,tsc_CC6.1,tsc_CC6.8,</group>\n\
+    \  </rule>\n\n  <rule id=\"61621\" level=\"0\">\n    <if_sid>61620</if_sid>\n    <field name=\"win.eventdata.parentImage\"\
+    >wininit.exe</field>\n    <description>Sysmon - Legitimate Parent Image - lsm.exe</description>\n  </rule>\n\
+    \n  <rule id=\"61622\" level=\"12\">\n    <if_group>sysmon_event1</if_group>\n    <field name=\"win.eventdata.parentImage\"\
+    >lsm.exe</field>\n    <description>Sysmon - Suspicious Process - lsm.exe is a Parent Image</description>\n \
+    \   <mitre>\n      <id>T1055</id>\n    </mitre>\n    <group>pci_dss_10.6.1,pci_dss_11.4,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,tsc_CC7.2,tsc_CC7.3,tsc_CC6.1,tsc_CC6.8,</group>\n\
+    \  </rule>\n\n  <rule id=\"61623\" level=\"12\">\n    <if_group>sysmon_event1</if_group>\n    <field name=\"\
+    win.eventdata.image\">csrss.exe</field>\n    <description>Sysmon - Suspicious Process - csrss.exe</description>\n\
+    \    <mitre>\n      <id>T1055</id>\n    </mitre>\n    <group>pci_dss_10.6.1,pci_dss_11.4,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,tsc_CC7.2,tsc_CC7.3,tsc_CC6.1,tsc_CC6.8,</group>\n\
+    \  </rule>\n\n  <rule id=\"61624\" level=\"0\">\n    <if_sid>61623</if_sid>\n    <field name=\"win.eventdata.parentImage\"\
+    >smss.exe</field>\n    <description>Sysmon - Legitimate Parent Image - csrss.exe</description>\n  </rule>\n\n\
+    \  <rule id=\"61625\" level=\"12\">\n    <if_group>sysmon_event1</if_group>\n    <field name=\"win.eventdata.image\"\
+    >lsass.exe</field>\n    <description>Sysmon - Suspicious Process - lsass</description>\n    <mitre>\n      <id>T1055</id>\n\
+    \    </mitre>\n    <group>pci_dss_10.6.1,pci_dss_11.4,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,tsc_CC7.2,tsc_CC7.3,tsc_CC6.1,tsc_CC6.8,</group>\n\
+    \  </rule>\n\n  <rule id=\"61626\" level=\"0\">\n    <if_sid>61625</if_sid>\n    <field name=\"win.eventdata.parentImage\"\
+    >wininit.exe</field>\n    <description>Sysmon - Legitimate Parent Image - lsass.exe</description>\n  </rule>\n\
+    \n  <rule id=\"61627\" level=\"12\">\n    <if_group>sysmon_event1</if_group>\n    <field name=\"win.eventdata.parentImage\"\
+    >lsass.exe</field>\n    <description>Sysmon - Suspicious Process - lsass.exe is a Parent Image</description>\n\
+    \    <mitre>\n      <id>T1055</id>\n    </mitre>\n    <group>pci_dss_10.6.1,pci_dss_11.4,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,tsc_CC7.2,tsc_CC7.3,tsc_CC6.1,tsc_CC6.8,</group>\n\
+    \  </rule>\n\n  <rule id=\"61628\" level=\"12\">\n    <if_group>sysmon_event1</if_group>\n    <field name=\"\
+    win.eventdata.image\">winlogon.exe</field>\n    <description>Sysmon - Suspicious Process - winlogon.exe</description>\n\
+    \    <mitre>\n      <id>T1055</id>\n    </mitre>\n    <group>pci_dss_10.6.1,pci_dss_11.4,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,tsc_CC7.2,tsc_CC7.3,tsc_CC6.1,tsc_CC6.8,</group>\n\
+    \  </rule>\n\n  <rule id=\"61629\" level=\"0\">\n    <if_sid>61628</if_sid>\n    <field name=\"win.eventdata.parentImage\"\
+    >smss.exe</field>\n    <description>Sysmon - Legitimate Parent Image - winlogon.exe</description>\n  </rule>\n\
+    \n  <rule id=\"61630\" level=\"12\">\n    <if_group>sysmon_event1</if_group>\n    <field name=\"win.eventdata.image\"\
+    >wininit.exe</field>\n    <description>Sysmon - Suspicious Process - wininit</description>\n    <mitre>\n  \
+    \    <id>T1055</id>\n    </mitre>\n    <group>pci_dss_10.6.1,pci_dss_11.4,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,tsc_CC7.2,tsc_CC7.3,tsc_CC6.1,tsc_CC6.8,</group>\n\
+    \  </rule>\n\n  <rule id=\"61631\" level=\"0\">\n    <if_sid>61630</if_sid>\n    <field name=\"win.eventdata.parentImage\"\
+    >smss.exe</field>\n    <description>Sysmon - Legitimate Parent Image - wininit.exe</description>\n  </rule>\n\
+    \n  <rule id=\"61632\" level=\"12\">\n    <if_group>sysmon_event1</if_group>\n    <field name=\"win.eventdata.image\"\
+    >smss.exe</field>\n    <description>Sysmon - Suspicious Process - smss.exe</description>\n    <mitre>\n    \
+    \  <id>T1055</id>\n    </mitre>\n    <group>pci_dss_10.6.1,pci_dss_11.4,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,tsc_CC7.2,tsc_CC7.3,tsc_CC6.1,tsc_CC6.8,</group>\n\
+    \  </rule>\n\n  <rule id=\"61633\" level=\"0\">\n    <if_sid>61632</if_sid>\n    <field name=\"win.eventdata.parentImage\"\
+    >system</field>\n    <description>Sysmon - Legitimate Parent Image - smss.exe</description>\n  </rule>\n\n \
+    \ <rule id=\"61634\" level=\"12\">\n    <if_group>sysmon_event1</if_group>\n    <field name=\"win.eventdata.image\"\
+    >taskhost.exe</field>\n    <description>Sysmon - Suspicious Process - taskhost.exe</description>\n    <mitre>\n\
+    \      <id>T1055</id>\n    </mitre>\n    <group>pci_dss_10.6.1,pci_dss_11.4,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,tsc_CC7.2,tsc_CC7.3,tsc_CC6.1,tsc_CC6.8,</group>\n\
+    \  </rule>\n\n  <rule id=\"61635\" level=\"0\">\n    <if_sid>61634</if_sid>\n    <field name=\"win.eventdata.parentImage\"\
+    >services.exe|svchost.exe</field>\n    <description>Sysmon - Legitimate Parent Image - taskhost.exe</description>\n\
+    \  </rule>\n\n  <rule id=\"61636\" level=\"12\">\n    <if_group>sysmon_event1</if_group>\n    <field name=\"\
+    win.eventdata.image\">/services.exe</field>\n    <description>Sysmon - Suspicious Process - services.exe</description>\n\
+    \    <mitre>\n      <id>T1055</id>\n    </mitre>\n    <group>pci_dss_10.6.1,pci_dss_11.4,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,tsc_CC7.2,tsc_CC7.3,tsc_CC6.1,tsc_CC6.8,</group>\n\
+    \  </rule>\n\n  <rule id=\"61637\" level=\"0\">\n    <if_sid>61636</if_sid>\n    <field name=\"win.eventdata.parentImage\"\
+    >wininit.exe</field>\n    <description>Sysmon - Legitimate Parent Image - services.exe</description>\n  </rule>\n\
+    \n  <rule id=\"61638\" level=\"12\">\n    <if_group>sysmon_event1</if_group>\n    <field name=\"win.eventdata.image\"\
+    >dllhost.exe</field>\n    <description>Sysmon - Suspicious Process - dllhost.exe</description>\n    <mitre>\n\
+    \      <id>T1055</id>\n    </mitre>\n    <group>pci_dss_10.6.1,pci_dss_11.4,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,tsc_CC7.2,tsc_CC7.3,tsc_CC6.1,tsc_CC6.8,</group>\n\
+    \  </rule>\n\n  <rule id=\"61639\" level=\"0\">\n    <if_sid>61638</if_sid>\n    <field name=\"win.eventdata.parentImage\"\
+    >svchost.exe|services.exe</field>\n    <description>Sysmon - Legitimate Parent Image - dllhost.exe</description>\n\
+    \  </rule>\n\n  <rule id=\"61640\" level=\"12\">\n    <if_group>sysmon_event1</if_group>\n    <field name=\"\
+    win.eventdata.image\">\\\\explorer.exe</field>\n    <description>Sysmon - Suspicious Process - explorer.exe</description>\n\
+    \    <mitre>\n      <id>T1055</id>\n    </mitre>\n    <group>pci_dss_10.6.1,pci_dss_11.4,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,nist_800_53_SI.4,tsc_CC7.2,tsc_CC7.3,tsc_CC6.1,tsc_CC6.8,</group>\n\
+    \  </rule>\n\n  <rule id=\"61641\" level=\"0\">\n    <if_sid>61640</if_sid>\n    <field name=\"win.eventdata.parentImage\"\
+    >userinit.exe</field>\n    <description>Sysmon - Legitimate Parent Image - explorer.exe</description>\n  </rule>\n\
+    </group>\n\n<!-- Rules for multiple events -->\n\n<group name=\"windows,sysmon,\">\n\n  <rule id=\"61642\" level=\"\
+    10\" frequency=\"$MS_FREQ\" timeframe=\"120\">\n    <if_matched_sid>61601</if_matched_sid>\n    <description>Multiple\
+    \ Sysmon warning events </description>\n    <options>no_full_log</options>\n  </rule>\n\n  <rule id=\"61643\"\
+    \ level=\"10\" frequency=\"$MS_FREQ\" timeframe=\"240\">\n    <if_matched_sid>61602</if_matched_sid>\n    <description>Multiple\
+    \ Sysmon error events</description>\n    <options>no_full_log</options>\n  </rule>\n\n</group>"

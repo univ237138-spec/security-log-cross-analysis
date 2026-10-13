@@ -1,0 +1,641 @@
+schema: wazuh-original-rules-yaml/v1
+format_only_conversion: true
+native_runtime_format: Wazuh XML
+authoritative_field: sources[].original_xml
+upstream:
+  repository: https://github.com/wazuh/wazuh
+  tag: v4.14.8
+  commit: f470ad7db717b18db7feeed568949643698f0f34
+sources:
+- file: ruleset/rules/0770-gitlab_rules.xml
+  url: https://github.com/wazuh/wazuh/blob/f470ad7db717b18db7feeed568949643698f0f34/ruleset/rules/0770-gitlab_rules.xml
+  sha256: 436647a8edcda4af4663e8407fba16a2e60e93b205ad6a81add296d32063c6e6
+  rule_count: 24
+  elements:
+  - element: group
+    attributes:
+      name: gitlab_v.12
+    children:
+    - element: rule
+      attributes:
+        id: '65600'
+        level: '3'
+      children:
+      - element: decoded_as
+        text: json
+      - element: status
+        text: ^200$
+      - element: field
+        attributes:
+          name: method
+        text: \w+
+      - element: field
+        attributes:
+          name: format
+        text: \w+
+      - element: field
+        attributes:
+          name: controller
+        text: \.+
+      - element: field
+        attributes:
+          name: path
+        text: ^/gitlab/gitlab-ce/\w+/\.+
+      - element: options
+        text: no_full_log
+      - element: description
+        text: (Gitlab) $(method) request completed succesfully.
+    - element: rule
+      attributes:
+        id: '65601'
+        level: '5'
+      children:
+      - element: decoded_as
+        text: json
+      - element: status
+        text: ^400$
+      - element: field
+        attributes:
+          name: method
+        text: \w+
+      - element: field
+        attributes:
+          name: format
+        text: \w+
+      - element: field
+        attributes:
+          name: controller
+        text: \.+
+      - element: field
+        attributes:
+          name: path
+        text: ^/gitlab/gitlab-ce/\w+/\.+
+      - element: options
+        text: no_full_log
+      - element: description
+        text: '(Gitlab) ERROR: couldn''t complete $(method) request.'
+    - element: rule
+      attributes:
+        id: '65602'
+        level: '5'
+      children:
+      - element: decoded_as
+        text: json
+      - element: status
+        text: ^300$
+      - element: field
+        attributes:
+          name: method
+        text: \w+
+      - element: field
+        attributes:
+          name: format
+        text: \w+
+      - element: field
+        attributes:
+          name: controller
+        text: \.+
+      - element: field
+        attributes:
+          name: path
+        text: ^/gitlab/gitlab-ce/\w+/\.+
+      - element: options
+        text: no_full_log
+      - element: description
+        text: '(Gitlab) REDIRECTION: The $(method) request has more than one possible response.'
+    - element: rule
+      attributes:
+        id: '65603'
+        level: '3'
+      children:
+      - element: decoded_as
+        text: gitlab-12-application-log
+      - element: field
+        attributes:
+          name: new_user
+        text: \.+
+      - element: description
+        text: (Gitlab) User $(new_user) was created.
+    - element: rule
+      attributes:
+        id: '65604'
+        level: '3'
+      children:
+      - element: decoded_as
+        text: gitlab-12-application-log
+      - element: field
+        attributes:
+          name: project_autor
+        text: \.+
+      - element: description
+        text: (Gitlab) $(project_autor) created a new project.
+    - element: rule
+      attributes:
+        id: '65605'
+        level: '3'
+      children:
+      - element: decoded_as
+        text: gitlab-12-application-log
+      - element: field
+        attributes:
+          name: removed_user
+        text: \.+
+      - element: description
+        text: (Gitlab) User $(removed_user) was removed.
+    - element: rule
+      attributes:
+        id: '65606'
+        level: '3'
+      children:
+      - element: decoded_as
+        text: gitlab-12-application-log
+      - element: field
+        attributes:
+          name: project_removed
+        text: \.+
+      - element: description
+        text: (Gitlab) Project $(project_removed) was removed.
+    - element: rule
+      attributes:
+        id: '65607'
+        level: '5'
+      children:
+      - element: decoded_as
+        text: json
+      - element: field
+        attributes:
+          name: service_class
+        text: \w+
+      - element: field
+        attributes:
+          name: project_id
+        text: \d+
+      - element: field
+        attributes:
+          name: project_path
+        text: \.+
+      - element: field
+        attributes:
+          name: severity
+        text: ^ERROR$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: (Gitlab) $(message).
+    - element: rule
+      attributes:
+        id: '65608'
+        level: '3'
+      children:
+      - element: decoded_as
+        text: json
+      - element: field
+        attributes:
+          name: service_class
+        text: \w+
+      - element: field
+        attributes:
+          name: project_id
+        text: \d+
+      - element: field
+        attributes:
+          name: project_path
+        text: \.+
+      - element: field
+        attributes:
+          name: severity
+        text: ^INFO$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: (Gitlab) $(message).
+    - element: rule
+      attributes:
+        id: '65609'
+        level: '5'
+      children:
+      - element: decoded_as
+        text: json
+      - element: field
+        attributes:
+          name: exception
+        text: \.+
+      - element: field
+        attributes:
+          name: error_code
+        text: \w+
+      - element: field
+        attributes:
+          name: service
+        text: \.+
+      - element: field
+        attributes:
+          name: app_id
+        text: \d+
+      - element: field
+        attributes:
+          name: severity
+        text: ^ERROR$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: (Gitlab) $(severity):$(message).
+    - element: rule
+      attributes:
+        id: '65610'
+        level: '3'
+      children:
+      - element: decoded_as
+        text: json
+      - element: field
+        attributes:
+          name: exception
+        text: \.+
+      - element: field
+        attributes:
+          name: error_code
+        text: \w+
+      - element: field
+        attributes:
+          name: service
+        text: \.+
+      - element: field
+        attributes:
+          name: app_id
+        text: \d+
+      - element: field
+        attributes:
+          name: severity
+        text: ^INFO$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: (Gitlab) $(severity):$(message).
+    - element: rule
+      attributes:
+        id: '65611'
+        level: '5'
+      children:
+      - element: decoded_as
+        text: json
+      - element: field
+        attributes:
+          name: correlation_id
+        text: \w+
+      - element: field
+        attributes:
+          name: message
+        text: \.+
+      - element: field
+        attributes:
+          name: severity
+        text: ^ERROR$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: (Gitlab) $(severity):$(message).
+    - element: rule
+      attributes:
+        id: '65612'
+        level: '3'
+      children:
+      - element: decoded_as
+        text: json
+      - element: field
+        attributes:
+          name: author_id
+        text: \w*
+      - element: field
+        attributes:
+          name: entity_id
+        text: \w*
+      - element: field
+        attributes:
+          name: entity_type
+        text: \w*
+      - element: field
+        attributes:
+          name: change
+        text: \w+
+      - element: field
+        attributes:
+          name: from
+        text: \.*
+      - element: field
+        attributes:
+          name: to
+        text: \.*
+      - element: field
+        attributes:
+          name: severity
+        text: ^INFO$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: (Gitlab) $(severity):changed $(change) from $(from) to $(to).
+    - element: rule
+      attributes:
+        id: '65613'
+        level: '3'
+      children:
+      - element: decoded_as
+        text: gitlab-sidekiq
+      - element: description
+        text: Group of gitlab_sidekiq.
+    - element: rule
+      attributes:
+        id: '65614'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '65613'
+      - element: field
+        attributes:
+          name: info
+        text: \.+
+      - element: description
+        text: (Gitlab) INFO:$(info).
+    - element: rule
+      attributes:
+        id: '65615'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '65613'
+      - element: field
+        attributes:
+          name: error
+        text: \.+
+      - element: description
+        text: (Gitlab) ERROR:$(error).
+    - element: rule
+      attributes:
+        id: '65616'
+        level: '3'
+      children:
+      - element: decoded_as
+        text: json
+      - element: field
+        attributes:
+          name: queue
+        text: \.+
+      - element: field
+        attributes:
+          name: args
+        text: \.*
+      - element: field
+        attributes:
+          name: class
+        text: \w*
+      - element: field
+        attributes:
+          name: retry
+        text: \w+
+      - element: field
+        attributes:
+          name: queue_namespace
+        text: \w*
+      - element: field
+        attributes:
+          name: jid
+        text: \w*
+      - element: field
+        attributes:
+          name: severity
+        text: ^INFO$
+      - element: description
+        text: '(Gitlab) $(severity): $(message).'
+    - element: rule
+      attributes:
+        id: '65617'
+        level: '5'
+      children:
+      - element: decoded_as
+        text: json
+      - element: field
+        attributes:
+          name: queue
+        text: \.+
+      - element: field
+        attributes:
+          name: args
+        text: \.*
+      - element: field
+        attributes:
+          name: class
+        text: \w*
+      - element: field
+        attributes:
+          name: retry
+        text: \w+
+      - element: field
+        attributes:
+          name: queue_namespace
+        text: \w*
+      - element: field
+        attributes:
+          name: jid
+        text: \w*
+      - element: field
+        attributes:
+          name: severity
+        text: ^ERROR$
+      - element: description
+        text: '(Gitlab) $(severity): $(message).'
+    - element: rule
+      attributes:
+        id: '65618'
+        level: '3'
+      children:
+      - element: decoded_as
+        text: gitlab-shell-stderr
+      - element: field
+        attributes:
+          name: severity
+        text: ^INFO$
+      - element: description
+        text: '(Gitlab) $(severity): $(message).'
+    - element: rule
+      attributes:
+        id: '65619'
+        level: '5'
+      children:
+      - element: decoded_as
+        text: gitlab-shell-stderr
+      - element: field
+        attributes:
+          name: severity
+        text: ^WARN$
+      - element: description
+        text: '(Gitlab) $(severity): $(message).'
+    - element: rule
+      attributes:
+        id: '65620'
+        level: '3'
+      children:
+      - element: decoded_as
+        text: json
+      - element: field
+        attributes:
+          name: query_string
+        text: \.+
+      - element: field
+        attributes:
+          name: complexity
+        text: \d*
+      - element: field
+        attributes:
+          name: depth
+        text: \d*
+      - element: field
+        attributes:
+          name: duration
+        text: \d*
+      - element: description
+        text: '(Gitlab) graphql_query_string: $(query_string).'
+    - element: rule
+      attributes:
+        id: '65621'
+        level: '3'
+      children:
+      - element: decoded_as
+        text: json
+      - element: status
+        text: ^200$
+      - element: field
+        attributes:
+          name: method
+        text: \w+
+      - element: field
+        attributes:
+          name: path
+        text: ^/api/\w+/\.+
+      - element: field
+        attributes:
+          name: params
+        text: \.+
+      - element: options
+        text: no_full_log
+      - element: description
+        text: (Gitlab) $(method) request completed succesfully.
+    - element: rule
+      attributes:
+        id: '65622'
+        level: '5'
+      children:
+      - element: decoded_as
+        text: json
+      - element: status
+        text: ^400$
+      - element: field
+        attributes:
+          name: method
+        text: \w+
+      - element: field
+        attributes:
+          name: path
+        text: ^/api/\w+/\.+
+      - element: field
+        attributes:
+          name: params
+        text: \.+
+      - element: options
+        text: no_full_log
+      - element: description
+        text: '(Gitlab) ERROR: couldn''t complete $(method) request.'
+    - element: rule
+      attributes:
+        id: '65623'
+        level: '5'
+      children:
+      - element: decoded_as
+        text: json
+      - element: status
+        text: ^300$
+      - element: field
+        attributes:
+          name: method
+        text: \w+
+      - element: field
+        attributes:
+          name: path
+        text: ^/api/\w+/\.+
+      - element: field
+        attributes:
+          name: params
+        text: \.+
+      - element: options
+        text: no_full_log
+      - element: description
+        text: '(Gitlab) REDIRECTION: The $(method) request has more than one possible response.'
+  original_xml: "<!--\n  -  Copyright (C) 2015, Wazuh Inc.\n-->\n\n<!--\n  Rules for:\n    GitLab ID:  65600 - 65699\n\
+    -->\n\n<group name=\"gitlab_v.12\">\n    \n  <rule id=\"65600\" level=\"3\">\n    <decoded_as>json</decoded_as>\n\
+    \    <status>^200$</status>\n    <field name=\"method\">\\w+</field>\n    <field name=\"format\">\\w+</field>\n\
+    \    <field name=\"controller\">\\.+</field>\n    <field name=\"path\">^/gitlab/gitlab-ce/\\w+/\\.+</field>\n\
+    \    <options>no_full_log</options>\n    <description>(Gitlab) $(method) request completed succesfully.</description>\n\
+    \  </rule>\n\n  <rule id=\"65601\" level=\"5\">\n    <decoded_as>json</decoded_as>\n    <status>^400$</status>\n\
+    \    <field name=\"method\">\\w+</field>\n    <field name=\"format\">\\w+</field>\n    <field name=\"controller\"\
+    >\\.+</field>\n    <field name=\"path\">^/gitlab/gitlab-ce/\\w+/\\.+</field>\n    <options>no_full_log</options>\n\
+    \    <description>(Gitlab) ERROR: couldn't complete $(method) request.</description>\n  </rule>\n\n  <rule id=\"\
+    65602\" level=\"5\">\n    <decoded_as>json</decoded_as>\n    <status>^300$</status>\n    <field name=\"method\"\
+    >\\w+</field>\n    <field name=\"format\">\\w+</field>\n    <field name=\"controller\">\\.+</field>\n    <field\
+    \ name=\"path\">^/gitlab/gitlab-ce/\\w+/\\.+</field>\n    <options>no_full_log</options>\n    <description>(Gitlab)\
+    \ REDIRECTION: The $(method) request has more than one possible response.</description>\n  </rule>\n\n  <rule\
+    \ id=\"65603\" level=\"3\">\n    <decoded_as>gitlab-12-application-log</decoded_as>\n    <field name=\"new_user\"\
+    >\\.+</field>\n    <description>(Gitlab) User $(new_user) was created.</description>\n  </rule>\n\n  <rule id=\"\
+    65604\" level=\"3\">\n    <decoded_as>gitlab-12-application-log</decoded_as>\n    <field name=\"project_autor\"\
+    >\\.+</field>\n    <description>(Gitlab) $(project_autor) created a new project.</description>\n  </rule>\n\n\
+    \  <rule id=\"65605\" level=\"3\">\n    <decoded_as>gitlab-12-application-log</decoded_as>\n    <field name=\"\
+    removed_user\">\\.+</field>\n    <description>(Gitlab) User $(removed_user) was removed.</description>\n  </rule>\n\
+    \n  <rule id=\"65606\" level=\"3\">\n    <decoded_as>gitlab-12-application-log</decoded_as>\n    <field name=\"\
+    project_removed\">\\.+</field>\n    <description>(Gitlab) Project $(project_removed) was removed.</description>\n\
+    \  </rule>\n\n  <rule id=\"65607\" level=\"5\">\n    <decoded_as>json</decoded_as>\n    <field name=\"service_class\"\
+    >\\w+</field>\n    <field name=\"project_id\">\\d+</field>\n    <field name=\"project_path\">\\.+</field>\n\
+    \    <field name=\"severity\">^ERROR$</field>\n    <options>no_full_log</options>\n    <description>(Gitlab)\
+    \ $(message).</description>\n  </rule>\n\n  <rule id=\"65608\" level=\"3\">\n    <decoded_as>json</decoded_as>\n\
+    \    <field name=\"service_class\">\\w+</field>\n    <field name=\"project_id\">\\d+</field>\n    <field name=\"\
+    project_path\">\\.+</field>\n    <field name=\"severity\">^INFO$</field>\n    <options>no_full_log</options>\n\
+    \    <description>(Gitlab) $(message).</description>\n  </rule>\n\n  <rule id=\"65609\" level=\"5\">\n    <decoded_as>json</decoded_as>\n\
+    \    <field name=\"exception\">\\.+</field>\n    <field name=\"error_code\">\\w+</field>\n    <field name=\"\
+    service\">\\.+</field>\n    <field name=\"app_id\">\\d+</field>\n    <field name=\"severity\">^ERROR$</field>\n\
+    \    <options>no_full_log</options>\n    <description>(Gitlab) $(severity):$(message).</description>\n  </rule>\n\
+    \n  <rule id=\"65610\" level=\"3\">\n    <decoded_as>json</decoded_as>\n    <field name=\"exception\">\\.+</field>\n\
+    \    <field name=\"error_code\">\\w+</field>\n    <field name=\"service\">\\.+</field>\n    <field name=\"app_id\"\
+    >\\d+</field>\n    <field name=\"severity\">^INFO$</field>\n    <options>no_full_log</options>\n    <description>(Gitlab)\
+    \ $(severity):$(message).</description>\n  </rule>\n\n  <rule id=\"65611\" level=\"5\">\n    <decoded_as>json</decoded_as>\n\
+    \    <field name=\"correlation_id\">\\w+</field>\n    <field name=\"message\">\\.+</field>\n    <field name=\"\
+    severity\">^ERROR$</field>\n    <options>no_full_log</options>\n    <description>(Gitlab) $(severity):$(message).</description>\n\
+    \  </rule>\n\n  <rule id=\"65612\" level=\"3\">\n    <decoded_as>json</decoded_as>\n    <field name=\"author_id\"\
+    >\\w*</field>\n    <field name=\"entity_id\">\\w*</field>\n    <field name=\"entity_type\">\\w*</field>\n  \
+    \  <field name=\"change\">\\w+</field>\n    <field name=\"from\">\\.*</field>\n    <field name=\"to\">\\.*</field>\
+    \   \n    <field name=\"severity\">^INFO$</field>\n    <options>no_full_log</options>\n    <description>(Gitlab)\
+    \ $(severity):changed $(change) from $(from) to $(to).</description>\n  </rule>\n  \n  <rule id=\"65613\" level=\"\
+    3\">\n    <decoded_as>gitlab-sidekiq</decoded_as>\n    <description>Group of gitlab_sidekiq.</description>\n\
+    \  </rule>\n\n  <rule id=\"65614\" level=\"3\">\n    <if_sid>65613</if_sid>\n    <field name=\"info\">\\.+</field>\n\
+    \    <description>(Gitlab) INFO:$(info).</description>\n  </rule>\n\n  <rule id=\"65615\" level=\"5\">\n   \
+    \ <if_sid>65613</if_sid>\n    <field name=\"error\">\\.+</field>\n    <description>(Gitlab) ERROR:$(error).</description>\n\
+    \  </rule>\n\n  <rule id=\"65616\" level=\"3\">\n    <decoded_as>json</decoded_as>\n    <field name=\"queue\"\
+    >\\.+</field>\n    <field name=\"args\">\\.*</field>\n    <field name=\"class\">\\w*</field>\n    <field name=\"\
+    retry\">\\w+</field>\n    <field name=\"queue_namespace\">\\w*</field>\n    <field name=\"jid\">\\w*</field>\n\
+    \    <field name=\"severity\">^INFO$</field>\n    <description>(Gitlab) $(severity): $(message).</description>\n\
+    \  </rule>\n\n  <rule id=\"65617\" level=\"5\">\n    <decoded_as>json</decoded_as>\n    <field name=\"queue\"\
+    >\\.+</field>\n    <field name=\"args\">\\.*</field>\n    <field name=\"class\">\\w*</field>\n    <field name=\"\
+    retry\">\\w+</field>\n    <field name=\"queue_namespace\">\\w*</field>\n    <field name=\"jid\">\\w*</field>\n\
+    \    <field name=\"severity\">^ERROR$</field>\n    <description>(Gitlab) $(severity): $(message).</description>\n\
+    \  </rule>\n  \n  <rule id=\"65618\" level=\"3\">\n    <decoded_as>gitlab-shell-stderr</decoded_as>\n    <field\
+    \ name=\"severity\">^INFO$</field>\n    <description>(Gitlab) $(severity): $(message).</description>\n  </rule>\n\
+    \n  <rule id=\"65619\" level=\"5\">\n    <decoded_as>gitlab-shell-stderr</decoded_as>\n    <field name=\"severity\"\
+    >^WARN$</field>\n    <description>(Gitlab) $(severity): $(message).</description>\n  </rule>\n\n  <rule id=\"\
+    65620\" level=\"3\">\n    <decoded_as>json</decoded_as>\n    <field name=\"query_string\">\\.+</field>\n   \
+    \ <field name=\"complexity\">\\d*</field>\n    <field name=\"depth\">\\d*</field>\n    <field name=\"duration\"\
+    >\\d*</field>\n    <description>(Gitlab) graphql_query_string: $(query_string).</description>\n  </rule>\n\n\
+    \  <rule id=\"65621\" level=\"3\">\n    <decoded_as>json</decoded_as>\n    <status>^200$</status>\n    <field\
+    \ name=\"method\">\\w+</field>\n    <field name=\"path\">^/api/\\w+/\\.+</field>\n    <field name=\"params\"\
+    >\\.+</field>\n    <options>no_full_log</options>\n    <description>(Gitlab) $(method) request completed succesfully.</description>\n\
+    \  </rule>\n\n  <rule id=\"65622\" level=\"5\">\n    <decoded_as>json</decoded_as>\n    <status>^400$</status>\n\
+    \    <field name=\"method\">\\w+</field>\n    <field name=\"path\">^/api/\\w+/\\.+</field>\n    <field name=\"\
+    params\">\\.+</field>\n    <options>no_full_log</options>\n    <description>(Gitlab) ERROR: couldn't complete\
+    \ $(method) request.</description>\n  </rule>\n\n  <rule id=\"65623\" level=\"5\">\n    <decoded_as>json</decoded_as>\n\
+    \    <status>^300$</status>\n    <field name=\"method\">\\w+</field>\n    <field name=\"path\">^/api/\\w+/\\\
+    .+</field>\n    <field name=\"params\">\\.+</field>\n    <options>no_full_log</options>\n    <description>(Gitlab)\
+    \ REDIRECTION: The $(method) request has more than one possible response.</description>\n  </rule>\n\n</group>\n"

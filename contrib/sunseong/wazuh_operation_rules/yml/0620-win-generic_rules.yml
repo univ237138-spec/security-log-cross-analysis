@@ -1,0 +1,250 @@
+schema: wazuh-original-rules-yaml/v1
+format_only_conversion: true
+native_runtime_format: Wazuh XML
+authoritative_field: sources[].original_xml
+upstream:
+  repository: https://github.com/wazuh/wazuh
+  tag: v4.14.8
+  commit: f470ad7db717b18db7feeed568949643698f0f34
+sources:
+- file: ruleset/rules/0620-win-generic_rules.xml
+  url: https://github.com/wazuh/wazuh/blob/f470ad7db717b18db7feeed568949643698f0f34/ruleset/rules/0620-win-generic_rules.xml
+  sha256: e86dba81255d1353a47748877f279988999c4328f10a7012a39700d5baaa2a38
+  rule_count: 11
+  elements:
+  - element: var
+    attributes:
+      name: MS_FREQ
+    text: '8'
+  - element: group
+    attributes:
+      name: windows,
+    children:
+    - element: rule
+      attributes:
+        id: '64100'
+        level: '0'
+      children:
+      - element: if_sid
+        text: 60009,60010,60011,60012
+      - element: field
+        attributes:
+          name: win.system.channel
+        text: ^File Replication Service$
+      - element: description
+        text: Group of Windows rules for Remote Access
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '64101'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '64100'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^20187$|^20014$|^20078$|^20050$|^20049$|^20189$
+      - element: description
+        text: Remote access login failure
+      - element: options
+        text: no_full_log
+      - element: group
+        text: authentication_failed,pci_dss_10.2.4,pci_dss_10.2.5,pci_dss_8.1.5,gpg13_7.1,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.b,hipaa_164.312.a.1,nist_800_53_AU.14,nist_800_53_AC.7,nist_800_53_AC.2,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '64102'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '64100'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^20158$
+      - element: description
+        text: Remote access login success
+      - element: options
+        text: no_full_log
+      - element: mitre
+        children:
+        - element: id
+          text: T1078
+      - element: group
+        text: authentication_success,pci_dss_10.2.5,pci_dss_8.1.5,gpg13_7.1,gpg13_7.2,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.b,hipaa_164.312.a.1,nist_800_53_AU.14,nist_800_53_AC.7,nist_800_53_AC.2,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,tsc_CC6.1,
+    - element: rule
+      attributes:
+        id: '64103'
+        level: '8'
+      children:
+      - element: if_sid
+        text: '64100'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^13570$
+      - element: description
+        text: Windows file system full
+      - element: options
+        text: no_full_log
+      - element: group
+        text: low_diskspace,pci_dss_10.6.1,gpg13_4.1,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '64104'
+        level: '0'
+      children:
+      - element: if_sid
+        text: 60009,60010,60011,60012
+      - element: field
+        attributes:
+          name: win.system.channel
+        text: ^Microsoft-Windows-TerminalServices-Gateway/Operational$
+      - element: description
+        text: Group of Windows rules for Terminal Services
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '64105'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '64104'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^200$|^300$|^302$
+      - element: description
+        text: TS Gateway login success
+      - element: options
+        text: no_full_log
+      - element: mitre
+        children:
+        - element: id
+          text: T1078
+      - element: group
+        text: authentication_success,pci_dss_10.2.5,gpg13_7.1,gpg13_7.2,gdpr_IV_32.2,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AC.7,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '64106'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '64105'
+      - element: field
+        attributes:
+          name: win.system.message
+        text: \.*The database engine has successfully completed recovery steps|The database engine is initiating
+          recovery steps|A missing flash device has reappeared
+      - element: description
+        text: 'Ignore rule 64105: not related to TS Gateway'
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '64107'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '64104'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^201$|^203$|^204$|^301$|^304$|^305$|^306$|^1001$
+      - element: description
+        text: TS Gateway login failure
+      - element: options
+        text: no_full_log
+      - element: group
+        text: authentication_failed,pci_dss_10.2.4,pci_dss_10.2.5,gpg13_7.1,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AC.7,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '64108'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '64104'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^202$|^303$
+      - element: description
+        text: TS Gateway user disconnected
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '64109'
+        level: '10'
+        frequency: $MS_FREQ
+        timeframe: '240'
+      children:
+      - element: if_matched_sid
+        text: '64101'
+      - element: description
+        text: Multiple remote access login failures
+      - element: mitre
+        children:
+        - element: id
+          text: T1110
+      - element: options
+        text: no_full_log
+      - element: group
+        text: authentication_failures,pci_dss_10.2.4,pci_dss_10.2.5,pci_dss_11.4,pci_dss_8.1.5,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.b,hipaa_164.312.a.1,nist_800_53_AU.14,nist_800_53_AC.7,nist_800_53_SI.4,nist_800_53_AC.2,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '64110'
+        level: '10'
+        frequency: $MS_FREQ
+        timeframe: '240'
+      children:
+      - element: if_matched_sid
+        text: '64107'
+      - element: description
+        text: Multiple TS Gateway login failures
+      - element: mitre
+        children:
+        - element: id
+          text: T1110
+      - element: options
+        text: no_full_log
+      - element: group
+        text: authentication_failures,pci_dss_10.2.4,pci_dss_10.2.5,pci_dss_11.4,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AC.7,nist_800_53_SI.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+  original_xml: "<!--\n  -  Windows Event Channel ruleset\n  -  Created by Wazuh, Inc.\n  -  Copyright (C) 2015,\
+    \ Wazuh Inc.\n  -  This program is a free software; you can redistribute it and/or modify it under the terms\
+    \ of GPLv2.\n-->\n\n<!--\n  -  ID range: 64100 - 64599\n-->\n\n<!-- Group of Windows rules from non-defined\
+    \ channel -->\n\n<var name=\"MS_FREQ\">8</var>\n\n<group name=\"windows,\">\n\n  <rule id=\"64100\" level=\"\
+    0\">\n    <if_sid>60009,60010,60011,60012</if_sid>\n    <field name=\"win.system.channel\">^File Replication\
+    \ Service$</field>\n    <description>Group of Windows rules for Remote Access</description>\n    <options>no_full_log</options>\n\
+    \  </rule>\n\n  <rule id=\"64101\" level=\"5\">\n    <if_sid>64100</if_sid>\n    <field name=\"win.system.eventID\"\
+    >^20187$|^20014$|^20078$|^20050$|^20049$|^20189$</field>\n    <description>Remote access login failure</description>\n\
+    \    <options>no_full_log</options>\n    <group>authentication_failed,pci_dss_10.2.4,pci_dss_10.2.5,pci_dss_8.1.5,gpg13_7.1,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.b,hipaa_164.312.a.1,nist_800_53_AU.14,nist_800_53_AC.7,nist_800_53_AC.2,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"64102\" level=\"3\">\n    <if_sid>64100</if_sid>\n    <field name=\"win.system.eventID\"\
+    >^20158$</field>\n    <description>Remote access login success</description>\n    <options>no_full_log</options>\n\
+    \    <mitre>\n      <id>T1078</id>\n    </mitre>\n    <group>authentication_success,pci_dss_10.2.5,pci_dss_8.1.5,gpg13_7.1,gpg13_7.2,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.b,hipaa_164.312.a.1,nist_800_53_AU.14,nist_800_53_AC.7,nist_800_53_AC.2,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,tsc_CC6.1,</group>\n\
+    \  </rule>\n\n  <rule id=\"64103\" level=\"8\">\n    <if_sid>64100</if_sid>\n    <field name=\"win.system.eventID\"\
+    >^13570$</field>\n    <description>Windows file system full</description>\n    <options>no_full_log</options>\n\
+    \    <group>low_diskspace,pci_dss_10.6.1,gpg13_4.1,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"64104\" level=\"0\">\n    <if_sid>60009,60010,60011,60012</if_sid>\n    <field name=\"\
+    win.system.channel\">^Microsoft-Windows-TerminalServices-Gateway/Operational$</field>\n    <description>Group\
+    \ of Windows rules for Terminal Services</description>\n    <options>no_full_log</options>\n  </rule>\n\n  <rule\
+    \ id=\"64105\" level=\"3\">\n    <if_sid>64104</if_sid>\n    <field name=\"win.system.eventID\">^200$|^300$|^302$</field>\n\
+    \    <description>TS Gateway login success</description>\n    <options>no_full_log</options>\n    <mitre>\n\
+    \      <id>T1078</id>\n    </mitre>\n    <group>authentication_success,pci_dss_10.2.5,gpg13_7.1,gpg13_7.2,gdpr_IV_32.2,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AC.7,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"64106\" level=\"0\">\n    <if_sid>64105</if_sid>\n    <field name=\"win.system.message\"\
+    >\\.*The database engine has successfully completed recovery steps|The database engine is initiating recovery\
+    \ steps|A missing flash device has reappeared</field>\n    <description>Ignore rule 64105: not related to TS\
+    \ Gateway</description>\n    <options>no_full_log</options>\n  </rule>\n\n  <rule id=\"64107\" level=\"5\">\n\
+    \    <if_sid>64104</if_sid>\n    <field name=\"win.system.eventID\">^201$|^203$|^204$|^301$|^304$|^305$|^306$|^1001$</field>\n\
+    \    <description>TS Gateway login failure</description>\n    <options>no_full_log</options>\n    <group>authentication_failed,pci_dss_10.2.4,pci_dss_10.2.5,gpg13_7.1,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AC.7,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"64108\" level=\"3\">\n    <if_sid>64104</if_sid>\n    <field name=\"win.system.eventID\"\
+    >^202$|^303$</field>\n    <description>TS Gateway user disconnected</description>\n    <options>no_full_log</options>\n\
+    \  </rule>\n  \n  <rule id=\"64109\" level=\"10\" frequency=\"$MS_FREQ\" timeframe=\"240\">\n    <if_matched_sid>64101</if_matched_sid>\n\
+    \    <description>Multiple remote access login failures</description>\n    <mitre>\n      <id>T1110</id>\n \
+    \   </mitre>\n    <options>no_full_log</options>\n    <group>authentication_failures,pci_dss_10.2.4,pci_dss_10.2.5,pci_dss_11.4,pci_dss_8.1.5,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.b,hipaa_164.312.a.1,nist_800_53_AU.14,nist_800_53_AC.7,nist_800_53_SI.4,nist_800_53_AC.2,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n  <rule id=\"64110\" level=\"10\" frequency=\"$MS_FREQ\" timeframe=\"240\">\n    <if_matched_sid>64107</if_matched_sid>\n\
+    \    <description>Multiple TS Gateway login failures</description>\n    <mitre>\n      <id>T1110</id>\n    </mitre>\n\
+    \    <options>no_full_log</options>\n    <group>authentication_failures,pci_dss_10.2.4,pci_dss_10.2.5,pci_dss_11.4,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AC.7,nist_800_53_SI.4,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>\n\
+    \  </rule>\n\n</group>\n"

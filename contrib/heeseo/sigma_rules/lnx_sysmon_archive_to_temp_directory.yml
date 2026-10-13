@@ -1,0 +1,27 @@
+# R07
+title: "Archive Command Writing To Temporary Directory"
+id: "ed9fefbc-80fc-466f-b66f-ee575ad56998"
+status: "experimental"
+description: "Detects tar, zip or gzip command lines referencing an output path beneath a temporary directory."
+references:
+    - "https://github.com/SigmaHQ/sigma/blob/8a4813404ea3074890e0cda9272d4d1a8b2941d6/rules/linux/auditd/execve/lnx_auditd_data_compressed.yml"
+author: "TEIREN Security Log Cross Analysis Team"
+date: "2026-10-12"
+tags:
+    - "attack.collection"
+    - "attack.t1560.001"
+logsource:
+    product: "linux"
+    category: "process_creation"
+    definition: "Sysmon for Linux process creation; Image and CommandLine are required."
+detection:
+    selection:
+        CommandLine|re: "^(tar|zip|gzip)\\b.*\\s/(tmp|var/tmp|dev/shm)/"
+    condition: "selection"
+fields:
+    - "Image"
+    - "CommandLine"
+    - "User"
+falsepositives:
+    - "Approved backup, packaging or release workflows."
+level: "medium"

@@ -1,0 +1,35 @@
+# R13 계정·권한 조작
+# docs/06_탐지규칙_Sigma_대조.yaml 을 규칙별로 나눈 파일이다. 필드 이름과 추가 필드의 뜻은 그 파일 머리말에 있다.
+
+title: R13 계정·권한 조작
+id: 4b53d3d1-6bc0-4be6-acf8-0a0f086b0fd2
+name: r13_account_or_permission_change
+related:
+    - id: 6f583da0-3a90-4566-a4ed-83c09fe18bbf # Account Created And Deleted Within A Close Time Frame (Sigma 등급 high)
+      type: similar
+status: experimental
+description: 테이렌 콘솔에서 계정이나 권한을 바꾸는 행위(iam_change 분류)를 탐지한다. 이 데이터에서 이 분류에 속한 행위는 IAM_POLICY_DETACH와 IAM_USER_DELETE다.
+references:
+    - docs/06_탐지_위험점수.md
+    - https://github.com/SigmaHQ/sigma/blob/8a4813404ea3074890e0cda9272d4d1a8b2941d6/rules/cloud/azure/audit_logs/azure_ad_account_created_deleted.yml
+author: security-log-cross-analysis 프로젝트 팀
+date: 2026-10-03
+tags:
+    - attack.persistence
+    - attack.impact
+    - attack.t1098
+    - attack.t1531
+logsource:
+    product: teiren
+    service: audit
+detection:
+    selection:
+        action_category: 'iam_change' # 보강 컬럼
+    condition: selection
+falsepositives:
+    - 허용된 계정 관리 업무 (이 데이터의 정상 세션에서는 0건)
+level: high
+project_rule_id: R13
+project_hits: 2
+sigma_match_level: 개념만 같음
+sigma_difference: Sigma(Azure)는 계정 추가·삭제를 본다. 이 규칙에 들어 있는 정책 해제(IAM_POLICY_DETACH)에 대응하는 Sigma 룰은 찾지 못했다.

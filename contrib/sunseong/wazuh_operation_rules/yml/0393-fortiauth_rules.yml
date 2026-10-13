@@ -1,0 +1,114 @@
+schema: wazuh-original-rules-yaml/v1
+format_only_conversion: true
+native_runtime_format: Wazuh XML
+authoritative_field: sources[].original_xml
+upstream:
+  repository: https://github.com/wazuh/wazuh
+  tag: v4.14.8
+  commit: f470ad7db717b18db7feeed568949643698f0f34
+sources:
+- file: ruleset/rules/0393-fortiauth_rules.xml
+  url: https://github.com/wazuh/wazuh/blob/f470ad7db717b18db7feeed568949643698f0f34/ruleset/rules/0393-fortiauth_rules.xml
+  sha256: f6c853a9f8fdde515469339044a06a501cb367c155850cd9f5178afa480520be
+  rule_count: 6
+  elements:
+  - element: group
+    attributes:
+      name: fortiauth,
+    children:
+    - element: rule
+      attributes:
+        id: '44730'
+        level: '0'
+      children:
+      - element: decoded_as
+        text: fortiauth
+      - element: description
+        text: Alert from Forti Authenticator.
+    - element: rule
+      attributes:
+        id: '44731'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '44730'
+      - element: field
+        attributes:
+          name: subcategory
+        text: Authentication
+      - element: description
+        text: 'FortiAuth: Authentication event.'
+      - element: mitre
+        children:
+        - element: id
+          text: T1102
+      - element: group
+        text: gpg13_3.3,gpg13_7.1,hipaa_164.312.a.1,nist_800_53_AC.7,nist_800_53_SC.5,pci_dss_1.3.2,pci_dss_6.5.10,pci_dss_7.1,pci_dss_8.1,tsc_cc6.1,
+    - element: rule
+      attributes:
+        id: '44732'
+        level: '4'
+      children:
+      - element: if_sid
+        text: '44731'
+      - element: status
+        text: Pending
+      - element: description
+        text: 'FortiAuth: Authentication pending by user $(dstuser).'
+    - element: rule
+      attributes:
+        id: '44733'
+        level: '7'
+      children:
+      - element: if_sid
+        text: '44731'
+      - element: status
+        text: Failed
+      - element: description
+        text: 'FortiAuth: Authentication failed by user $(dstuser).'
+      - element: group
+        text: gpg13_3.3,hipaa_164.312.e.1,nist_800_53_AC.7,pci_dss_8.2
+      - element: mitre
+        children:
+        - element: id
+          text: T1102
+    - element: rule
+      attributes:
+        id: '44734'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '44731'
+      - element: status
+        text: Success
+      - element: description
+        text: 'FortiAuth: Authentication success by user $(dstuser).'
+      - element: group
+        text: hipaa_164.312.d,pci_dss_8.2
+    - element: rule
+      attributes:
+        id: '44735'
+        level: '4'
+      children:
+      - element: if_sid
+        text: '44730'
+      - element: field
+        attributes:
+          name: subcategory
+        text: System
+      - element: description
+        text: 'FortiAuth: System event.'
+  original_xml: "<!--\n  Copyright (C) 2015, Wazuh Inc.\n-->\n\n<!-- \n  Rules for:\n    FortiAuth ID: 44730 - 44739\n\
+    -->\n\n<group name=\"fortiauth,\">\n\n  <rule id=\"44730\" level=\"0\">\n    <decoded_as>fortiauth</decoded_as>\n\
+    \    <description>Alert from Forti Authenticator.</description>\n  </rule>\n\n  <rule id=\"44731\" level=\"\
+    0\">\n    <if_sid>44730</if_sid>\n    <field name=\"subcategory\">Authentication</field>\n    <description>FortiAuth:\
+    \ Authentication event.</description>\n    <mitre>\n      <id>T1102</id>\n    </mitre>\n    <group>gpg13_3.3,gpg13_7.1,hipaa_164.312.a.1,nist_800_53_AC.7,nist_800_53_SC.5,pci_dss_1.3.2,pci_dss_6.5.10,pci_dss_7.1,pci_dss_8.1,tsc_cc6.1,</group>\n\
+    \  </rule>\n\n  <rule id=\"44732\" level=\"4\">\n    <if_sid>44731</if_sid>\n    <status>Pending</status>\n\
+    \    <description>FortiAuth: Authentication pending by user $(dstuser).</description>\n  </rule>\n\n  <rule\
+    \ id=\"44733\" level=\"7\">\n    <if_sid>44731</if_sid>\n    <status>Failed</status>\n    <description>FortiAuth:\
+    \ Authentication failed by user $(dstuser).</description>\n    <group>gpg13_3.3,hipaa_164.312.e.1,nist_800_53_AC.7,pci_dss_8.2</group>\n\
+    \    <mitre>\n      <id>T1102</id>\n    </mitre>\n  </rule>\n\n  <rule id=\"44734\" level=\"3\">\n    <if_sid>44731</if_sid>\n\
+    \    <status>Success</status>\n    <description>FortiAuth: Authentication success by user $(dstuser).</description>\n\
+    \    <group>hipaa_164.312.d,pci_dss_8.2</group>\n  </rule>\n\n  <rule id=\"44735\" level=\"4\">\n    <if_sid>44730</if_sid>\n\
+    \    <field name=\"subcategory\">System</field>\n    <description>FortiAuth: System event.</description>\n \
+    \ </rule>\n\n</group>\n"

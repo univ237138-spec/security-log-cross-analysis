@@ -1,0 +1,99 @@
+schema: wazuh-original-rules-yaml/v1
+format_only_conversion: true
+native_runtime_format: Wazuh XML
+authoritative_field: sources[].original_xml
+upstream:
+  repository: https://github.com/wazuh/wazuh
+  tag: v4.14.8
+  commit: f470ad7db717b18db7feeed568949643698f0f34
+sources:
+- file: ruleset/rules/0420-freeipa_rules.xml
+  url: https://github.com/wazuh/wazuh/blob/f470ad7db717b18db7feeed568949643698f0f34/ruleset/rules/0420-freeipa_rules.xml
+  sha256: 142a089bf4c9e74b53e099492dee1918d7319ff94498ca46f6add599405ed5c2
+  rule_count: 4
+  elements:
+  - element: group
+    attributes:
+      name: freeipa,
+    children:
+    - element: rule
+      attributes:
+        id: '82200'
+        level: '0'
+      children:
+      - element: decoded_as
+        text: freeipa
+      - element: description
+        text: FreeIPA syslog.
+    - element: rule
+      attributes:
+        id: '82201'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '30101'
+      - element: match
+        text: '] ipa:'
+      - element: description
+        text: FreeIPA (apache format)
+    - element: rule
+      attributes:
+        id: '82202'
+        level: '0'
+      children:
+      - element: if_sid
+        text: 82200,82201
+      - element: description
+        text: FreeIPA messages grouped.
+    - element: rule
+      attributes:
+        id: '82203'
+        level: '4'
+      children:
+      - element: if_sid
+        text: '82202'
+      - element: match
+        text: Password incorrect
+      - element: description
+        text: 'FreeIPA: Authentication fail'
+      - element: group
+        text: authentication_failed,pci_dss_10.2.4,pci_dss_10.2.5,gpg13_7.1,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AC.7,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+  original_xml: |
+    <!--
+      -  FreeIPA rules
+      -  Created by Wazuh, Inc.
+      -  Copyright (C) 2015, Wazuh Inc.
+      -  This program is a free software; you can redistribute it and/or modify it under the terms of GPLv2.
+    -->
+
+    <!-- ID: 82200 - 82299 -->
+
+    <group name="freeipa,">
+
+        <rule id="82200" level="0">
+            <decoded_as>freeipa</decoded_as>
+            <description>FreeIPA syslog.</description>
+        </rule>
+
+        <rule id="82201" level="0">
+            <if_sid>30101</if_sid>
+            <match>] ipa:</match>
+            <description>FreeIPA (apache format)</description>
+        </rule>
+
+        <rule id="82202" level="0">
+            <if_sid>82200,82201</if_sid>
+            <description>FreeIPA messages grouped.</description>
+        </rule>
+
+        <!--
+        [Tue Aug 09 18:26:22 2016] [error] ipa: INFO: 401 Unauthorized: kinit: Password incorrect while getting initial credentials
+        -->
+        <rule id="82203" level="4">
+            <if_sid>82202</if_sid>
+            <match>Password incorrect</match>
+            <description>FreeIPA: Authentication fail</description>
+            <group>authentication_failed,pci_dss_10.2.4,pci_dss_10.2.5,gpg13_7.1,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AC.7,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>
+        </rule>
+
+    </group>

@@ -1,0 +1,97 @@
+schema: wazuh-original-rules-yaml/v1
+format_only_conversion: true
+native_runtime_format: Wazuh XML
+authoritative_field: sources[].original_xml
+upstream:
+  repository: https://github.com/wazuh/wazuh
+  tag: v4.14.8
+  commit: f470ad7db717b18db7feeed568949643698f0f34
+sources:
+- file: ruleset/rules/0290-firewalld_rules.xml
+  url: https://github.com/wazuh/wazuh/blob/f470ad7db717b18db7feeed568949643698f0f34/ruleset/rules/0290-firewalld_rules.xml
+  sha256: cc7ffe182c2a9c2f7227cfa5214abad909cb638946b75de1270826500074c19c
+  rule_count: 4
+  elements:
+  - element: group
+    attributes:
+      name: local,firewalld,
+    children:
+    - element: rule
+      attributes:
+        id: '40900'
+        level: '0'
+      children:
+      - element: program_name
+        text: ^firewalld
+      - element: description
+        text: firewalld grouping
+      - element: group
+        text: pci_dss_1.4,hipaa_164.312.a.1,nist_800_53_SC.7,tsc_CC6.7,tsc_CC6.8,
+    - element: rule
+      attributes:
+        id: '40901'
+        level: '1'
+      children:
+      - element: if_sid
+        text: '40900'
+      - element: match
+        text: ' ERROR: '
+      - element: description
+        text: firewalld error
+    - element: rule
+      attributes:
+        id: '40902'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '40901'
+      - element: match
+        text: ' No chain/target/match by that name.$'
+      - element: description
+        text: 'firewalld: Incorrect chain/target/match.'
+    - element: rule
+      attributes:
+        id: '40903'
+        level: '2'
+      children:
+      - element: if_sid
+        text: '40901'
+      - element: match
+        text: ' ZONE_ALREADY_SET$'
+      - element: description
+        text: 'firewalld: zone already set.'
+  original_xml: |
+    <!--
+      -  Firewalld rules
+      -  Author: Dan Parriott <ddpbsd@gmail.com>.
+      -  Updated by Wazuh, Inc.
+      -  Copyright (C) 2015, Wazuh Inc.
+      -  Copyright (C) 2009 Trend Micro Inc.
+      -  This program is a free software; you can redistribute it and/or modify it under the terms of GPLv2.
+    -->
+
+    <group name="local,firewalld,">
+      <rule id="40900" level="0">
+        <program_name>^firewalld</program_name>
+        <description>firewalld grouping</description>
+        <group>pci_dss_1.4,hipaa_164.312.a.1,nist_800_53_SC.7,tsc_CC6.7,tsc_CC6.8,</group>
+      </rule>
+
+      <rule id="40901" level="1">
+        <if_sid>40900</if_sid>
+        <match> ERROR: </match>
+        <description>firewalld error</description>
+      </rule>
+
+      <rule id="40902" level="3">
+        <if_sid>40901</if_sid>
+        <match> No chain/target/match by that name.$</match>
+        <description>firewalld: Incorrect chain/target/match.</description>
+      </rule>
+
+      <rule id="40903" level="2">
+        <if_sid>40901</if_sid>
+        <match> ZONE_ALREADY_SET$</match>
+        <description>firewalld: zone already set.</description>
+      </rule>
+    </group>

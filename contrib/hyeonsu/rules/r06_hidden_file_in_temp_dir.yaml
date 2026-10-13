@@ -1,0 +1,35 @@
+# R06 임시 폴더의 숨김 파일 생성
+# docs/06_탐지규칙_Sigma_대조.yaml 을 규칙별로 나눈 파일이다. 필드 이름과 추가 필드의 뜻은 그 파일 머리말에 있다.
+
+title: R06 임시 폴더의 숨김 파일 생성
+id: 8d03b399-561b-4560-8d04-9921a2fac987
+name: r06_hidden_file_in_temp_dir
+related:
+    - id: d08722cd-3d09-449a-80b4-83ea2d9d4616 # Hidden Files and Directories (Sigma 등급 low)
+      type: similar
+status: experimental
+description: /tmp, /var/tmp, /dev/shm 아래에 이름이 점(.)으로 시작하는 파일이 만들어지면 탐지한다.
+references:
+    - docs/06_탐지_위험점수.md
+    - https://github.com/SigmaHQ/sigma/blob/8a4813404ea3074890e0cda9272d4d1a8b2941d6/rules/linux/auditd/execve/lnx_auditd_hidden_files_directories.yml
+author: security-log-cross-analysis 프로젝트 팀
+date: 2026-10-03
+tags:
+    - attack.defense-evasion
+    - attack.t1564.001
+logsource:
+    category: file_event
+    product: linux
+detection:
+    selection:
+        TargetFilename|re: '^/(tmp|var/tmp|dev/shm)/(.*/)?\.[^/]+$'
+    condition: selection
+falsepositives:
+    - 알려진 사례 없음 (이 데이터의 정상 세션에서는 0건)
+level: medium
+project_rule_id: R06
+project_hits: 1
+sigma_match_level: 개념만 같음
+sigma_difference: Sigma는 auditd 로그에서 mkdir·touch·vi 같은 명령의 인자가 점으로 시작하는지 보며, 위치는 가리지 않는다. 이 프로젝트는 Sysmon 파일 생성 이벤트의 경로가 임시 폴더 아래의 숨김 파일인지 본다.
+sigma_original_hits: 0
+sigma_original_note: 숨김 파일을 touch가 아니라 curl -o로 만들었다.

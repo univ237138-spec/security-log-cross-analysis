@@ -1,0 +1,345 @@
+schema: wazuh-original-rules-yaml/v1
+format_only_conversion: true
+native_runtime_format: Wazuh XML
+authoritative_field: sources[].original_xml
+upstream:
+  repository: https://github.com/wazuh/wazuh
+  tag: v4.14.8
+  commit: f470ad7db717b18db7feeed568949643698f0f34
+sources:
+- file: ruleset/rules/0810-sysmon_id_3.xml
+  url: https://github.com/wazuh/wazuh/blob/f470ad7db717b18db7feeed568949643698f0f34/ruleset/rules/0810-sysmon_id_3.xml
+  sha256: 4c9d45a9a8581b1089638009ca58c8bb7291484a94cc4c14d42d98b8d6878cce
+  rule_count: 10
+  elements:
+  - element: group
+    attributes:
+      name: sysmon,sysmon_eid3_detections,windows,
+    children:
+    - element: rule
+      attributes:
+        id: '92101'
+        level: '0'
+      children:
+      - element: if_group
+        text: sysmon_event3
+      - element: field
+        attributes:
+          name: win.eventdata.image
+          type: pcre2
+        text: (?i)\\powershell\.exe
+      - element: field
+        attributes:
+          name: win.eventdata.protocol
+        text: ^tcp$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Powershell process communicating over TCP
+      - element: mitre
+        children:
+        - element: id
+          text: T1095
+    - element: rule
+      attributes:
+        id: '92102'
+        level: '6'
+      children:
+      - element: if_sid
+        text: '92101'
+      - element: field
+        attributes:
+          name: win.eventdata.destinationPort
+        text: ^135$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Suspicious DCOM/RPC activity from Powershell process
+      - element: mitre
+        children:
+        - element: id
+          text: T1110
+    - element: rule
+      attributes:
+        id: '92103'
+        level: '6'
+      children:
+      - element: if_sid
+        text: '92101'
+      - element: field
+        attributes:
+          name: win.eventdata.destinationPort
+        text: ^389$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: LDAP activity from Powershell process, possible remote system discovery
+      - element: mitre
+        children:
+        - element: id
+          text: T1018
+    - element: rule
+      attributes:
+        id: '92104'
+        level: '15'
+      children:
+      - element: if_group
+        text: sysmon_event3
+      - element: field
+        attributes:
+          name: win.eventdata.image
+          type: pcre2
+        text: (*UTF)\N{U+202E}
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Suspicious binary created network connection to $(win.eventdata.destinationIp):$(win.eventdata.destinationPort)
+      - element: mitre
+        children:
+        - element: id
+          text: T1095
+    - element: rule
+      attributes:
+        id: '92105'
+        level: '3'
+      children:
+      - element: if_group
+        text: sysmon_event3
+      - element: field
+        attributes:
+          name: win.eventdata.destinationPort
+          type: pcre2
+        text: ^(135|445)$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Possible suspicious access to Windows admin shares
+      - element: mitre
+        children:
+        - element: id
+          text: T1021.002
+    - element: rule
+      attributes:
+        id: '92106'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '92105'
+      - element: field
+        attributes:
+          name: win.eventdata.image
+          type: pcre2
+        text: ^System$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Windows System process activity over SMB port - Possible suspicious access to Windows admin shares
+      - element: mitre
+        children:
+        - element: id
+          text: T1021.002
+    - element: rule
+      attributes:
+        id: '92107'
+        level: '4'
+      children:
+      - element: if_group
+        text: sysmon_event3
+      - element: field
+        attributes:
+          name: win.eventdata.image
+          type: pcre2
+        text: \\(c|w)script\.exe
+      - element: field
+        attributes:
+          name: win.eventdata.protocol
+          type: pcre2
+        text: tcp
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Script generated suspicious network activity over TCP protocol
+      - element: mitre
+        children:
+        - element: id
+          text: T1095
+    - element: rule
+      attributes:
+        id: '92108'
+        level: '0'
+      children:
+      - element: if_group
+        text: sysmon_event3
+      - element: field
+        attributes:
+          name: win.eventdata.destinationPort
+          type: pcre2
+        text: ^3389$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Detected RDP port network activity from $(win.eventdata.sourceIp) to $(win.eventdata.destinationIp)
+      - element: mitre
+        children:
+        - element: id
+          text: T1021.001
+    - element: rule
+      attributes:
+        id: '92109'
+        level: '15'
+      children:
+      - element: if_sid
+        text: '92108'
+      - element: field
+        attributes:
+          name: win.eventdata.destinationIp
+          type: pcre2
+        text: 0:0:0:0:0:0:0:1|127\.0\.0\.1
+      - element: field
+        attributes:
+          name: win.eventdata.sourceIp
+          type: pcre2
+        text: 0:0:0:0:0:0:0:1|127\.0\.0\.1
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Network activity using RDP port from-to loopback address, possible exploit using reverse tunneling
+      - element: mitre
+        children:
+        - element: id
+          text: T1021.001
+    - element: rule
+      attributes:
+        id: '92110'
+        level: '4'
+      children:
+      - element: if_sid
+        text: 92101, 61605
+      - element: field
+        attributes:
+          name: win.eventdata.destinationPort
+          type: pcre2
+        text: ^5985$
+      - element: options
+        text: no_full_log
+      - element: description
+        text: Detected WinRM activity from $(win.eventdata.sourceIp) to $(win.eventdata.destinationIp)
+      - element: mitre
+        children:
+        - element: id
+          text: T1021.006
+  original_xml: |
+    <!--
+      Copyright (C) 2015, Wazuh Inc.
+    -->
+
+    <!--
+      Sysmon Event ID 3 rules: 92101 - 92150
+    -->
+
+    <group name="sysmon,sysmon_eid3_detections,windows,">
+
+      <rule id="92101" level="0">
+        <if_group>sysmon_event3</if_group>
+        <field name="win.eventdata.image" type="pcre2">(?i)\\powershell\.exe</field>
+        <field name="win.eventdata.protocol">^tcp$</field>
+        <options>no_full_log</options>
+        <description>Powershell process communicating over TCP</description>
+        <mitre>
+          <id>T1095</id>
+        </mitre>
+      </rule>
+
+      <rule id="92102" level="6">
+        <if_sid>92101</if_sid>
+        <field name="win.eventdata.destinationPort">^135$</field>
+        <options>no_full_log</options>
+        <description>Suspicious DCOM/RPC activity from Powershell process</description>
+        <mitre>
+          <id>T1110</id>
+        </mitre>
+      </rule>
+
+      <rule id="92103" level="6">
+        <if_sid>92101</if_sid>
+        <field name="win.eventdata.destinationPort">^389$</field>
+        <options>no_full_log</options>
+        <description>LDAP activity from Powershell process, possible remote system discovery</description>
+        <mitre>
+          <id>T1018</id>
+        </mitre>
+      </rule>
+
+      <rule id="92104" level="15">
+        <if_group>sysmon_event3</if_group>
+        <field name="win.eventdata.image" type="pcre2">(*UTF)\N{U+202E}</field>
+        <options>no_full_log</options>
+        <description>Suspicious binary created network connection to $(win.eventdata.destinationIp):$(win.eventdata.destinationPort)</description>
+        <mitre>
+          <id>T1095</id>
+        </mitre>
+      </rule>
+
+      <rule id="92105" level="3">
+        <if_group>sysmon_event3</if_group>
+        <field name="win.eventdata.destinationPort" type="pcre2">^(135|445)$</field>
+        <options>no_full_log</options>
+        <description>Possible suspicious access to Windows admin shares</description>
+        <mitre>
+          <id>T1021.002</id>
+        </mitre>
+      </rule>
+
+      <rule id="92106" level="3">
+        <if_sid>92105</if_sid>
+        <field name="win.eventdata.image" type="pcre2">^System$</field>
+        <options>no_full_log</options>
+        <description>Windows System process activity over SMB port - Possible suspicious access to Windows admin shares</description>
+        <mitre>
+          <id>T1021.002</id>
+        </mitre>
+      </rule>
+
+      <rule id="92107" level="4">
+        <if_group>sysmon_event3</if_group>
+        <field name="win.eventdata.image" type="pcre2">\\(c|w)script\.exe</field>
+        <field name="win.eventdata.protocol" type="pcre2">tcp</field>
+        <options>no_full_log</options>
+        <description>Script generated suspicious network activity over TCP protocol</description>
+        <mitre>
+          <id>T1095</id>
+        </mitre>
+      </rule>
+
+      <rule id="92108" level="0">
+        <if_group>sysmon_event3</if_group>
+        <field name="win.eventdata.destinationPort" type="pcre2">^3389$</field>
+        <options>no_full_log</options>
+        <description>Detected RDP port network activity from $(win.eventdata.sourceIp) to $(win.eventdata.destinationIp)</description>
+        <mitre>
+          <id>T1021.001</id>
+        </mitre>
+      </rule>
+
+      <rule id="92109" level="15">
+        <if_sid>92108</if_sid>
+        <field name="win.eventdata.destinationIp" type="pcre2">0:0:0:0:0:0:0:1|127\.0\.0\.1</field>
+        <field name="win.eventdata.sourceIp" type="pcre2">0:0:0:0:0:0:0:1|127\.0\.0\.1</field>
+        <options>no_full_log</options>
+        <description>Network activity using RDP port from-to loopback address, possible exploit using reverse tunneling</description>
+        <mitre>
+          <id>T1021.001</id>
+        </mitre>
+      </rule>
+
+      <rule id="92110" level="4">
+        <if_sid>92101, 61605</if_sid>
+        <field name="win.eventdata.destinationPort" type="pcre2">^5985$</field>
+        <options>no_full_log</options>
+        <description>Detected WinRM activity from $(win.eventdata.sourceIp) to $(win.eventdata.destinationIp)</description>
+        <mitre>
+          <id>T1021.006</id>
+        </mitre>
+      </rule>
+
+    </group>

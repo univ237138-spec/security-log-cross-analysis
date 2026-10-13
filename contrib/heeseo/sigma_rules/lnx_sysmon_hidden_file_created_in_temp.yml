@@ -1,0 +1,27 @@
+# R06
+title: "Hidden File Created In Temporary Directory"
+id: "73bc3405-5142-48b0-b7b2-759b89e9f83c"
+status: "experimental"
+description: "Detects a hidden file created beneath /tmp, /var/tmp or /dev/shm in a Sysmon for Linux file event."
+references:
+    - "https://github.com/SigmaHQ/sigma/blob/8a4813404ea3074890e0cda9272d4d1a8b2941d6/rules/linux/auditd/execve/lnx_auditd_hidden_files_directories.yml"
+author: "TEIREN Security Log Cross Analysis Team"
+date: "2026-10-12"
+tags:
+    - "attack.stealth"
+    - "attack.t1564.001"
+logsource:
+    product: "linux"
+    category: "file_event"
+    definition: "Sysmon for Linux file creation event; TargetFilename is required."
+detection:
+    selection:
+        TargetFilename|re: "^/(tmp|var/tmp|dev/shm)/(.*/)?\\.[^/]+$"
+    condition: "selection"
+fields:
+    - "TargetFilename"
+    - "Image"
+    - "User"
+falsepositives:
+    - "Applications creating hidden temporary files."
+level: "medium"

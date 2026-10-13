@@ -1,0 +1,322 @@
+schema: wazuh-original-rules-yaml/v1
+format_only_conversion: true
+native_runtime_format: Wazuh XML
+authoritative_field: sources[].original_xml
+upstream:
+  repository: https://github.com/wazuh/wazuh
+  tag: v4.14.8
+  commit: f470ad7db717b18db7feeed568949643698f0f34
+sources:
+- file: ruleset/rules/0295-mysql_rules.xml
+  url: https://github.com/wazuh/wazuh/blob/f470ad7db717b18db7feeed568949643698f0f34/ruleset/rules/0295-mysql_rules.xml
+  sha256: 84a2658f7c46a89b3967b01a7944c956c55a21877cbdfcea1280ccb450b1bc5f
+  rule_count: 13
+  elements:
+  - element: group
+    attributes:
+      name: mysql_log,
+    children:
+    - element: rule
+      attributes:
+        id: '50100'
+        level: '0'
+      children:
+      - element: decoded_as
+        text: mysql_log
+      - element: description
+        text: MySQL messages grouped.
+    - element: rule
+      attributes:
+        id: '50105'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '50100'
+      - element: regex
+        text: '^MySQL log: \d+ \S+ \d+ Connect'
+      - element: description
+        text: 'MySQL: authentication success.'
+      - element: mitre
+        children:
+        - element: id
+          text: T1078
+      - element: group
+        text: authentication_success,pci_dss_10.2.5,pci_dss_8.7,gpg13_7.1,gpg13_7.2,gdpr_IV_32.2,hipaa_164.312.b,hipaa_164.312.d,hipaa_164.312.e.1,hipaa_164.312.e.2.I,hipaa_164.312.e.2.II,nist_800_53_AU.14,nist_800_53_AC.7,nist_800_53_SC.2,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,tsc_PI1.4,tsc_PI1.5,
+    - element: rule
+      attributes:
+        id: '50106'
+        level: '9'
+      children:
+      - element: if_sid
+        text: '50100'
+      - element: match
+        text: Access denied for user
+      - element: description
+        text: 'MySQL: authentication failure.'
+      - element: group
+        text: authentication_failed,pci_dss_10.2.4,pci_dss_10.2.5,pci_dss_8.7,gpg13_7.1,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.b,hipaa_164.312.d,hipaa_164.312.e.1,hipaa_164.312.e.2.I,hipaa_164.312.e.2.II,nist_800_53_AU.14,nist_800_53_AC.7,nist_800_53_SC.2,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,tsc_PI1.4,tsc_PI1.5,
+    - element: rule
+      attributes:
+        id: '50107'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '50100'
+      - element: regex
+        text: '^MySQL log: \d+ \S+ \d+ Query'
+      - element: description
+        text: 'MySQL: query.'
+    - element: rule
+      attributes:
+        id: '50108'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '50100'
+      - element: regex
+        text: '^MySQL log: \d+ \S+ \d+ Quit'
+      - element: description
+        text: 'MySQL: User disconnected from database.'
+      - element: group
+        text: pci_dss_10.2.5,pci_dss_8.7,gpg13_7.1,gpg13_7.2,gdpr_IV_32.2,hipaa_164.312.b,hipaa_164.312.d,hipaa_164.312.e.1,hipaa_164.312.e.2.I,hipaa_164.312.e.2.II,nist_800_53_AU.14,nist_800_53_AC.7,nist_800_53_SC.2,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,tsc_PI1.4,tsc_PI1.5,
+    - element: rule
+      attributes:
+        id: '50120'
+        level: '12'
+      children:
+      - element: if_sid
+        text: '50100'
+      - element: match
+        text: mysqld ended|Shutdown complete
+      - element: description
+        text: 'MySQL: shutdown message.'
+      - element: mitre
+        children:
+        - element: id
+          text: T1529
+      - element: group
+        text: service_availability,pci_dss_10.6.1,gpg13_4.14,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '50121'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '50100'
+      - element: match
+        text: mysqld started|mysqld restarted
+      - element: description
+        text: 'MySQL: startup message.'
+      - element: group
+        text: service_availability,gpg13_4.14,
+    - element: rule
+      attributes:
+        id: '50125'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '50100'
+      - element: regex
+        text: '^MySQL log: \d+ \S+ \d+ [ERROR]'
+      - element: description
+        text: 'MySQL: error.'
+      - element: group
+        text: gpg13_4.3,gdpr_IV_35.7.d,
+    - element: rule
+      attributes:
+        id: '50126'
+        level: '12'
+      children:
+      - element: if_sid
+        text: '50125'
+      - element: match
+        text: 'Fatal error:'
+      - element: description
+        text: 'MySQL: fatal error.'
+      - element: mitre
+        children:
+        - element: id
+          text: T1499
+      - element: group
+        text: service_availability,pci_dss_10.6.1,gpg13_4.1,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '50180'
+        level: '10'
+        frequency: '8'
+        timeframe: '120'
+        ignore: '60'
+      children:
+      - element: if_matched_sid
+        text: '50125'
+      - element: description
+        text: 'MySQL: Multiple errors.'
+      - element: mitre
+        children:
+        - element: id
+          text: T1499
+      - element: group
+        text: service_availability,pci_dss_10.6.1,gpg13_4.3,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '50181'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '50100'
+      - element: regex
+        text: '^MySQL log: \d+-\d+-\d+T\d+:\d+:\d+.\d+\.+ \d+ [ERROR]'
+      - element: description
+        text: 'MySQL: error.'
+      - element: group
+        text: gpg13_4.3,gdpr_IV_35.7.d,
+    - element: rule
+      attributes:
+        id: '50182'
+        level: '12'
+      children:
+      - element: if_sid
+        text: '50181'
+      - element: match
+        text: 'Fatal error:'
+      - element: description
+        text: 'MySQL: fatal error.'
+      - element: mitre
+        children:
+        - element: id
+          text: T1499
+      - element: group
+        text: service_availability,pci_dss_10.6.1,gpg13_4.1,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,
+    - element: rule
+      attributes:
+        id: '50183'
+        level: '10'
+        frequency: '8'
+        timeframe: '120'
+        ignore: '60'
+      children:
+      - element: if_matched_sid
+        text: '50181'
+      - element: description
+        text: 'MySQL: Multiple errors.'
+      - element: mitre
+        children:
+        - element: id
+          text: T1499
+      - element: group
+        text: service_availability,pci_dss_10.6.1,gpg13_4.3,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,
+  original_xml: |
+    <!--
+      -  MySQL rules
+      -  Author: Daniel Cid.
+      -  Updated by Wazuh, Inc.
+      -  Copyright (C) 2015, Wazuh Inc.
+      -  Copyright (C) 2009 Trend Micro Inc.
+      -  This program is a free software; you can redistribute it and/or modify it under the terms of GPLv2.
+    -->
+
+    <group name="mysql_log,">
+      <rule id="50100" level="0">
+        <decoded_as>mysql_log</decoded_as>
+        <description>MySQL messages grouped.</description>
+      </rule>
+
+      <rule id="50105" level="3">
+        <if_sid>50100</if_sid>
+        <regex>^MySQL log: \d+ \S+ \d+ Connect</regex>
+        <description>MySQL: authentication success.</description>
+        <mitre>
+          <id>T1078</id>
+        </mitre>
+        <group>authentication_success,pci_dss_10.2.5,pci_dss_8.7,gpg13_7.1,gpg13_7.2,gdpr_IV_32.2,hipaa_164.312.b,hipaa_164.312.d,hipaa_164.312.e.1,hipaa_164.312.e.2.I,hipaa_164.312.e.2.II,nist_800_53_AU.14,nist_800_53_AC.7,nist_800_53_SC.2,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,tsc_PI1.4,tsc_PI1.5,</group>
+      </rule>
+
+      <rule id="50106" level="9">
+        <if_sid>50100</if_sid>
+        <match>Access denied for user</match>
+        <description>MySQL: authentication failure.</description>
+        <group>authentication_failed,pci_dss_10.2.4,pci_dss_10.2.5,pci_dss_8.7,gpg13_7.1,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.b,hipaa_164.312.d,hipaa_164.312.e.1,hipaa_164.312.e.2.I,hipaa_164.312.e.2.II,nist_800_53_AU.14,nist_800_53_AC.7,nist_800_53_SC.2,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,tsc_PI1.4,tsc_PI1.5,</group>
+      </rule>
+
+      <rule id="50107" level="0">
+        <if_sid>50100</if_sid>
+        <regex>^MySQL log: \d+ \S+ \d+ Query</regex>
+        <description>MySQL: query.</description>
+      </rule>
+
+      <rule id="50108" level="3">
+        <if_sid>50100</if_sid>
+        <regex>^MySQL log: \d+ \S+ \d+ Quit</regex>
+        <description>MySQL: User disconnected from database.</description>
+        <group>pci_dss_10.2.5,pci_dss_8.7,gpg13_7.1,gpg13_7.2,gdpr_IV_32.2,hipaa_164.312.b,hipaa_164.312.d,hipaa_164.312.e.1,hipaa_164.312.e.2.I,hipaa_164.312.e.2.II,nist_800_53_AU.14,nist_800_53_AC.7,nist_800_53_SC.2,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,tsc_PI1.4,tsc_PI1.5,</group>
+      </rule>
+
+      <rule id="50120" level="12">
+        <if_sid>50100</if_sid>
+        <match>mysqld ended|Shutdown complete</match>
+        <description>MySQL: shutdown message.</description>
+        <mitre>
+          <id>T1529</id>
+        </mitre>
+        <group>service_availability,pci_dss_10.6.1,gpg13_4.14,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="50121" level="3">
+        <if_sid>50100</if_sid>
+        <match>mysqld started|mysqld restarted</match>
+        <description>MySQL: startup message.</description>
+        <group>service_availability,gpg13_4.14,</group>
+      </rule>
+
+      <rule id="50125" level="5">
+        <if_sid>50100</if_sid>
+        <regex>^MySQL log: \d+ \S+ \d+ [ERROR]</regex>
+        <description>MySQL: error.</description>
+        <group>gpg13_4.3,gdpr_IV_35.7.d,</group>
+      </rule>
+
+      <rule id="50126" level="12">
+        <if_sid>50125</if_sid>
+        <match>Fatal error:</match>
+        <description>MySQL: fatal error.</description>
+        <mitre>
+          <id>T1499</id>
+        </mitre>
+        <group>service_availability,pci_dss_10.6.1,gpg13_4.1,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="50180" level="10" frequency="8" timeframe="120" ignore="60">
+        <if_matched_sid>50125</if_matched_sid>
+        <description>MySQL: Multiple errors.</description>
+        <mitre>
+          <id>T1499</id>
+        </mitre>
+        <group>service_availability,pci_dss_10.6.1,gpg13_4.3,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="50181" level="5">
+        <if_sid>50100</if_sid>
+        <regex>^MySQL log: \d+-\d+-\d+T\d+:\d+:\d+.\d+\.+ \d+ [ERROR]</regex>
+        <description>MySQL: error.</description>
+        <group>gpg13_4.3,gdpr_IV_35.7.d,</group>
+      </rule>
+
+      <rule id="50182" level="12">
+        <if_sid>50181</if_sid>
+        <match>Fatal error:</match>
+        <description>MySQL: fatal error.</description>
+        <mitre>
+          <id>T1499</id>
+        </mitre>
+        <group>service_availability,pci_dss_10.6.1,gpg13_4.1,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,</group>
+      </rule>
+
+      <rule id="50183" level="10" frequency="8" timeframe="120" ignore="60">
+        <if_matched_sid>50181</if_matched_sid>
+        <description>MySQL: Multiple errors.</description>
+        <mitre>
+          <id>T1499</id>
+        </mitre>
+        <group>service_availability,pci_dss_10.6.1,gpg13_4.3,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,</group>
+      </rule>
+    </group>

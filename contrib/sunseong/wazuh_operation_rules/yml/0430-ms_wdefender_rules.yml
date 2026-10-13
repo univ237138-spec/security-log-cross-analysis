@@ -1,0 +1,94 @@
+schema: wazuh-original-rules-yaml/v1
+format_only_conversion: true
+native_runtime_format: Wazuh XML
+authoritative_field: sources[].original_xml
+upstream:
+  repository: https://github.com/wazuh/wazuh
+  tag: v4.14.8
+  commit: f470ad7db717b18db7feeed568949643698f0f34
+sources:
+- file: ruleset/rules/0430-ms_wdefender_rules.xml
+  url: https://github.com/wazuh/wazuh/blob/f470ad7db717b18db7feeed568949643698f0f34/ruleset/rules/0430-ms_wdefender_rules.xml
+  sha256: f122e0c149023fbb87bc2f0f516a9bc830414f8febbc3b00ee885cd9dfbf483f
+  rule_count: 3
+  elements:
+  - element: group
+    attributes:
+      name: windows,windows_defender,
+    children:
+    - element: rule
+      attributes:
+        id: '83000'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '18100'
+      - element: match
+        text: 'Microsoft-Windows-Windows Defender/Operational:'
+      - element: description
+        text: Windows Defender messages grouped.
+    - element: rule
+      attributes:
+        id: '83001'
+        level: '12'
+      children:
+      - element: if_sid
+        text: '83000'
+      - element: id
+        text: '1116'
+      - element: description
+        text: 'Windows Defender: detected potentially unwanted software'
+      - element: group
+        text: pci_dss_10.6.1,gdpr_IV_35.7.d,
+    - element: rule
+      attributes:
+        id: '83002'
+        level: '7'
+      children:
+      - element: if_sid
+        text: '83000'
+      - element: id
+        text: '1117'
+      - element: description
+        text: 'Windows Defender: taken action to protect machine from unwanted software'
+      - element: group
+        text: pci_dss_10.6.1,gdpr_IV_35.7.d,
+  original_xml: |
+    <!--
+      -  Windows defender rules
+      -  Created by Wazuh, Inc.
+      -  Copyright (C) 2015, Wazuh Inc.
+      -  This program is a free software; you can redistribute it and/or modify it under the terms of GPLv2.
+    -->
+
+    <!-- ID: 83000 - 83199 -->
+
+    <group name="windows,windows_defender,">
+
+        <rule id="83000" level="0">
+            <if_sid>18100</if_sid>
+            <match>Microsoft-Windows-Windows Defender/Operational:</match>
+            <description>Windows Defender messages grouped.</description>
+        </rule>
+
+        <!--
+        2017 Apr 06 06:25:54 WinEvtLog: Microsoft-Windows-Windows Defender/Operational: WARNING(1116): Microsoft-Windows-Windows Defender: SYSTEM: NT AUTHORITY: DESKTOP-6UOEPO5: Windows Defender has detected malware or other potentially unwanted software.   For more information please see the following:  http://go.microsoft.com/fwlink/?linkid=37020&name=Virus:DOS/EICAR_Test_File&threatid=2147519003&enterprise=0     Name: Virus:DOS/EICAR_Test_File          ID: 2147519003          Severity: Severe        Category: Virus         Path: file:_C:\Users\spiderman\Downloads\eicar.com.txt          Detection Origin: Local machine         Detection Type: Concrete     Detection Source: Real-Time Protection          User: NT AUTHORITY\SYSTEM       Process Name: C:\Windows\System32\SearchProtocolHost.exe        Signature Version: AV: 1.239.892.0, AS: 1.239.892.0, NIS: 116.88.0.0    Engine Version: AM: 1.1.13601.0, NIS: 2.1.12706.0
+        -->
+        <rule id="83001" level="12">
+            <if_sid>83000</if_sid>
+            <id>1116</id>
+            <description>Windows Defender: detected potentially unwanted software</description>
+            <group>pci_dss_10.6.1,gdpr_IV_35.7.d,</group>
+        </rule>
+
+        <!--
+        2017 Apr 06 06:26:01 WinEvtLog: Microsoft-Windows-Windows Defender/Operational: INFORMATION(1117): Microsoft-Windows-Windows Defender: SYSTEM: NT AUTHORITY: DESKTOP-6UOEPO5: Windows Defender has taken action to protect this machine from malware or other potentially unwanted software.   For more information please see the following:  http://go.microsoft.com/fwlink/?linkid=37020&name=Virus:DOS/EICAR_Test_File&threatid=2147519003&enterprise=0         Name: Virus:DOS/EICAR_Test_File         ID: 2147519003          Severity: Severe        Category: Virus         Path: file:_C:\Users\spiderman\Downloads\eicar.com.txt;webfile:_C:\Users\spiderman\Downloads\eicar.com.txt|http://www.eicar.org/download/eicar.com.txt|chrome.exe    Detection Origin: Internet      Detection Type: Concrete        Detection Source: Real-Time Protection          User: NT AUTHORITY\SYSTEM       Process Name: C:\Windows\System32\SearchProtocolHost.exe     Action: Quarantine      Action Status:  No additional actions required          Error Code: 0x80508023          Error description: The program could not find the malware and other potentially unwanted software on this computer.          Signature Version: AV: 1.239.892.0, AS: 1.239.892.0, NIS: 116.88.0.0    Engine Version: AM: 1.1.13601.0, NIS: 2.1.12706.0
+        -->
+        <rule id="83002" level="7">
+            <if_sid>83000</if_sid>
+            <id>1117</id>
+            <description>Windows Defender: taken action to protect machine from unwanted software</description>
+            <group>pci_dss_10.6.1,gdpr_IV_35.7.d,</group>
+        </rule>
+
+    </group>

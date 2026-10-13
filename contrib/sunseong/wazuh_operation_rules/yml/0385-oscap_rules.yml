@@ -1,0 +1,960 @@
+schema: wazuh-original-rules-yaml/v1
+format_only_conversion: true
+native_runtime_format: Wazuh XML
+authoritative_field: sources[].original_xml
+upstream:
+  repository: https://github.com/wazuh/wazuh
+  tag: v4.14.8
+  commit: f470ad7db717b18db7feeed568949643698f0f34
+sources:
+- file: ruleset/rules/0385-oscap_rules.xml
+  url: https://github.com/wazuh/wazuh/blob/f470ad7db717b18db7feeed568949643698f0f34/ruleset/rules/0385-oscap_rules.xml
+  sha256: 0ae6665d3fdd12905b7ffcec4d1d9c619419b1745cdd6f1ee051fadac62c2435
+  rule_count: 38
+  elements:
+  - element: group
+    attributes:
+      name: oscap,
+    children:
+    - element: rule
+      attributes:
+        id: '81400'
+        level: '0'
+      children:
+      - element: decoded_as
+        text: oscap
+      - element: description
+        text: OpenSCAP messages grouped.
+    - element: rule
+      attributes:
+        id: '81401'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '81400'
+      - element: match
+        text: Evaluation started
+      - element: description
+        text: 'OpenSCAP: Evaluation started.'
+      - element: group
+        text: syslog,
+    - element: rule
+      attributes:
+        id: '81402'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '81400'
+      - element: match
+        text: Evaluation finished
+      - element: description
+        text: 'OpenSCAP: Evaluation finished.'
+      - element: group
+        text: syslog,
+    - element: rule
+      attributes:
+        id: '81403'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '81402'
+      - element: field
+        attributes:
+          name: oscap.scan.return_code
+        text: '2'
+      - element: description
+        text: 'OpenSCAP: Evaluation finished with some failures.'
+      - element: group
+        text: syslog,
+    - element: rule
+      attributes:
+        id: '81501'
+        level: '7'
+      children:
+      - element: if_sid
+        text: '81400'
+      - element: match
+        text: 'oscap: ERROR: '
+      - element: description
+        text: 'OpenSCAP: Error messages grouped.'
+      - element: group
+        text: errors,gdpr_IV_35.7.d,
+    - element: rule
+      attributes:
+        id: '81502'
+        level: '7'
+      children:
+      - element: if_sid
+        text: '81501'
+      - element: match
+        text: OpenSCAP not installed
+      - element: description
+        text: 'OpenSCAP ERROR: OpenSCAP not installed.'
+      - element: group
+        text: errors,gdpr_IV_35.7.d,
+    - element: rule
+      attributes:
+        id: '81503'
+        level: '7'
+      children:
+      - element: if_sid
+        text: '81501'
+      - element: match
+        text: Impossible to execute OpenSCAP
+      - element: description
+        text: 'OpenSCAP ERROR: Impossible to execute OpenSCAP.'
+      - element: group
+        text: errors,gdpr_IV_35.7.d,
+    - element: rule
+      attributes:
+        id: '81504'
+        level: '7'
+      children:
+      - element: if_sid
+        text: '81501'
+      - element: match
+        text: ': File "'
+      - element: description
+        text: 'OpenSCAP ERROR: Wrong configuration - Inexistent policy.'
+      - element: group
+        text: errors,gdpr_IV_35.7.d,
+    - element: rule
+      attributes:
+        id: '81505'
+        level: '7'
+      children:
+      - element: if_sid
+        text: '81501'
+      - element: match
+        text: 'Parsing file '
+      - element: description
+        text: 'OpenSCAP ERROR: Wrong configuration - Invalid policy.'
+      - element: group
+        text: errors,gdpr_IV_35.7.d,
+    - element: rule
+      attributes:
+        id: '81506'
+        level: '7'
+      children:
+      - element: if_sid
+        text: '81501'
+      - element: match
+        text: Executing profile
+      - element: description
+        text: 'OpenSCAP ERROR: Problem executing oscap.'
+      - element: group
+        text: errors,gdpr_IV_35.7.d,
+    - element: rule
+      attributes:
+        id: '81507'
+        level: '7'
+      children:
+      - element: if_sid
+        text: '81501'
+      - element: match
+        text: Profile
+      - element: description
+        text: 'OpenSCAP ERROR: Wrong configuration - Inexistent profile.'
+      - element: group
+        text: errors,gdpr_IV_35.7.d,
+    - element: rule
+      attributes:
+        id: '81508'
+        level: '7'
+      children:
+      - element: if_sid
+        text: '81501'
+      - element: match
+        text: Timeout expired
+      - element: description
+        text: 'OpenSCAP ERROR: Timeout expired'
+      - element: group
+        text: errors,gdpr_IV_35.7.d,
+    - element: rule
+      attributes:
+        id: '81509'
+        level: '7'
+      children:
+      - element: if_sid
+        text: '81501'
+      - element: match
+        text: xsltproc not installed
+      - element: description
+        text: 'OpenSCAP ERROR: xsltproc not installed.'
+      - element: group
+        text: errors,gdpr_IV_35.7.d,
+    - element: rule
+      attributes:
+        id: '81520'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '81400'
+      - element: match
+        text: 'msg: "xccdf-result"'
+      - element: description
+        text: OpenSCAP XCCDF messages grouped.
+      - element: group
+        text: oscap-result,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,
+    - element: rule
+      attributes:
+        id: '81521'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '81520'
+      - element: field
+        attributes:
+          name: oscap.check.result
+        text: pass
+      - element: description
+        text: 'OpenSCAP: $(oscap.check.title) (passed)'
+      - element: group
+        text: oscap-result,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,
+    - element: rule
+      attributes:
+        id: '81522'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '81520'
+      - element: field
+        attributes:
+          name: oscap.check.result
+        text: notchecked
+      - element: description
+        text: 'OpenSCAP: $(oscap.check.title) (not checked)'
+      - element: group
+        text: oscap-result,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,
+    - element: rule
+      attributes:
+        id: '81523'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '81520'
+      - element: field
+        attributes:
+          name: oscap.check.result
+        text: notapplicable
+      - element: description
+        text: 'OpenSCAP: $(oscap.check.title) (not applied)'
+      - element: group
+        text: oscap-result,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,
+    - element: rule
+      attributes:
+        id: '81524'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '81520'
+      - element: field
+        attributes:
+          name: oscap.check.result
+        text: fixed
+      - element: description
+        text: 'OpenSCAP: $(oscap.check.title) (fixed)'
+      - element: group
+        text: oscap-result,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,
+    - element: rule
+      attributes:
+        id: '81525'
+        level: '1'
+      children:
+      - element: if_sid
+        text: '81520'
+      - element: field
+        attributes:
+          name: oscap.check.result
+        text: informational
+      - element: description
+        text: 'OpenSCAP: $(oscap.check.title) (informational)'
+      - element: group
+        text: oscap-result,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,
+    - element: rule
+      attributes:
+        id: '81526'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '81520'
+      - element: field
+        attributes:
+          name: oscap.check.result
+        text: error
+      - element: description
+        text: 'OpenSCAP: $(oscap.check.title) (error)'
+      - element: group
+        text: oscap-result,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '81527'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '81520'
+      - element: field
+        attributes:
+          name: oscap.check.result
+        text: unknown
+      - element: description
+        text: 'OpenSCAP: $(oscap.check.title) (unknown)'
+      - element: group
+        text: oscap-result,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '81528'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '81520'
+      - element: field
+        attributes:
+          name: oscap.check.result
+        text: notselected
+      - element: description
+        text: 'OpenSCAP: $(oscap.check.title) (not selected)'
+      - element: group
+        text: oscap-result,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,
+    - element: rule
+      attributes:
+        id: '81529'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '81520'
+      - element: field
+        attributes:
+          name: oscap.check.result
+        text: fail
+      - element: description
+        text: 'OpenSCAP: $(oscap.check.title) (not passed)'
+      - element: group
+        text: oscap-result,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '81530'
+        level: '7'
+      children:
+      - element: if_sid
+        text: '81529'
+      - element: field
+        attributes:
+          name: oscap.check.severity
+        text: medium
+      - element: description
+        text: 'OpenSCAP: $(oscap.check.title) (not passed)'
+      - element: group
+        text: oscap-result,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '81531'
+        level: '9'
+      children:
+      - element: if_sid
+        text: '81529'
+      - element: field
+        attributes:
+          name: oscap.check.severity
+        text: high
+      - element: description
+        text: 'OpenSCAP: $(oscap.check.title) (not passed)'
+      - element: group
+        text: oscap-result,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '81540'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '81400'
+      - element: match
+        text: 'msg: "xccdf-overview"'
+      - element: description
+        text: OpenSCAP Report overview.
+      - element: group
+        text: oscap-report,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,
+    - element: rule
+      attributes:
+        id: '81541'
+        level: '4'
+      children:
+      - element: if_sid
+        text: '81540'
+      - element: field
+        attributes:
+          name: oscap.scan.score
+        text: 8\d.
+      - element: description
+        text: 'OpenSCAP Report overview: Score less than 90'
+      - element: group
+        text: oscap-report,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,
+    - element: rule
+      attributes:
+        id: '81542'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '81540'
+      - element: field
+        attributes:
+          name: oscap.scan.score
+        text: 7\d.|6\d.|5\d.
+      - element: description
+        text: 'OpenSCAP Report overview: Score less than 80'
+      - element: group
+        text: oscap-report,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,
+    - element: rule
+      attributes:
+        id: '81543'
+        level: '7'
+      children:
+      - element: if_sid
+        text: '81540'
+      - element: field
+        attributes:
+          name: oscap.scan.score
+        text: 4\d.|3\d.\d+
+      - element: description
+        text: 'OpenSCAP Report overview: Score less than 50'
+      - element: group
+        text: oscap-report,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,
+    - element: rule
+      attributes:
+        id: '81544'
+        level: '9'
+      children:
+      - element: if_sid
+        text: '81540'
+      - element: field
+        attributes:
+          name: oscap.scan.score
+        text: 2\d.|1\d.|^\d.
+      - element: description
+        text: 'OpenSCAP Report overview: Score less than 30'
+      - element: group
+        text: oscap-report,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,
+    - element: rule
+      attributes:
+        id: '81550'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '81400'
+      - element: match
+        text: 'msg: "oval-result"'
+      - element: description
+        text: OpenSCAP OVAL messages grouped.
+      - element: group
+        text: oscap-result,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,
+    - element: rule
+      attributes:
+        id: '81551'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '81550'
+      - element: field
+        attributes:
+          name: oscap.check.result
+        text: pass
+      - element: description
+        text: 'OpenSCAP: $(oscap.check.title) (passed)'
+      - element: group
+        text: oscap-result,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,
+    - element: rule
+      attributes:
+        id: '81552'
+        level: '7'
+      children:
+      - element: if_sid
+        text: '81550'
+      - element: field
+        attributes:
+          name: oscap.check.result
+        text: fail
+      - element: description
+        text: 'OpenSCAP: $(oscap.check.title) (not passed)'
+      - element: group
+        text: oscap-result,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '81560'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '81400'
+      - element: match
+        text: 'msg: "oval-overview"'
+      - element: description
+        text: OpenSCAP Report overview.
+      - element: group
+        text: oscap-report,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,
+    - element: rule
+      attributes:
+        id: '81561'
+        level: '4'
+      children:
+      - element: if_sid
+        text: '81560'
+      - element: field
+        attributes:
+          name: oscap.scan.score
+        text: 8\d.
+      - element: description
+        text: 'OpenSCAP Report overview: Score less than 90'
+      - element: group
+        text: oscap-report,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,
+    - element: rule
+      attributes:
+        id: '81562'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '81560'
+      - element: field
+        attributes:
+          name: oscap.scan.score
+        text: 7\d.|6\d.|5\d.
+      - element: description
+        text: 'OpenSCAP Report overview: Score less than 80'
+      - element: group
+        text: oscap-report,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,
+    - element: rule
+      attributes:
+        id: '81563'
+        level: '7'
+      children:
+      - element: if_sid
+        text: '81560'
+      - element: field
+        attributes:
+          name: oscap.scan.score
+        text: 4\d.|3\d.\d+
+      - element: description
+        text: 'OpenSCAP Report overview: Score less than 50'
+      - element: group
+        text: oscap-report,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,
+    - element: rule
+      attributes:
+        id: '81564'
+        level: '9'
+      children:
+      - element: if_sid
+        text: '81560'
+      - element: field
+        attributes:
+          name: oscap.scan.score
+        text: 2\d.|1\d.|^\d.
+      - element: description
+        text: 'OpenSCAP Report overview: Score less than 30'
+      - element: group
+        text: oscap-report,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,
+  original_xml: |
+    <!--
+      -  OpenSCAP rules
+      -  Created by Wazuh, Inc.
+      -  Copyright (C) 2015, Wazuh Inc.
+      -  This program is a free software; you can redistribute it and/or modify it under the terms of GPLv2.
+    -->
+
+    <!--
+    ID Range:
+    OpenSCAP syslog messages: 81400 - 81499
+    Wodle OpenSCAP: 81500 - 81600
+    -->
+
+    <group name="oscap,">
+
+        <rule id="81400" level="0">
+            <decoded_as>oscap</decoded_as>
+            <description>OpenSCAP messages grouped.</description>
+        </rule>
+
+        <!-- Syslog messages -->
+
+        <!--
+        Apr 12 10:50:32 centos oscap: Evaluation started. Content: /usr/share/xml/scap/ssg/content/ssg-centos7-ds.xml, Profile: xccdf_org.ssgproject.content_profile_standard.
+        -->
+        <rule id="81401" level="0">
+            <if_sid>81400</if_sid>
+            <match>Evaluation started</match>
+            <description>OpenSCAP: Evaluation started.</description>
+            <group>syslog,</group>
+        </rule>
+
+        <!--
+        Apr 12 10:50:42 centos oscap: Evaluation finished. Return code: 0, Base score 100.000000.
+        -->
+        <rule id="81402" level="0">
+            <if_sid>81400</if_sid>
+            <match>Evaluation finished</match>
+            <description>OpenSCAP: Evaluation finished.</description>
+            <group>syslog,</group>
+        </rule>
+
+        <!--
+        Apr 12 10:50:42 centos oscap: Evaluation finished. Return code: 2, Base score 100.000000.
+        -->
+        <rule id="81403" level="0">
+            <if_sid>81402</if_sid>
+            <field name="oscap.scan.return_code">2</field>
+            <description>OpenSCAP: Evaluation finished with some failures.</description>
+            <group>syslog,</group>
+        </rule>
+
+        <!-- -->
+
+
+
+        <!-- OSCAP OSSEC Module -->
+
+
+        <!-- ERRORS -->
+
+        <rule id="81501" level="7">
+            <if_sid>81400</if_sid>
+            <match>oscap: ERROR: </match>
+            <description>OpenSCAP: Error messages grouped.</description>
+            <group>errors,gdpr_IV_35.7.d,</group>
+        </rule>
+
+        <!--
+        oscap: ERROR: OpenSCAP not installed. Details: [Errno 2] No such file or directory
+        -->
+        <rule id="81502" level="7">
+            <if_sid>81501</if_sid>
+            <match>OpenSCAP not installed</match>
+            <description>OpenSCAP ERROR: OpenSCAP not installed.</description>
+            <group>errors,gdpr_IV_35.7.d,</group>
+        </rule>
+
+        <!--
+        oscap: ERROR: Impossible to execute OpenSCAP...
+        -->
+        <rule id="81503" level="7">
+            <if_sid>81501</if_sid>
+            <match>Impossible to execute OpenSCAP</match>
+            <description>OpenSCAP ERROR: Impossible to execute OpenSCAP.</description>
+            <group>errors,gdpr_IV_35.7.d,</group>
+        </rule>
+
+        <!--
+        oscap: ERROR: File "checklists/ssg-centos7dfa-axccdf.xml" does not exist.
+        -->
+        <rule id="81504" level="7">
+            <if_sid>81501</if_sid>
+            <match>: File "</match>
+            <description>OpenSCAP ERROR: Wrong configuration - Inexistent policy.</description>
+            <group>errors,gdpr_IV_35.7.d,</group>
+        </rule>
+
+        <!--
+        oscap: ERROR: Parsing file "a.xml". Details: "a.xml:1: parser error : Start tag expected, '<' not found".
+        -->
+        <rule id="81505" level="7">
+            <if_sid>81501</if_sid>
+            <match>Parsing file </match>
+            <description>OpenSCAP ERROR: Wrong configuration - Invalid policy.</description>
+            <group>errors,gdpr_IV_35.7.d,</group>
+        </rule>
+
+        <!--
+        oscap: ERROR: Executing profile "standard" of file "checklists/ssg-centos7-xccdf.xml": Return Code: "101" Error: "No such module: eva".
+        -->
+        <rule id="81506" level="7">
+            <if_sid>81501</if_sid>
+            <match>Executing profile</match>
+            <description>OpenSCAP ERROR: Problem executing oscap.</description>
+            <group>errors,gdpr_IV_35.7.d,</group>
+        </rule>
+
+        <!--
+        oscap: ERROR: Profile "kk" does not exist at "checklists/ssg-centos7-xccdf.xml".
+        -->
+        <rule id="81507" level="7">
+            <if_sid>81501</if_sid>
+            <match>Profile</match>
+            <description>OpenSCAP ERROR: Wrong configuration - Inexistent profile.</description>
+            <group>errors,gdpr_IV_35.7.d,</group>
+        </rule>
+
+        <!--
+        "oscap: ERROR: Timeout expired."
+        -->
+        <rule id="81508" level="7">
+            <if_sid>81501</if_sid>
+            <match>Timeout expired</match>
+            <description>OpenSCAP ERROR: Timeout expired</description>
+            <group>errors,gdpr_IV_35.7.d,</group>
+        </rule>
+
+        <!--
+        oscap: ERROR: xsltproc not installed. Details: [Errno 2] No such file or directory
+        -->
+        <rule id="81509" level="7">
+            <if_sid>81501</if_sid>
+            <match>xsltproc not installed</match>
+            <description>OpenSCAP ERROR: xsltproc not installed.</description>
+            <group>errors,gdpr_IV_35.7.d,</group>
+        </rule>
+
+        <!-- -->
+
+
+        <!-- XCCDF RULES -->
+
+        <!--
+        oscap: msg: "xccdf-result", scan-id: "0011477050403", content: "ssg-centos-7-ds.xml", title: "Ensure /tmp Located On Separate Partition", id: "xccdf_org.ssgproject.content_rule_partition_for_tmp", result: "???", severity: "low", description: "The /tmp directory is a world-writable directory used for temporary file storage. Ensure it has its own partition or logical volume at installation time, or migrate it using LVM.", rationale: "The /tmp partition is used as temporary storage by many programs. Placing /tmp in its own partition enables the setting of more restrictive mount options, which can help protect programs which use it." references: "SC-32 (http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53r4.pdf), Test attestation on 20120928 by MM (https://github.com/OpenSCAP/scap-security-guide/wiki/Contributors)", identifiers: "CCE-27173-4 (http://cce.mitre.org)", oval-id: "oval:ssg:def:522", benchmark-id: "xccdf_org.ssgproject.content_benchmark_RHEL-7", profile-id: "xccdf_org.ssgproject.content_profile_rht-ccp", profile-title: "CentOS Profile for Cloud Providers (CPCP)".
+        -->
+        <rule id="81520" level="0">
+            <if_sid>81400</if_sid>
+            <match>msg: "xccdf-result"</match>
+            <description>OpenSCAP XCCDF messages grouped.</description>
+            <group>oscap-result,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,</group>
+        </rule>
+
+        <!--
+        oscap: msg: "xccdf-result", scan-id: "0011477050403", content: "ssg-centos-7-ds.xml", title: "Ensure /tmp Located On Separate Partition", id: "xccdf_org.ssgproject.content_rule_partition_for_tmp", result: "pass", severity: "low", description: "The /tmp directory is a world-writable directory used for temporary file storage. Ensure it has its own partition or logical volume at installation time, or migrate it using LVM.", rationale: "The /tmp partition is used as temporary storage by many programs. Placing /tmp in its own partition enables the setting of more restrictive mount options, which can help protect programs which use it." references: "SC-32 (http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53r4.pdf), Test attestation on 20120928 by MM (https://github.com/OpenSCAP/scap-security-guide/wiki/Contributors)", identifiers: "CCE-27173-4 (http://cce.mitre.org)", oval-id: "oval:ssg:def:522", benchmark-id: "xccdf_org.ssgproject.content_benchmark_RHEL-7", profile-id: "xccdf_org.ssgproject.content_profile_rht-ccp", profile-title: "CentOS Profile for Cloud Providers (CPCP)".
+        -->
+
+        <rule id="81521" level="0">
+            <if_sid>81520</if_sid>
+            <field name="oscap.check.result">pass</field>
+            <description>OpenSCAP: $(oscap.check.title) (passed)</description>
+            <group>oscap-result,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,</group>
+        </rule>
+
+        <!--
+        oscap: msg: "xccdf-result", scan-id: "0011477050403", content: "ssg-centos-7-ds.xml", title: "Ensure /tmp Located On Separate Partition", id: "xccdf_org.ssgproject.content_rule_partition_for_tmp", result: "notchecked", severity: "low", description: "The /tmp directory is a world-writable directory used for temporary file storage. Ensure it has its own partition or logical volume at installation time, or migrate it using LVM.", rationale: "The /tmp partition is used as temporary storage by many programs. Placing /tmp in its own partition enables the setting of more restrictive mount options, which can help protect programs which use it." references: "SC-32 (http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53r4.pdf), Test attestation on 20120928 by MM (https://github.com/OpenSCAP/scap-security-guide/wiki/Contributors)", identifiers: "CCE-27173-4 (http://cce.mitre.org)", oval-id: "oval:ssg:def:522", benchmark-id: "xccdf_org.ssgproject.content_benchmark_RHEL-7", profile-id: "xccdf_org.ssgproject.content_profile_rht-ccp", profile-title: "CentOS Profile for Cloud Providers (CPCP)".
+        -->
+        <rule id="81522" level="0">
+            <if_sid>81520</if_sid>
+            <field name="oscap.check.result">notchecked</field>
+            <description>OpenSCAP: $(oscap.check.title) (not checked)</description>
+            <group>oscap-result,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,</group>
+        </rule>
+
+        <!--
+        oscap: msg: "xccdf-result", scan-id: "0011477050403", content: "ssg-centos-7-ds.xml", title: "Ensure /tmp Located On Separate Partition", id: "xccdf_org.ssgproject.content_rule_partition_for_tmp", result: "notapplicable", severity: "low", description: "The /tmp directory is a world-writable directory used for temporary file storage. Ensure it has its own partition or logical volume at installation time, or migrate it using LVM.", rationale: "The /tmp partition is used as temporary storage by many programs. Placing /tmp in its own partition enables the setting of more restrictive mount options, which can help protect programs which use it." references: "SC-32 (http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53r4.pdf), Test attestation on 20120928 by MM (https://github.com/OpenSCAP/scap-security-guide/wiki/Contributors)", identifiers: "CCE-27173-4 (http://cce.mitre.org)", oval-id: "oval:ssg:def:522", benchmark-id: "xccdf_org.ssgproject.content_benchmark_RHEL-7", profile-id: "xccdf_org.ssgproject.content_profile_rht-ccp", profile-title: "CentOS Profile for Cloud Providers (CPCP)".
+        -->
+        <rule id="81523" level="0">
+            <if_sid>81520</if_sid>
+            <field name="oscap.check.result">notapplicable</field>
+            <description>OpenSCAP: $(oscap.check.title) (not applied)</description>
+            <group>oscap-result,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,</group>
+        </rule>
+
+        <!--
+        oscap: msg: "xccdf-result", scan-id: "0011477050403", content: "ssg-centos-7-ds.xml", title: "Ensure /tmp Located On Separate Partition", id: "xccdf_org.ssgproject.content_rule_partition_for_tmp", result: "fixed", severity: "low", description: "The /tmp directory is a world-writable directory used for temporary file storage. Ensure it has its own partition or logical volume at installation time, or migrate it using LVM.", rationale: "The /tmp partition is used as temporary storage by many programs. Placing /tmp in its own partition enables the setting of more restrictive mount options, which can help protect programs which use it." references: "SC-32 (http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53r4.pdf), Test attestation on 20120928 by MM (https://github.com/OpenSCAP/scap-security-guide/wiki/Contributors)", identifiers: "CCE-27173-4 (http://cce.mitre.org)", oval-id: "oval:ssg:def:522", benchmark-id: "xccdf_org.ssgproject.content_benchmark_RHEL-7", profile-id: "xccdf_org.ssgproject.content_profile_rht-ccp", profile-title: "CentOS Profile for Cloud Providers (CPCP)".
+        -->
+        <rule id="81524" level="0">
+            <if_sid>81520</if_sid>
+            <field name="oscap.check.result">fixed</field>
+            <description>OpenSCAP: $(oscap.check.title) (fixed)</description>
+            <group>oscap-result,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,</group>
+        </rule>
+
+        <!--
+        oscap: msg: "xccdf-result", scan-id: "0011477050403", content: "ssg-centos-7-ds.xml", title: "Ensure /tmp Located On Separate Partition", id: "xccdf_org.ssgproject.content_rule_partition_for_tmp", result: "informational", severity: "low", description: "The /tmp directory is a world-writable directory used for temporary file storage. Ensure it has its own partition or logical volume at installation time, or migrate it using LVM.", rationale: "The /tmp partition is used as temporary storage by many programs. Placing /tmp in its own partition enables the setting of more restrictive mount options, which can help protect programs which use it." references: "SC-32 (http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53r4.pdf), Test attestation on 20120928 by MM (https://github.com/OpenSCAP/scap-security-guide/wiki/Contributors)", identifiers: "CCE-27173-4 (http://cce.mitre.org)", oval-id: "oval:ssg:def:522", benchmark-id: "xccdf_org.ssgproject.content_benchmark_RHEL-7", profile-id: "xccdf_org.ssgproject.content_profile_rht-ccp", profile-title: "CentOS Profile for Cloud Providers (CPCP)".
+        -->
+        <rule id="81525" level="1">
+            <if_sid>81520</if_sid>
+            <field name="oscap.check.result">informational</field>
+            <description>OpenSCAP: $(oscap.check.title) (informational)</description>
+            <group>oscap-result,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,</group>
+        </rule>
+
+        <!--
+        oscap: msg: "xccdf-result", scan-id: "0011477050403", content: "ssg-centos-7-ds.xml", title: "Ensure /tmp Located On Separate Partition", id: "xccdf_org.ssgproject.content_rule_partition_for_tmp", result: "error", severity: "low", description: "The /tmp directory is a world-writable directory used for temporary file storage. Ensure it has its own partition or logical volume at installation time, or migrate it using LVM.", rationale: "The /tmp partition is used as temporary storage by many programs. Placing /tmp in its own partition enables the setting of more restrictive mount options, which can help protect programs which use it." references: "SC-32 (http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53r4.pdf), Test attestation on 20120928 by MM (https://github.com/OpenSCAP/scap-security-guide/wiki/Contributors)", identifiers: "CCE-27173-4 (http://cce.mitre.org)", oval-id: "oval:ssg:def:522", benchmark-id: "xccdf_org.ssgproject.content_benchmark_RHEL-7", profile-id: "xccdf_org.ssgproject.content_profile_rht-ccp", profile-title: "CentOS Profile for Cloud Providers (CPCP)".
+        -->
+        <rule id="81526" level="3">
+            <if_sid>81520</if_sid>
+            <field name="oscap.check.result">error</field>
+            <description>OpenSCAP: $(oscap.check.title) (error)</description>
+            <group>oscap-result,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,</group>
+            <options>no_full_log</options>
+        </rule>
+
+        <!--
+        oscap: msg: "xccdf-result", scan-id: "0011477050403", content: "ssg-centos-7-ds.xml", title: "Ensure /tmp Located On Separate Partition", id: "xccdf_org.ssgproject.content_rule_partition_for_tmp", result: "unknown", severity: "low", description: "The /tmp directory is a world-writable directory used for temporary file storage. Ensure it has its own partition or logical volume at installation time, or migrate it using LVM.", rationale: "The /tmp partition is used as temporary storage by many programs. Placing /tmp in its own partition enables the setting of more restrictive mount options, which can help protect programs which use it." references: "SC-32 (http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53r4.pdf), Test attestation on 20120928 by MM (https://github.com/OpenSCAP/scap-security-guide/wiki/Contributors)", identifiers: "CCE-27173-4 (http://cce.mitre.org)", oval-id: "oval:ssg:def:522", benchmark-id: "xccdf_org.ssgproject.content_benchmark_RHEL-7", profile-id: "xccdf_org.ssgproject.content_profile_rht-ccp", profile-title: "CentOS Profile for Cloud Providers (CPCP)".
+        -->
+        <rule id="81527" level="3">
+            <if_sid>81520</if_sid>
+            <field name="oscap.check.result">unknown</field>
+            <description>OpenSCAP: $(oscap.check.title) (unknown)</description>
+            <group>oscap-result,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,</group>
+            <options>no_full_log</options>
+        </rule>
+
+        <!--
+        oscap: msg: "xccdf-result", scan-id: "0011477050403", content: "ssg-centos-7-ds.xml", title: "Ensure /tmp Located On Separate Partition", id: "xccdf_org.ssgproject.content_rule_partition_for_tmp", result: "notselected", severity: "low", description: "The /tmp directory is a world-writable directory used for temporary file storage. Ensure it has its own partition or logical volume at installation time, or migrate it using LVM.", rationale: "The /tmp partition is used as temporary storage by many programs. Placing /tmp in its own partition enables the setting of more restrictive mount options, which can help protect programs which use it." references: "SC-32 (http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53r4.pdf), Test attestation on 20120928 by MM (https://github.com/OpenSCAP/scap-security-guide/wiki/Contributors)", identifiers: "CCE-27173-4 (http://cce.mitre.org)", oval-id: "oval:ssg:def:522", benchmark-id: "xccdf_org.ssgproject.content_benchmark_RHEL-7", profile-id: "xccdf_org.ssgproject.content_profile_rht-ccp", profile-title: "CentOS Profile for Cloud Providers (CPCP)".
+        -->
+        <rule id="81528" level="0">
+            <if_sid>81520</if_sid>
+            <field name="oscap.check.result">notselected</field>
+            <description>OpenSCAP: $(oscap.check.title) (not selected)</description>
+            <group>oscap-result,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,</group>
+        </rule>
+
+        <!--
+        oscap: msg: "xccdf-result", scan-id: "0011477050403", content: "ssg-centos-7-ds.xml", title: "Ensure /tmp Located On Separate Partition", id: "xccdf_org.ssgproject.content_rule_partition_for_tmp", result: "fail", severity: "low", description: "The /tmp directory is a world-writable directory used for temporary file storage. Ensure it has its own partition or logical volume at installation time, or migrate it using LVM.", rationale: "The /tmp partition is used as temporary storage by many programs. Placing /tmp in its own partition enables the setting of more restrictive mount options, which can help protect programs which use it." references: "SC-32 (http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53r4.pdf), Test attestation on 20120928 by MM (https://github.com/OpenSCAP/scap-security-guide/wiki/Contributors)", identifiers: "CCE-27173-4 (http://cce.mitre.org)", oval-id: "oval:ssg:def:522", benchmark-id: "xccdf_org.ssgproject.content_benchmark_RHEL-7", profile-id: "xccdf_org.ssgproject.content_profile_rht-ccp", profile-title: "CentOS Profile for Cloud Providers (CPCP)".
+        oscap: msg: "xccdf-result", scan-id: "0011477050403", content: "ssg-centos-7-ds.xml", title: "Ensure /tmp Located On Separate Partition", id: "xccdf_org.ssgproject.content_rule_partition_for_tmp", result: "fail", severity: "medium", description: "The /tmp directory is a world-writable directory used for temporary file storage. Ensure it has its own partition or logical volume at installation time, or migrate it using LVM.", rationale: "The /tmp partition is used as temporary storage by many programs. Placing /tmp in its own partition enables the setting of more restrictive mount options, which can help protect programs which use it." references: "SC-32 (http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53r4.pdf), Test attestation on 20120928 by MM (https://github.com/OpenSCAP/scap-security-guide/wiki/Contributors)", identifiers: "CCE-27173-4 (http://cce.mitre.org)", oval-id: "oval:ssg:def:522", benchmark-id: "xccdf_org.ssgproject.content_benchmark_RHEL-7", profile-id: "xccdf_org.ssgproject.content_profile_rht-ccp", profile-title: "CentOS Profile for Cloud Providers (CPCP)".
+        oscap: msg: "xccdf-result", scan-id: "0011477050403", content: "ssg-centos-7-ds.xml", title: "Ensure /tmp Located On Separate Partition", id: "xccdf_org.ssgproject.content_rule_partition_for_tmp", result: "fail", severity: "high", description: "The /tmp directory is a world-writable directory used for temporary file storage. Ensure it has its own partition or logical volume at installation time, or migrate it using LVM.", rationale: "The /tmp partition is used as temporary storage by many programs. Placing /tmp in its own partition enables the setting of more restrictive mount options, which can help protect programs which use it." references: "SC-32 (http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53r4.pdf), Test attestation on 20120928 by MM (https://github.com/OpenSCAP/scap-security-guide/wiki/Contributors)", identifiers: "CCE-27173-4 (http://cce.mitre.org)", oval-id: "oval:ssg:def:522", benchmark-id: "xccdf_org.ssgproject.content_benchmark_RHEL-7", profile-id: "xccdf_org.ssgproject.content_profile_rht-ccp", profile-title: "CentOS Profile for Cloud Providers (CPCP)".
+        -->
+        <rule id="81529" level="5">
+            <if_sid>81520</if_sid>
+            <field name="oscap.check.result">fail</field>
+            <description>OpenSCAP: $(oscap.check.title) (not passed)</description>
+            <group>oscap-result,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,</group>
+            <options>no_full_log</options>
+        </rule>
+
+        <rule id="81530" level="7">
+            <if_sid>81529</if_sid>
+            <field name="oscap.check.severity">medium</field>
+            <description>OpenSCAP: $(oscap.check.title) (not passed)</description>
+            <group>oscap-result,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,</group>
+            <options>no_full_log</options>
+        </rule>
+
+        <rule id="81531" level="9">
+            <if_sid>81529</if_sid>
+            <field name="oscap.check.severity">high</field>
+            <description>OpenSCAP: $(oscap.check.title) (not passed)</description>
+            <group>oscap-result,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,</group>
+            <options>no_full_log</options>
+        </rule>
+
+        <!-- -->
+
+
+        <!-- Report Overview -->
+
+        <!--
+        oscap: msg: "xccdf-overview", scan-id: "0011477050403", content: "ssg-centos-7-ds.xml", benchmark-id: "xccdf_org.ssgproject.content_benchmark_RHEL-7", profile-id: "xccdf_org.ssgproject.content_profile_common", profile-title: "Common Profile for General-Purpose Systems", score: "62.500000".
+        -->
+        <rule id="81540" level="3">
+            <if_sid>81400</if_sid>
+            <match>msg: "xccdf-overview"</match>
+            <description>OpenSCAP Report overview.</description>
+            <group>oscap-report,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,</group>
+        </rule>
+
+        <rule id="81541" level="4">
+            <if_sid>81540</if_sid>
+            <field name="oscap.scan.score">8\d.</field>
+            <description>OpenSCAP Report overview: Score less than 90</description>
+            <group>oscap-report,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,</group>
+        </rule>
+
+        <rule id="81542" level="5">
+            <if_sid>81540</if_sid>
+            <field name="oscap.scan.score">7\d.|6\d.|5\d.</field>
+            <description>OpenSCAP Report overview: Score less than 80</description>
+            <group>oscap-report,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,</group>
+        </rule>
+
+        <rule id="81543" level="7">
+            <if_sid>81540</if_sid>
+            <field name="oscap.scan.score">4\d.|3\d.\d+</field>
+            <description>OpenSCAP Report overview: Score less than 50</description>
+            <group>oscap-report,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,</group>
+        </rule>
+
+        <rule id="81544" level="9">
+            <if_sid>81540</if_sid>
+            <field name="oscap.scan.score">2\d.|1\d.|^\d.</field>
+            <description>OpenSCAP Report overview: Score less than 30</description>
+            <group>oscap-report,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,</group>
+        </rule>
+
+        <!--  -->
+
+        <!-- OVAL RULES -->
+
+        <!--
+        oscap: msg: "oval-result", scan-id: "0011477050403", content: "cve-ubuntu-xenial-oval.xml", title: "CVE-2002-2439 on Ubuntu 16.04 LTS (xenial) - low.", id: "oval:com.ubuntu.xenial:def:20022439000", result: "??", description: "operator new[] sometimes returns pointers to heap blocks which are too small. When a new array is allocated, the C++ run-time has to calculate its size. The product may exceed the maximum value which can be stored in a machine register. This error is ignored, and the truncated value is used for the heap allocation. This may lead to heap overflows and therefore security bugs. (See http://cert.uni-stuttgart.de/advisories/calloc.php for further references.)", profile-title: "vulnerability", reference: "CVE-2002-2439 (https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2002-2439)".
+        -->
+        <rule id="81550" level="0">
+            <if_sid>81400</if_sid>
+            <match>msg: "oval-result"</match>
+            <description>OpenSCAP OVAL messages grouped.</description>
+            <group>oscap-result,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,</group>
+        </rule>
+
+        <!--
+        oscap: msg: "oval-result", scan-id: "0011477050403", content: "cve-ubuntu-xenial-oval.xml", title: "CVE-2002-2439 on Ubuntu 16.04 LTS (xenial) - low.", id: "oval:com.ubuntu.xenial:def:20022439000", result: "pass", description: "operator new[] sometimes returns pointers to heap blocks which are too small. When a new array is allocated, the C++ run-time has to calculate its size. The product may exceed the maximum value which can be stored in a machine register. This error is ignored, and the truncated value is used for the heap allocation. This may lead to heap overflows and therefore security bugs. (See http://cert.uni-stuttgart.de/advisories/calloc.php for further references.)", profile-title: "vulnerability", reference: "CVE-2002-2439 (https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2002-2439)".
+        oscap: msg: "oval-result", scan-id: "0011477050403", content: "cve-ubuntu-xenial-oval.xml", title: "CVE-2002-2439 on Ubuntu 16.04 LTS (xenial) - low.", id: "oval:com.ubuntu.xenial:def:20022439000", result: "pass", description: "operator new[] sometimes returns pointers to heap blocks which are too small. When a new array is allocated, the C++ run-time has to calculate its size. The product may exceed the maximum value which can be stored in a machine register. This error is ignored, and the truncated value is used for the heap allocation. This may lead to heap overflows and therefore security bugs. (See http://cert.uni-stuttgart.de/advisories/calloc.php for further references.)", profile-title: "inventory", reference: "CVE-2002-2439 (https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2002-2439)".
+        oscap: msg: "oval-result", scan-id: "0011477050403", content: "cve-ubuntu-xenial-oval.xml", title: "CVE-2002-2439 on Ubuntu 16.04 LTS (xenial) - low.", id: "oval:com.ubuntu.xenial:def:20022439000", result: "fail", description: "operator new[] sometimes returns pointers to heap blocks which are too small. When a new array is allocated, the C++ run-time has to calculate its size. The product may exceed the maximum value which can be stored in a machine register. This error is ignored, and the truncated value is used for the heap allocation. This may lead to heap overflows and therefore security bugs. (See http://cert.uni-stuttgart.de/advisories/calloc.php for further references.)", profile-title: "compliance", reference: "CVE-2002-2439 (https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2002-2439)".
+        oscap: msg: "oval-result", scan-id: "0011477050403", content: "cve-ubuntu-xenial-oval.xml", title: "CVE-2002-2439 on Ubuntu 16.04 LTS (xenial) - low.", id: "oval:com.ubuntu.xenial:def:20022439000", result: "fail", description: "operator new[] sometimes returns pointers to heap blocks which are too small. When a new array is allocated, the C++ run-time has to calculate its size. The product may exceed the maximum value which can be stored in a machine register. This error is ignored, and the truncated value is used for the heap allocation. This may lead to heap overflows and therefore security bugs. (See http://cert.uni-stuttgart.de/advisories/calloc.php for further references.)", profile-title: "patch", reference: "CVE-2002-2439 (https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2002-2439)".
+        -->
+        <rule id="81551" level="0">
+            <if_sid>81550</if_sid>
+            <field name="oscap.check.result">pass</field>
+            <description>OpenSCAP: $(oscap.check.title) (passed)</description>
+            <group>oscap-result,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,</group>
+        </rule>
+
+        <rule id="81552" level="7">
+            <if_sid>81550</if_sid>
+            <field name="oscap.check.result">fail</field>
+            <description>OpenSCAP: $(oscap.check.title) (not passed)</description>
+            <group>oscap-result,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,</group>
+            <options>no_full_log</options>
+        </rule>
+
+
+        <!-- Report Overview -->
+
+        <!--
+        oscap: msg: "oval-overview", scan-id: "0011477050403", content: "com.ubuntu.xenial.cve.oval.xml", score: "48.19".
+        -->
+        <rule id="81560" level="3">
+            <if_sid>81400</if_sid>
+            <match>msg: "oval-overview"</match>
+            <description>OpenSCAP Report overview.</description>
+            <group>oscap-report,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,</group>
+        </rule>
+
+        <rule id="81561" level="4">
+            <if_sid>81560</if_sid>
+            <field name="oscap.scan.score">8\d.</field>
+            <description>OpenSCAP Report overview: Score less than 90</description>
+            <group>oscap-report,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,</group>
+        </rule>
+
+        <rule id="81562" level="5">
+            <if_sid>81560</if_sid>
+            <field name="oscap.scan.score">7\d.|6\d.|5\d.</field>
+            <description>OpenSCAP Report overview: Score less than 80</description>
+            <group>oscap-report,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,</group>
+        </rule>
+
+        <rule id="81563" level="7">
+            <if_sid>81560</if_sid>
+            <field name="oscap.scan.score">4\d.|3\d.\d+</field>
+            <description>OpenSCAP Report overview: Score less than 50</description>
+            <group>oscap-report,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,</group>
+        </rule>
+
+        <rule id="81564" level="9">
+            <if_sid>81560</if_sid>
+            <field name="oscap.scan.score">2\d.|1\d.|^\d.</field>
+            <description>OpenSCAP Report overview: Score less than 30</description>
+            <group>oscap-report,pci_dss_2.2,nist_800_53_CM.1,tsc_CC6.8,tsc_CC7.1,tsc_CC7.2,tsc_CC8.1,</group>
+        </rule>
+
+    </group>

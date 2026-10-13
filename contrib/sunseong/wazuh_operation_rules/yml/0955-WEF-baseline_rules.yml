@@ -1,0 +1,491 @@
+schema: wazuh-original-rules-yaml/v1
+format_only_conversion: true
+native_runtime_format: Wazuh XML
+authoritative_field: sources[].original_xml
+upstream:
+  repository: https://github.com/wazuh/wazuh
+  tag: v4.14.8
+  commit: f470ad7db717b18db7feeed568949643698f0f34
+sources:
+- file: ruleset/rules/0955-WEF-baseline_rules.xml
+  url: https://github.com/wazuh/wazuh/blob/f470ad7db717b18db7feeed568949643698f0f34/ruleset/rules/0955-WEF-baseline_rules.xml
+  sha256: b32c60e97dd06d30f8918c72ddf20fddd19c3e928b91a8082dc17193588b209a
+  rule_count: 19
+  elements:
+  - element: group
+    attributes:
+      name: windows, WEF
+    children:
+    - element: rule
+      attributes:
+        id: '67011'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '60009'
+      - element: field
+        attributes:
+          name: win.system.providerName
+        text: Microsoft-Windows-AppLocker
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: '8002'
+      - element: description
+        text: 'Applocker: $(win.eventdata.message), according to rule $(win.ruleAndFileData.ruleName).'
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '67012'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '60010'
+      - element: field
+        attributes:
+          name: win.system.providerName
+        text: Microsoft-Windows-AppLocker
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: '8003'
+      - element: description
+        text: 'Applocker: $(win.eventdata.message), according to rule $(win.ruleAndFileData.ruleName).'
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '67013'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '60011'
+      - element: field
+        attributes:
+          name: win.system.providerName
+        text: Microsoft-Windows-AppLocker
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: '8004'
+      - element: description
+        text: 'Applocker: $(win.eventdata.message), according to rule $(win.ruleAndFileData.ruleName).'
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '67014'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '60009'
+      - element: field
+        attributes:
+          name: win.system.providerName
+        text: Microsoft-Windows-TaskScheduler
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: '106'
+      - element: description
+        text: 'Task Scheduler: $(win.eventdata.message).'
+      - element: mitre
+        children:
+        - element: id
+          text: T1053.005
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '67015'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '60009'
+      - element: field
+        attributes:
+          name: win.system.providerName
+        text: Microsoft-Windows-TaskScheduler
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: '141'
+      - element: description
+        text: 'Task Scheduler: $(win.eventdata.message).'
+      - element: mitre
+        children:
+        - element: id
+          text: T1053.005
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '67016'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '60009'
+      - element: field
+        attributes:
+          name: win.system.providerName
+        text: Microsoft-Windows-TaskScheduler
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: '142'
+      - element: description
+        text: 'Task Scheduler: $(win.eventdata.message).'
+      - element: mitre
+        children:
+        - element: id
+          text: T1053.005
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '67017'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '60103'
+      - element: field
+        attributes:
+          name: win.system.providerName
+        text: Microsoft-Windows-Security-Auditing
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: '5140'
+      - element: field
+        attributes:
+          name: win.eventdata.shareName
+          negate: 'yes'
+        text: IPC$|NetLogon
+      - element: description
+        text: A network share was accessed.
+      - element: mitre
+        children:
+        - element: id
+          text: T1021.002
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '67018'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '61100'
+      - element: field
+        attributes:
+          name: win.system.providerName
+        text: User32
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: '1074'
+      - element: description
+        text: System shutdown initiated.
+      - element: mitre
+        children:
+        - element: id
+          text: T1529
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '67019'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '60009'
+      - element: field
+        attributes:
+          name: win.system.providerName
+        text: Microsoft-Windows-AppLocker
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: '8020'
+      - element: description
+        text: 'Applocker: $(win.eventdata.message), according to rule $(win.ruleAndFileData.ruleName).'
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '67020'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '60010'
+      - element: field
+        attributes:
+          name: win.system.providerName
+        text: Microsoft-Windows-AppLocker
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: '8021'
+      - element: description
+        text: 'Applocker: $(win.eventdata.message), according to rule $(win.ruleAndFileData.ruleName).'
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '67021'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '60011'
+      - element: field
+        attributes:
+          name: win.system.providerName
+        text: Microsoft-Windows-AppLocker
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: '8022'
+      - element: description
+        text: 'Applocker: $(win.eventdata.message), according to rule $(win.ruleAndFileData.ruleName).'
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '67022'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '60106'
+      - element: field
+        attributes:
+          name: win.eventdata.logonType
+          negate: 'yes'
+        text: 3|5
+      - element: description
+        text: Non network or service local logon.
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '67023'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '60137'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: '4634'
+      - element: field
+        attributes:
+          name: win.eventdata.logonType
+          negate: 'yes'
+        text: '3'
+      - element: description
+        text: Non service account logged off.
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '67024'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '60106'
+      - element: field
+        attributes:
+          name: win.eventdata.logonType
+        text: '5'
+      - element: field
+        attributes:
+          name: win.eventdata.targetUserSid
+          negate: 'yes'
+        text: ^S-1-5-18$|^S-1-5-19$|^S-1-5-20$
+      - element: description
+        text: Service logon event registered from non standard service account.
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '67025'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '60103'
+      - element: field
+        attributes:
+          name: win.system.providerName
+        text: Microsoft-Windows-Security-Auditing
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: '5142'
+      - element: description
+        text: A network share object was created.
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '67026'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '60103'
+      - element: field
+        attributes:
+          name: win.system.providerName
+        text: Microsoft-Windows-Security-Auditing
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: '5144'
+      - element: description
+        text: A network share object was deleted.
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '67027'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '60103'
+      - element: field
+        attributes:
+          name: win.system.providerName
+        text: Microsoft-Windows-Security-Auditing
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: '4688'
+      - element: description
+        text: A process was created.
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '67028'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '60103'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4672$
+      - element: field
+        attributes:
+          name: win.eventdata.subjectUserSid
+          negate: 'yes'
+        text: ^S-1-5-18$
+      - element: description
+        text: Special privileges assigned to new logon.
+      - element: mitre
+        children:
+        - element: id
+          text: T1484
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '67029'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '60009'
+      - element: field
+        attributes:
+          name: win.system.providerName
+        text: Microsoft-Windows-TerminalServices-ClientActiveXCore
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: '1024'
+      - element: description
+        text: 'RDP: $(win.system.message).'
+      - element: mitre
+        children:
+        - element: id
+          text: T1021.001
+      - element: options
+        text: no_full_log
+  original_xml: "<!--\n    Copyright (C) 2015, Wazuh Inc.\n-->\n\n<!--\n  WEF baseline for intrusion detection rules:\
+    \ 67011 - 67099\n-->\n\n<!-- This set of rules is based on the \"Baseline subscription query\" suggested by\
+    \ Microsoft for intrusion detection:\n     https://docs.microsoft.com/en-us/windows/security/threat-protection/use-windows-event-forwarding-to-assist-in-intrusion-detection\n\
+    \n     To make use of these rules make sure to configure Windows Audit and App-locker as indicated in\n    \
+    \ https://docs.microsoft.com/en-us/windows/security/threat-protection/use-windows-event-forwarding-to-assist-in-intrusion-detection#baseline-subscription-requirements.\n\
+    -->\n\n\n\n<group name=\"windows, WEF\">\n  <!-- Query 0: Anti-malware events. Covered by rules 62123 and 62126-->\n\
+    \n  <!-- Query 1: AppLocker EXE events or Script events -->\n  <rule id=\"67011\" level=\"3\">\n    <if_sid>60009</if_sid>\n\
+    \    <field name=\"win.system.providerName\">Microsoft-Windows-AppLocker</field>\n    <field name=\"win.system.eventID\"\
+    >8002</field>\n    <description>Applocker: $(win.eventdata.message), according to rule $(win.ruleAndFileData.ruleName).</description>\n\
+    \    <options>no_full_log</options>\n  </rule>\n\n  <rule id=\"67012\" level=\"3\">\n    <if_sid>60010</if_sid>\n\
+    \    <field name=\"win.system.providerName\">Microsoft-Windows-AppLocker</field>\n    <field name=\"win.system.eventID\"\
+    >8003</field>\n    <description>Applocker: $(win.eventdata.message), according to rule $(win.ruleAndFileData.ruleName).</description>\n\
+    \    <options>no_full_log</options>\n  </rule>\n\n  <rule id=\"67013\" level=\"3\">\n    <if_sid>60011</if_sid>\n\
+    \    <field name=\"win.system.providerName\">Microsoft-Windows-AppLocker</field>\n    <field name=\"win.system.eventID\"\
+    >8004</field>\n    <description>Applocker: $(win.eventdata.message), according to rule $(win.ruleAndFileData.ruleName).</description>\n\
+    \    <options>no_full_log</options>\n  </rule>\n\n  <!--Query 3: Task scheduler Tasks -->\n  <rule id=\"67014\"\
+    \ level=\"3\">\n    <if_sid>60009</if_sid>\n    <field name=\"win.system.providerName\">Microsoft-Windows-TaskScheduler</field>\n\
+    \    <field name=\"win.system.eventID\">106</field>\n    <description>Task Scheduler: $(win.eventdata.message).</description>\n\
+    \    <mitre>\n      <id>T1053.005</id>\n    </mitre>\n    <options>no_full_log</options>\n  </rule>\n\n  <rule\
+    \ id=\"67015\" level=\"3\">\n    <if_sid>60009</if_sid>\n    <field name=\"win.system.providerName\">Microsoft-Windows-TaskScheduler</field>\n\
+    \    <field name=\"win.system.eventID\">141</field>\n    <description>Task Scheduler: $(win.eventdata.message).</description>\n\
+    \    <mitre>\n      <id>T1053.005</id>\n    </mitre>\n    <options>no_full_log</options>\n  </rule>\n\n  <rule\
+    \ id=\"67016\" level=\"3\">\n    <if_sid>60009</if_sid>\n    <field name=\"win.system.providerName\">Microsoft-Windows-TaskScheduler</field>\n\
+    \    <field name=\"win.system.eventID\">142</field>\n    <description>Task Scheduler: $(win.eventdata.message).</description>\n\
+    \    <mitre>\n      <id>T1053.005</id>\n    </mitre>\n    <options>no_full_log</options>\n  </rule>\n\n  <!--Query\
+    \ 5: Services: Covered by rule 60108 -->\n\n  <!--Query 6: Terminal services connect/reconnect: Covered by rule\
+    \ 60108-->\n\n  <!--Query 7: Network share object access without IPC$ and Netlogon shares -->\n  <rule id=\"\
+    67017\" level=\"3\">\n    <if_sid>60103</if_sid>\n    <field name=\"win.system.providerName\">Microsoft-Windows-Security-Auditing</field>\n\
+    \    <field name=\"win.system.eventID\">5140</field>\n    <field name=\"win.eventdata.shareName\" negate=\"\
+    yes\">IPC$|NetLogon</field>\n    <description>A network share was accessed.</description>\n    <mitre>\n   \
+    \   <id>T1021.002</id>\n    </mitre>\n    <options>no_full_log</options>\n  </rule>\n\n  <!--Query 8: System\
+    \ time change: Covered by rule 60132 -->\n\n  <!--Query 9: Shutdown initiate requests-->\n  <rule id=\"67018\"\
+    \ level=\"3\">\n    <if_sid>61100</if_sid>\n    <field name=\"win.system.providerName\">User32</field>\n   \
+    \ <field name=\"win.system.eventID\">1074</field>\n    <description>System shutdown initiated.</description>\n\
+    \    <mitre>\n      <id>T1529</id>\n    </mitre>\n    <options>no_full_log</options>\n  </rule>\n\n  <!--Query\
+    \ 10: Applocker packaged UI execution-->\n  <rule id=\"67019\" level=\"3\">\n    <if_sid>60009</if_sid>\n  \
+    \  <field name=\"win.system.providerName\">Microsoft-Windows-AppLocker</field>\n    <field name=\"win.system.eventID\"\
+    >8020</field>\n    <description>Applocker: $(win.eventdata.message), according to rule $(win.ruleAndFileData.ruleName).</description>\n\
+    \    <options>no_full_log</options>\n  </rule>\n\n  <rule id=\"67020\" level=\"3\">\n    <if_sid>60010</if_sid>\n\
+    \    <field name=\"win.system.providerName\">Microsoft-Windows-AppLocker</field>\n    <field name=\"win.system.eventID\"\
+    >8021</field>\n    <description>Applocker: $(win.eventdata.message), according to rule $(win.ruleAndFileData.ruleName).</description>\n\
+    \    <options>no_full_log</options>\n  </rule>\n\n  <rule id=\"67021\" level=\"3\">\n    <if_sid>60011</if_sid>\n\
+    \    <field name=\"win.system.providerName\">Microsoft-Windows-AppLocker</field>\n    <field name=\"win.system.eventID\"\
+    >8022</field>\n    <description>Applocker: $(win.eventdata.message), according to rule $(win.ruleAndFileData.ruleName).</description>\n\
+    \    <options>no_full_log</options>\n  </rule>\n\n  <!--Query 13: Event Log service events. Covered by rules\
+    \ in 0610-win-ms_logs_rules.xml-->\n\n  <!--Query 14: Local logons without network or service events -->\n \
+    \ <rule id=\"67022\" level=\"3\">\n    <if_sid>60106</if_sid>\n    <field name=\"win.eventdata.logonType\" negate=\"\
+    yes\">3|5</field>\n    <description>Non network or service local logon.</description>\n    <options>no_full_log</options>\n\
+    \  </rule>\n\n  <!--Query 16: Security Log cleared. Covered by rule 63103 -->\n\n  <!--Query 17: Log cleared\
+    \ events. Covered by rule 63104-->\n\n  <!--Query 18: User initiated logoff. Covered by rule 60137-->\n\n  <!--Query\
+    \ 19: user logoff for all non-network logon sessions-->\n  <rule id=\"67023\" level=\"3\">\n    <if_sid>60137</if_sid>\n\
+    \    <field name=\"win.system.eventID\">4634</field>\n    <field name=\"win.eventdata.logonType\" negate=\"\
+    yes\">3</field>\n    <description>Non service account logged off.</description>\n    <options>no_full_log</options>\n\
+    \  </rule>\n\n  <!--Query 20: Service logon events if the user account isn't LocalSystem, NetworkService, LocalService-->\n\
+    \  <rule id=\"67024\" level=\"3\">\n    <if_sid>60106</if_sid>\n    <field name=\"win.eventdata.logonType\"\
+    >5</field>\n    <field name=\"win.eventdata.targetUserSid\" negate=\"yes\">^S-1-5-18$|^S-1-5-19$|^S-1-5-20$</field>\n\
+    \    <description>Service logon event registered from non standard service account.</description>\n    <options>no_full_log</options>\n\
+    \  </rule>\n\n  <!--Query 21: Network create share and delete-->\n  <rule id=\"67025\" level=\"3\">\n    <if_sid>60103</if_sid>\n\
+    \    <field name=\"win.system.providerName\">Microsoft-Windows-Security-Auditing</field>\n    <field name=\"\
+    win.system.eventID\">5142</field>\n    <description>A network share object was created.</description>\n    <options>no_full_log</options>\n\
+    \  </rule>\n\n  <rule id=\"67026\" level=\"3\">\n    <if_sid>60103</if_sid>\n    <field name=\"win.system.providerName\"\
+    >Microsoft-Windows-Security-Auditing</field>\n    <field name=\"win.system.eventID\">5144</field>\n    <description>A\
+    \ network share object was deleted.</description>\n    <options>no_full_log</options>\n  </rule>\n\n  <!--Query\
+    \ 22: Process create-->\n  <rule id=\"67027\" level=\"3\">\n    <if_sid>60103</if_sid>\n    <field name=\"win.system.providerName\"\
+    >Microsoft-Windows-Security-Auditing</field>\n    <field name=\"win.system.eventID\">4688</field>\n    <description>A\
+    \ process was created.</description>\n    <options>no_full_log</options>\n  </rule>\n\n  <!--Query 26: Special\
+    \ privileges (Admin-equivalent Access) assigned to new logon, excluding LocalSystem.-->\n  <rule id=\"67028\"\
+    \ level=\"3\">\n    <if_sid>60103</if_sid>\n    <field name=\"win.system.eventID\">^4672$</field>\n    <field\
+    \ name=\"win.eventdata.subjectUserSid\" negate=\"yes\">^S-1-5-18$</field>\n    <description>Special privileges\
+    \ assigned to new logon.</description>\n    <mitre>\n      <id>T1484</id>\n    </mitre>\n    <options>no_full_log</options>\n\
+    \  </rule>\n\n  <!--Query 27: New user added to local security group. Covered by rule 60144-->\n\n  <!--Query\
+    \ 28: New user added to global security group. Covered by rule 60141-->\n\n  <!--Query 29: New user added to\
+    \ universal security group. Covered by rule 60151-->\n\n  <!-- Query 30: User removed from local Administrators\
+    \ group. Covered by rule 60154-->\n\n  <!-- Query 31: Log attempted TS connect to remote server-->\n  <rule\
+    \ id=\"67029\" level=\"3\">\n    <if_sid>60009</if_sid>\n    <field name=\"win.system.providerName\">Microsoft-Windows-TerminalServices-ClientActiveXCore</field>\n\
+    \    <field name=\"win.system.eventID\">1024</field>\n    <description>RDP: $(win.system.message).</description>\n\
+    \    <mitre>\n      <id>T1021.001</id>\n    </mitre>\n    <options>no_full_log</options>\n  </rule>\n\n  <!--Query\
+    \ 34: New User Account Created(4720), User Account Enabled (4722), User Account Disabled (4725), User Account\
+    \ Deleted (4726)\n              Covereded by rules: 60109 and 60111 -->\n  \n</group>\n"

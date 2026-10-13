@@ -1,0 +1,1175 @@
+schema: wazuh-original-rules-yaml/v1
+format_only_conversion: true
+native_runtime_format: Wazuh XML
+authoritative_field: sources[].original_xml
+upstream:
+  repository: https://github.com/wazuh/wazuh
+  tag: v4.14.8
+  commit: f470ad7db717b18db7feeed568949643698f0f34
+sources:
+- file: ruleset/rules/0601-win-vipre_rules.xml
+  url: https://github.com/wazuh/wazuh/blob/f470ad7db717b18db7feeed568949643698f0f34/ruleset/rules/0601-win-vipre_rules.xml
+  sha256: 32c035c92ca2237e59e2f4940c7ca2cf6697b05250e4f3849a492e594bf7726c
+  rule_count: 67
+  elements:
+  - element: group
+    attributes:
+      name: vipre,
+    children:
+    - element: rule
+      attributes:
+        id: '90499'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: match
+        text: SBAMSvc
+      - element: description
+        text: Vipre informational message
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90500'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4097$
+      - element: description
+        text: System shutdown complete
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90501'
+        level: '7'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4098$
+      - element: description
+        text: User initiated shutdown
+      - element: mitre
+        children:
+        - element: id
+          text: T1529
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90502'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4099$
+      - element: description
+        text: Service started application version
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90503'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4100$
+      - element: description
+        text: Service paused
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90504'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4101$
+      - element: description
+        text: Service resumed
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90505'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4102$
+      - element: description
+        text: The transfer of one or more threatNet files failed
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90506'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4103$
+      - element: description
+        text: Transfer occured
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90507'
+        level: '6'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4104$
+      - element: description
+        text: The start of the ThreatNet controller failed
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90508'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4105$
+      - element: description
+        text: Active protection enabled
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90509'
+        level: '7'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4106$
+      - element: description
+        text: Active protection disabled
+      - element: mitre
+        children:
+        - element: id
+          text: T1562.001
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90510'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4108$
+      - element: description
+        text: Active protection could not be enabled
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90511'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4109$
+      - element: description
+        text: Active protection could not be disabled
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90512'
+        level: '4'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4110$
+      - element: description
+        text: Active protection requires a reboot to fully protect your computer
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90513'
+        level: '4'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4111$
+      - element: description
+        text: Active protection could not be enabled because there are no threat definitions
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90514'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4112$
+      - element: description
+        text: Manual software update downloaded
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90515'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4113$
+      - element: description
+        text: Scheduled software update downloaded
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90516'
+        level: '4'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4114$
+      - element: description
+        text: Vipre was unable to complete the check for software updates
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90517'
+        level: '4'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4115$
+      - element: description
+        text: Vipre was unable to complete the check for software updates. It will retry on the next update event
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90518'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4116$
+      - element: description
+        text: The start of the software update controller failed
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90519'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4121$
+      - element: description
+        text: Definitions update applied
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90520'
+        level: '4'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4122$
+      - element: description
+        text: Definitions update cancelled
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90521'
+        level: '4'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4123$
+      - element: description
+        text: Vipre was unable to complete the check for threat definitions updates
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90522'
+        level: '4'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4124$
+      - element: description
+        text: Vipre was unable to complete the check for threat definitions updates. It will retry on the next update
+          event
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90523'
+        level: '6'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4125$
+      - element: description
+        text: Start of threat definitions controller failed
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90524'
+        level: '4'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4126$
+      - element: description
+        text: Cannot update threat definitions because your registration is expired
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90525'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4129$
+      - element: description
+        text: Completed scheduled deep scan
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90526'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4130$
+      - element: description
+        text: Completed manual deep scan
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90527'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4131$
+      - element: description
+        text: Completed scheduled quick scan
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90528'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4132$
+      - element: description
+        text: Completed manual quick scan
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90529'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4133$
+      - element: description
+        text: Completed scheduled custom scan
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90530'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4134$
+      - element: description
+        text: Completed manual custom scan
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90531'
+        level: '4'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4135$
+      - element: description
+        text: Scan cancelled
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90532'
+        level: '4'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4136$
+      - element: description
+        text: Reboot required
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90533'
+        level: '4'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4137$
+      - element: description
+        text: A scan of your computer failed because there are no threat definitions
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90534'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4138$
+      - element: description
+        text: Start of the scan controller failed
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90535'
+        level: '4'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4139$
+      - element: description
+        text: An item has been quarantined
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90536'
+        level: '4'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4140$
+      - element: description
+        text: An item has been restored from quarantine
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90537'
+        level: '6'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4141$
+      - element: description
+        text: An item has been deleted from quarantine
+      - element: mitre
+        children:
+        - element: id
+          text: T1070.004
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90538'
+        level: '4'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4142$
+      - element: description
+        text: The quarantine has been purged
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90539'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4143$
+      - element: description
+        text: The quarantine controller could not be started
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90540'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4145$
+      - element: description
+        text: Email AV enabled
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90541'
+        level: '4'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4146$
+      - element: description
+        text: Email AV disabled
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90542'
+        level: '4'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4147$
+      - element: description
+        text: Email protection is enabled but the drivers are not loaded
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90543'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4148$
+      - element: description
+        text: The scan of an email item failed
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90544'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4149$
+      - element: description
+        text: The scan of an email item failed because there are no threat definitions
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90545'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4250$
+      - element: description
+        text: Registration state changed
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90546'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4151$
+      - element: description
+        text: The registration controller could not be started
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90547'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4153$
+      - element: description
+        text: The scan control could not complete its scan
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90548'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4159$
+      - element: description
+        text: A scheduled scan was missed because the machine was powered off
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90549'
+        level: '4'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4160$
+      - element: description
+        text: Quarantine of an item failed
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90550'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4161$
+      - element: description
+        text: Restore of an item from quarantine failed
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90551'
+        level: '4'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4162$
+      - element: description
+        text: Delete of an from quarantine failed
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90552'
+        level: '4'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4163$
+      - element: description
+        text: The quarantine purge failed
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90553'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4165$
+      - element: description
+        text: Firewall enabled
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90554'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4166$
+      - element: description
+        text: Firewall disabled
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90555'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4167$
+      - element: description
+        text: IDS enabled
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90556'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4168$
+      - element: description
+        text: IDS disabled
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90557'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4169$
+      - element: description
+        text: Web filtering enabled
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90558'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4170$
+      - element: description
+        text: Web filtering disabled
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90559'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4171$
+      - element: description
+        text: Bad web site blocking enabled
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90560'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4172$
+      - element: description
+        text: Bad web site blocking disabled
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90561'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4173$
+      - element: description
+        text: HIPS enabled
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90562'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4174$
+      - element: description
+        text: HIPS disabled
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90563'
+        level: '4'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4175$
+      - element: description
+        text: Firewall resume all traffic
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90564'
+        level: '5'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4176$
+      - element: description
+        text: Firewall stops all traffic
+      - element: options
+        text: no_full_log
+    - element: rule
+      attributes:
+        id: '90565'
+        level: '4'
+      children:
+      - element: if_sid
+        text: '60600'
+      - element: field
+        attributes:
+          name: win.system.eventID
+        text: ^4177$
+      - element: description
+        text: Active protection blocked a process from accessing a file
+      - element: options
+        text: no_full_log
+  original_xml: "<!--\n  -  Vipre rules\n  -  Created by Wazuh, Inc.\n  -  Copyright (C) 2015, Wazuh Inc.\n  - \
+    \ This program is a free software; you can redistribute it and/or modify it under the terms of GPLv2.\n-->\n\
+    \n\n<group name=\"vipre,\">\n\n<rule id=\"90499\" level=\"3\">\n    <if_sid>60600</if_sid>\n    <match>SBAMSvc</match>\n\
+    \    <description>Vipre informational message</description>\n    <options>no_full_log</options>\n</rule>\n\n\
+    <rule id=\"90500\" level=\"5\">\n    <if_sid>60600</if_sid>\n    <field name=\"win.system.eventID\">^4097$</field>\n\
+    \    <description>System shutdown complete</description>\n    <options>no_full_log</options>\n</rule>\n  \n\
+    \  \n<rule id=\"90501\" level=\"7\">\n    <if_sid>60600</if_sid>\n    <field name=\"win.system.eventID\">^4098$</field>\n\
+    \    <description>User initiated shutdown</description>\n    <mitre>\n      <id>T1529</id>\n    </mitre>\n \
+    \   <options>no_full_log</options>\n</rule>\n  \n<rule id=\"90502\" level=\"3\">\n    <if_sid>60600</if_sid>\n\
+    \    <field name=\"win.system.eventID\">^4099$</field>\n    <description>Service started application version</description>\n\
+    \    <options>no_full_log</options>\n</rule>\n \n<rule id=\"90503\" level=\"5\">\n    <if_sid>60600</if_sid>\n\
+    \    <field name=\"win.system.eventID\">^4100$</field>\n    <description>Service paused</description>\n    <options>no_full_log</options>\n\
+    </rule>\n \n<rule id=\"90504\" level=\"3\">\n    <if_sid>60600</if_sid>\n    <field name=\"win.system.eventID\"\
+    >^4101$</field>\n    <description>Service resumed</description>\n    <options>no_full_log</options>\n</rule>\n\
+    \n<rule id=\"90505\" level=\"5\">\n    <if_sid>60600</if_sid>\n    <field name=\"win.system.eventID\">^4102$</field>\n\
+    \    <description>The transfer of one or more threatNet files failed</description>\n    <options>no_full_log</options>\n\
+    </rule>   \n \n<rule id=\"90506\" level=\"5\">\n    <if_sid>60600</if_sid>\n    <field name=\"win.system.eventID\"\
+    >^4103$</field>\n    <description>Transfer occured</description>\n    <options>no_full_log</options>\n</rule>\n\
+    \n<rule id=\"90507\" level=\"6\">\n    <if_sid>60600</if_sid>\n    <field name=\"win.system.eventID\">^4104$</field>\n\
+    \    <description>The start of the ThreatNet controller failed</description>\n    <options>no_full_log</options>\n\
+    </rule>\n\n<rule id=\"90508\" level=\"3\">\n    <if_sid>60600</if_sid>\n    <field name=\"win.system.eventID\"\
+    >^4105$</field>\n    <description>Active protection enabled</description>\n    <options>no_full_log</options>\n\
+    </rule>\n\n<rule id=\"90509\" level=\"7\">\n    <if_sid>60600</if_sid>\n    <field name=\"win.system.eventID\"\
+    >^4106$</field>\n    <description>Active protection disabled</description>\n    <mitre>\n      <id>T1562.001</id>\n\
+    \    </mitre>\n    <options>no_full_log</options>\n</rule>\n\n<rule id=\"90510\" level=\"5\">\n    <if_sid>60600</if_sid>\n\
+    \    <field name=\"win.system.eventID\">^4108$</field>\n    <description>Active protection could not be enabled</description>\n\
+    \    <options>no_full_log</options>\n</rule>\n\n<rule id=\"90511\" level=\"5\">\n    <if_sid>60600</if_sid>\n\
+    \    <field name=\"win.system.eventID\">^4109$</field>\n    <description>Active protection could not be disabled</description>\n\
+    \    <options>no_full_log</options>\n</rule>\n\n<rule id=\"90512\" level=\"4\">\n    <if_sid>60600</if_sid>\n\
+    \    <field name=\"win.system.eventID\">^4110$</field>\n    <description>Active protection requires a reboot\
+    \ to fully protect your computer</description>\n    <options>no_full_log</options>\n</rule>\n\n<rule id=\"90513\"\
+    \ level=\"4\">\n    <if_sid>60600</if_sid>\n    <field name=\"win.system.eventID\">^4111$</field>\n    <description>Active\
+    \ protection could not be enabled because there are no threat definitions</description>\n    <options>no_full_log</options>\n\
+    </rule>\n\n<rule id=\"90514\" level=\"3\">\n    <if_sid>60600</if_sid>\n    <field name=\"win.system.eventID\"\
+    >^4112$</field>\n    <description>Manual software update downloaded</description>\n    <options>no_full_log</options>\n\
+    </rule>\n\n<rule id=\"90515\" level=\"3\">\n    <if_sid>60600</if_sid>\n    <field name=\"win.system.eventID\"\
+    >^4113$</field>\n    <description>Scheduled software update downloaded</description>\n    <options>no_full_log</options>\n\
+    </rule>\n \n<rule id=\"90516\" level=\"4\">\n    <if_sid>60600</if_sid>\n    <field name=\"win.system.eventID\"\
+    >^4114$</field>\n    <description>Vipre was unable to complete the check for software updates</description>\n\
+    \    <options>no_full_log</options>\n</rule>\n\n<rule id=\"90517\" level=\"4\">\n    <if_sid>60600</if_sid>\n\
+    \    <field name=\"win.system.eventID\">^4115$</field>\n    <description>Vipre was unable to complete the check\
+    \ for software updates. It will retry on the next update event</description>\n    <options>no_full_log</options>\n\
+    </rule>\n \n<rule id=\"90518\" level=\"5\">\n    <if_sid>60600</if_sid>\n    <field name=\"win.system.eventID\"\
+    >^4116$</field>\n    <description>The start of the software update controller failed</description>\n    <options>no_full_log</options>\n\
+    </rule>\n\n<rule id=\"90519\" level=\"3\">\n    <if_sid>60600</if_sid>\n    <field name=\"win.system.eventID\"\
+    >^4121$</field>\n    <description>Definitions update applied</description>\n    <options>no_full_log</options>\n\
+    </rule>\n\n<rule id=\"90520\" level=\"4\">\n    <if_sid>60600</if_sid>\n    <field name=\"win.system.eventID\"\
+    >^4122$</field>\n    <description>Definitions update cancelled</description>\n    <options>no_full_log</options>\n\
+    </rule>\n\n<rule id=\"90521\" level=\"4\">\n    <if_sid>60600</if_sid>\n    <field name=\"win.system.eventID\"\
+    >^4123$</field>\n    <description>Vipre was unable to complete the check for threat definitions updates</description>\n\
+    \    <options>no_full_log</options>\n</rule>\n\n<rule id=\"90522\" level=\"4\">\n    <if_sid>60600</if_sid>\n\
+    \    <field name=\"win.system.eventID\">^4124$</field>\n    <description>Vipre was unable to complete the check\
+    \ for threat definitions updates. It will retry on the next update event</description>\n    <options>no_full_log</options>\n\
+    </rule>\n\n<rule id=\"90523\" level=\"6\">\n    <if_sid>60600</if_sid>\n    <field name=\"win.system.eventID\"\
+    >^4125$</field>\n    <description>Start of threat definitions controller failed</description>\n    <options>no_full_log</options>\n\
+    </rule>\n\n<rule id=\"90524\" level=\"4\">\n    <if_sid>60600</if_sid>\n    <field name=\"win.system.eventID\"\
+    >^4126$</field>\n    <description>Cannot update threat definitions because your registration is expired</description>\n\
+    \    <options>no_full_log</options>\n</rule>\n\n<rule id=\"90525\" level=\"3\">\n    <if_sid>60600</if_sid>\n\
+    \    <field name=\"win.system.eventID\">^4129$</field>\n    <description>Completed scheduled deep scan</description>\n\
+    \    <options>no_full_log</options>\n</rule>\n\n<rule id=\"90526\" level=\"3\">\n    <if_sid>60600</if_sid>\n\
+    \    <field name=\"win.system.eventID\">^4130$</field>\n    <description>Completed manual deep scan</description>\n\
+    \    <options>no_full_log</options>\n</rule>\n\n<rule id=\"90527\" level=\"3\">\n    <if_sid>60600</if_sid>\n\
+    \    <field name=\"win.system.eventID\">^4131$</field>\n    <description>Completed scheduled quick scan</description>\n\
+    \    <options>no_full_log</options>\n</rule>\n\n<rule id=\"90528\" level=\"3\">\n    <if_sid>60600</if_sid>\n\
+    \    <field name=\"win.system.eventID\">^4132$</field>\n    <description>Completed manual quick scan</description>\n\
+    \    <options>no_full_log</options>\n</rule>\n\n<rule id=\"90529\" level=\"3\">\n    <if_sid>60600</if_sid>\n\
+    \    <field name=\"win.system.eventID\">^4133$</field>\n    <description>Completed scheduled custom scan</description>\n\
+    \    <options>no_full_log</options>\n</rule>\n\n<rule id=\"90530\" level=\"3\">\n    <if_sid>60600</if_sid>\n\
+    \    <field name=\"win.system.eventID\">^4134$</field>\n    <description>Completed manual custom scan</description>\n\
+    \    <options>no_full_log</options>\n</rule>\n\n<rule id=\"90531\" level=\"4\">\n    <if_sid>60600</if_sid>\n\
+    \    <field name=\"win.system.eventID\">^4135$</field>\n    <description>Scan cancelled</description>\n    <options>no_full_log</options>\n\
+    </rule>\n\n<rule id=\"90532\" level=\"4\">\n    <if_sid>60600</if_sid>\n    <field name=\"win.system.eventID\"\
+    >^4136$</field>\n    <description>Reboot required</description>\n    <options>no_full_log</options>\n</rule>\n\
+    \n<rule id=\"90533\" level=\"4\">\n    <if_sid>60600</if_sid>\n    <field name=\"win.system.eventID\">^4137$</field>\n\
+    \    <description>A scan of your computer failed because there are no threat definitions</description>\n   \
+    \ <options>no_full_log</options>\n</rule>\n\n<rule id=\"90534\" level=\"5\">\n    <if_sid>60600</if_sid>\n \
+    \   <field name=\"win.system.eventID\">^4138$</field>\n    <description>Start of the scan controller failed</description>\n\
+    \    <options>no_full_log</options>\n</rule>\n\n<rule id=\"90535\" level=\"4\">\n    <if_sid>60600</if_sid>\n\
+    \    <field name=\"win.system.eventID\">^4139$</field>\n    <description>An item has been quarantined</description>\n\
+    \    <options>no_full_log</options>\n</rule>\n\n<rule id=\"90536\" level=\"4\">\n    <if_sid>60600</if_sid>\n\
+    \    <field name=\"win.system.eventID\">^4140$</field>\n    <description>An item has been restored from quarantine</description>\n\
+    \    <options>no_full_log</options>\n</rule>\n\n<rule id=\"90537\" level=\"6\">\n    <if_sid>60600</if_sid>\n\
+    \    <field name=\"win.system.eventID\">^4141$</field>\n    <description>An item has been deleted from quarantine</description>\n\
+    \    <mitre>\n        <id>T1070.004</id>\n    </mitre>\n    <options>no_full_log</options>\n</rule>\n\n<rule\
+    \ id=\"90538\" level=\"4\">\n    <if_sid>60600</if_sid>\n    <field name=\"win.system.eventID\">^4142$</field>\n\
+    \    <description>The quarantine has been purged</description>\n    <options>no_full_log</options>\n</rule>\n\
+    \n<rule id=\"90539\" level=\"5\">\n    <if_sid>60600</if_sid>\n    <field name=\"win.system.eventID\">^4143$</field>\n\
+    \    <description>The quarantine controller could not be started</description>\n    <options>no_full_log</options>\n\
+    </rule>\n\n<rule id=\"90540\" level=\"3\">\n    <if_sid>60600</if_sid>\n    <field name=\"win.system.eventID\"\
+    >^4145$</field>\n    <description>Email AV enabled</description>\n    <options>no_full_log</options>\n</rule>\n\
+    \n<rule id=\"90541\" level=\"4\">\n    <if_sid>60600</if_sid>\n    <field name=\"win.system.eventID\">^4146$</field>\n\
+    \    <description>Email AV disabled</description>\n    <options>no_full_log</options>\n</rule>\n\n<rule id=\"\
+    90542\" level=\"4\">\n    <if_sid>60600</if_sid>\n    <field name=\"win.system.eventID\">^4147$</field>\n  \
+    \  <description>Email protection is enabled but the drivers are not loaded</description>\n    <options>no_full_log</options>\n\
+    </rule>\n\n<rule id=\"90543\" level=\"5\">\n    <if_sid>60600</if_sid>\n    <field name=\"win.system.eventID\"\
+    >^4148$</field>\n    <description>The scan of an email item failed</description>\n    <options>no_full_log</options>\n\
+    </rule>\n\n<rule id=\"90544\" level=\"5\">\n    <if_sid>60600</if_sid>\n    <field name=\"win.system.eventID\"\
+    >^4149$</field>\n    <description>The scan of an email item failed because there are no threat definitions</description>\n\
+    \    <options>no_full_log</options>\n</rule>\n\n<rule id=\"90545\" level=\"3\">\n    <if_sid>60600</if_sid>\n\
+    \    <field name=\"win.system.eventID\">^4250$</field>\n    <description>Registration state changed</description>\n\
+    \    <options>no_full_log</options>\n</rule>\n\n<rule id=\"90546\" level=\"5\">\n    <if_sid>60600</if_sid>\n\
+    \    <field name=\"win.system.eventID\">^4151$</field>\n    <description>The registration controller could not\
+    \ be started</description>\n    <options>no_full_log</options>\n</rule>\n\n<rule id=\"90547\" level=\"5\">\n\
+    \    <if_sid>60600</if_sid>\n    <field name=\"win.system.eventID\">^4153$</field>\n    <description>The scan\
+    \ control could not complete its scan</description>\n    <options>no_full_log</options>\n</rule>\n\n<rule id=\"\
+    90548\" level=\"3\">\n    <if_sid>60600</if_sid>\n    <field name=\"win.system.eventID\">^4159$</field>\n  \
+    \  <description>A scheduled scan was missed because the machine was powered off</description>\n    <options>no_full_log</options>\n\
+    </rule>\n\n<rule id=\"90549\" level=\"4\">\n    <if_sid>60600</if_sid>\n    <field name=\"win.system.eventID\"\
+    >^4160$</field>\n    <description>Quarantine of an item failed</description>\n    <options>no_full_log</options>\n\
+    </rule>\n\n<rule id=\"90550\" level=\"5\">\n    <if_sid>60600</if_sid>\n    <field name=\"win.system.eventID\"\
+    >^4161$</field>\n    <description>Restore of an item from quarantine failed</description>\n    <options>no_full_log</options>\n\
+    </rule>\n\n<rule id=\"90551\" level=\"4\">\n    <if_sid>60600</if_sid>\n    <field name=\"win.system.eventID\"\
+    >^4162$</field>\n    <description>Delete of an from quarantine failed</description>\n    <options>no_full_log</options>\n\
+    </rule>\n\n\n<rule id=\"90552\" level=\"4\">\n    <if_sid>60600</if_sid>\n    <field name=\"win.system.eventID\"\
+    >^4163$</field>\n    <description>The quarantine purge failed</description>\n    <options>no_full_log</options>\n\
+    </rule>\n\n<rule id=\"90553\" level=\"3\">\n    <if_sid>60600</if_sid>\n    <field name=\"win.system.eventID\"\
+    >^4165$</field>\n    <description>Firewall enabled</description>\n    <options>no_full_log</options>\n</rule>\n\
+    \n<rule id=\"90554\" level=\"5\">\n    <if_sid>60600</if_sid>\n    <field name=\"win.system.eventID\">^4166$</field>\n\
+    \    <description>Firewall disabled</description>\n    <options>no_full_log</options>\n</rule>\n\n<rule id=\"\
+    90555\" level=\"3\">\n    <if_sid>60600</if_sid>\n    <field name=\"win.system.eventID\">^4167$</field>\n  \
+    \  <description>IDS enabled</description>\n    <options>no_full_log</options>\n</rule>\n\n<rule id=\"90556\"\
+    \ level=\"5\">\n    <if_sid>60600</if_sid>\n    <field name=\"win.system.eventID\">^4168$</field>\n    <description>IDS\
+    \ disabled</description>\n    <options>no_full_log</options>\n</rule>\n\n<rule id=\"90557\" level=\"3\">\n \
+    \   <if_sid>60600</if_sid>\n    <field name=\"win.system.eventID\">^4169$</field>\n    <description>Web filtering\
+    \ enabled</description>\n    <options>no_full_log</options>\n</rule>\n\n<rule id=\"90558\" level=\"5\">\n  \
+    \  <if_sid>60600</if_sid>\n    <field name=\"win.system.eventID\">^4170$</field>\n    <description>Web filtering\
+    \ disabled</description>\n    <options>no_full_log</options>\n</rule>\n\n<rule id=\"90559\" level=\"3\">\n \
+    \   <if_sid>60600</if_sid>\n    <field name=\"win.system.eventID\">^4171$</field>\n    <description>Bad web\
+    \ site blocking enabled</description>\n    <options>no_full_log</options>\n</rule>\n\n<rule id=\"90560\" level=\"\
+    5\">\n    <if_sid>60600</if_sid>\n    <field name=\"win.system.eventID\">^4172$</field>\n    <description>Bad\
+    \ web site blocking disabled</description>\n    <options>no_full_log</options>\n</rule>\n\n<rule id=\"90561\"\
+    \ level=\"3\">\n    <if_sid>60600</if_sid>\n    <field name=\"win.system.eventID\">^4173$</field>\n    <description>HIPS\
+    \ enabled</description>\n    <options>no_full_log</options>\n</rule>\n\n<rule id=\"90562\" level=\"5\">\n  \
+    \  <if_sid>60600</if_sid>\n    <field name=\"win.system.eventID\">^4174$</field>\n    <description>HIPS disabled</description>\n\
+    \    <options>no_full_log</options>\n</rule>\n\n<rule id=\"90563\" level=\"4\">\n    <if_sid>60600</if_sid>\n\
+    \    <field name=\"win.system.eventID\">^4175$</field>\n    <description>Firewall resume all traffic</description>\n\
+    \    <options>no_full_log</options>\n</rule>\n\n<rule id=\"90564\" level=\"5\">\n    <if_sid>60600</if_sid>\n\
+    \    <field name=\"win.system.eventID\">^4176$</field>\n    <description>Firewall stops all traffic</description>\n\
+    \    <options>no_full_log</options>\n</rule>\n\n<rule id=\"90565\" level=\"4\">\n    <if_sid>60600</if_sid>\n\
+    \    <field name=\"win.system.eventID\">^4177$</field>\n    <description>Active protection blocked a process\
+    \ from accessing a file</description>\n    <options>no_full_log</options>\n</rule>\n\n</group>\n\n\n"

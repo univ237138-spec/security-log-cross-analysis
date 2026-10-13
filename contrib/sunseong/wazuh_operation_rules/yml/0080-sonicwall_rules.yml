@@ -1,0 +1,265 @@
+schema: wazuh-original-rules-yaml/v1
+format_only_conversion: true
+native_runtime_format: Wazuh XML
+authoritative_field: sources[].original_xml
+upstream:
+  repository: https://github.com/wazuh/wazuh
+  tag: v4.14.8
+  commit: f470ad7db717b18db7feeed568949643698f0f34
+sources:
+- file: ruleset/rules/0080-sonicwall_rules.xml
+  url: https://github.com/wazuh/wazuh/blob/f470ad7db717b18db7feeed568949643698f0f34/ruleset/rules/0080-sonicwall_rules.xml
+  sha256: cb87fa05e6f0be1289e1d18da20f40dd913190315665b5eb335e7c234ac592b1
+  rule_count: 12
+  elements:
+  - element: group
+    attributes:
+      name: syslog,sonicwall,
+    children:
+    - element: rule
+      attributes:
+        id: '4800'
+        level: '0'
+      children:
+      - element: decoded_as
+        text: sonicwall
+      - element: description
+        text: SonicWall messages grouped.
+    - element: rule
+      attributes:
+        id: '4801'
+        level: '8'
+      children:
+      - element: if_sid
+        text: '4800'
+      - element: status
+        text: ^1
+      - element: description
+        text: SonicWall critical message.
+      - element: group
+        text: gpg13_3.2,gdpr_IV_35.7.d,
+    - element: rule
+      attributes:
+        id: '4802'
+        level: '8'
+      children:
+      - element: if_sid
+        text: '4800'
+      - element: status
+        text: ^2
+      - element: description
+        text: SonicWall critical message.
+      - element: group
+        text: gpg13_3.2,gdpr_IV_35.7.d,
+    - element: rule
+      attributes:
+        id: '4803'
+        level: '4'
+      children:
+      - element: if_sid
+        text: '4800'
+      - element: status
+        text: ^3
+      - element: description
+        text: SonicWall error message.
+      - element: group
+        text: gpg13_3.5,
+    - element: rule
+      attributes:
+        id: '4804'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '4800'
+      - element: status
+        text: ^4
+      - element: description
+        text: SonicWall warning message.
+    - element: rule
+      attributes:
+        id: '4805'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '4800'
+      - element: status
+        text: ^5
+      - element: description
+        text: SonicWall notice message.
+    - element: rule
+      attributes:
+        id: '4806'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '4800'
+      - element: status
+        text: ^6
+      - element: description
+        text: SonicWall informational message.
+    - element: rule
+      attributes:
+        id: '4807'
+        level: '0'
+      children:
+      - element: if_sid
+        text: '4800'
+      - element: status
+        text: ^7
+      - element: description
+        text: SonicWall debug message.
+    - element: rule
+      attributes:
+        id: '4810'
+        level: '3'
+      children:
+      - element: if_sid
+        text: '4806'
+      - element: id
+        text: ^236$
+      - element: description
+        text: 'SonicWall: Firewall administrator login.'
+      - element: mitre
+        children:
+        - element: id
+          text: T1078
+      - element: group
+        text: authentication_success,pci_dss_10.2.5,gpg13_3.6,gdpr_IV_32.2,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AC.7,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '4811'
+        level: '9'
+      children:
+      - element: if_sid
+        text: '4801'
+      - element: id
+        text: ^30$|^32$
+      - element: description
+        text: 'SonicWall: Firewall authentication failure.'
+      - element: group
+        text: authentication_failed,pci_dss_10.2.4,pci_dss_10.2.5,gpg13_3.6,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AC.7,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '4850'
+        level: '10'
+        frequency: '8'
+        timeframe: '120'
+        ignore: '60'
+      children:
+      - element: if_matched_sid
+        text: '4804'
+      - element: description
+        text: 'SonicWall: Multiple firewall warning messages.'
+      - element: group
+        text: service_availability,pci_dss_10.6.1,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,
+    - element: rule
+      attributes:
+        id: '4851'
+        level: '10'
+        frequency: '8'
+        timeframe: '120'
+        ignore: '60'
+      children:
+      - element: if_matched_sid
+        text: '4803'
+      - element: description
+        text: 'SonicWall: Multiple firewall error messages.'
+      - element: mitre
+        children:
+        - element: id
+          text: T1499
+      - element: group
+        text: service_availability,pci_dss_10.6.1,gpg13_3.5,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,
+  original_xml: |
+    <!--
+      -  Sonicwall rules
+      -  Author: Daniel Cid.
+      -  Updated by Wazuh, Inc.
+      -  Copyright (C) 2015, Wazuh Inc.
+      -  Copyright (C) 2009 Trend Micro Inc.
+      -  This program is a free software; you can redistribute it and/or modify it under the terms of GPLv2.
+    -->
+
+    <group name="syslog,sonicwall,">
+      <rule id="4800" level="0">
+        <decoded_as>sonicwall</decoded_as>
+        <description>SonicWall messages grouped.</description>
+      </rule>
+
+      <rule id="4801" level="8">
+        <if_sid>4800</if_sid>
+        <status>^1</status>
+        <description>SonicWall critical message.</description>
+        <group>gpg13_3.2,gdpr_IV_35.7.d,</group>
+      </rule>
+
+      <rule id="4802" level="8">
+        <if_sid>4800</if_sid>
+        <status>^2</status>
+        <description>SonicWall critical message.</description>
+        <group>gpg13_3.2,gdpr_IV_35.7.d,</group>
+      </rule>
+
+     <rule id="4803" level="4">
+        <if_sid>4800</if_sid>
+        <status>^3</status>
+        <description>SonicWall error message.</description>
+        <group>gpg13_3.5,</group>
+      </rule>
+
+      <rule id="4804" level="3">
+        <if_sid>4800</if_sid>
+        <status>^4</status>
+        <description>SonicWall warning message.</description>
+      </rule>
+
+      <rule id="4805" level="0">
+        <if_sid>4800</if_sid>
+        <status>^5</status>
+        <description>SonicWall notice message.</description>
+      </rule>
+
+      <rule id="4806" level="0">
+        <if_sid>4800</if_sid>
+        <status>^6</status>
+        <description>SonicWall informational message.</description>
+      </rule>
+
+      <rule id="4807" level="0">
+        <if_sid>4800</if_sid>
+        <status>^7</status>
+        <description>SonicWall debug message.</description>
+      </rule>
+
+      <rule id="4810" level="3">
+        <if_sid>4806</if_sid>
+        <id>^236$</id>
+        <description>SonicWall: Firewall administrator login.</description>
+        <mitre>
+          <id>T1078</id>
+        </mitre>
+        <group>authentication_success,pci_dss_10.2.5,gpg13_3.6,gdpr_IV_32.2,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AC.7,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="4811" level="9">
+        <if_sid>4801</if_sid>
+        <id>^30$|^32$</id>
+        <description>SonicWall: Firewall authentication failure.</description>
+        <group>authentication_failed,pci_dss_10.2.4,pci_dss_10.2.5,gpg13_3.6,gdpr_IV_35.7.d,gdpr_IV_32.2,hipaa_164.312.b,nist_800_53_AU.14,nist_800_53_AC.7,tsc_CC6.1,tsc_CC6.8,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="4850" level="10" frequency="8" timeframe="120" ignore="60">
+        <if_matched_sid>4804</if_matched_sid>
+        <description>SonicWall: Multiple firewall warning messages.</description>
+        <group>service_availability,pci_dss_10.6.1,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+
+      <rule id="4851" level="10" frequency="8" timeframe="120" ignore="60">
+        <if_matched_sid>4803</if_matched_sid>
+        <description>SonicWall: Multiple firewall error messages.</description>
+        <mitre>
+          <id>T1499</id>
+        </mitre>
+        <group>service_availability,pci_dss_10.6.1,gpg13_3.5,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.6,tsc_CC7.2,tsc_CC7.3,</group>
+      </rule>
+    </group>
